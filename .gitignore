@@ -1,4 +1,5 @@
 /vendor
+sami.phar
 composer.phar
 composer.lock
 .DS_Store
