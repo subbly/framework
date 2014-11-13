@@ -30,7 +30,7 @@
     },
 
     "suggest": {
-      "subbly/backend": "The Subbly backend",
+      "subbly/backend": "The Subbly backend"
     },
 
     "autoload": {
