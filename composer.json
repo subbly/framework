@@ -12,7 +12,10 @@
 
     "require": {
         "php": ">=5.4.0",
+        "ext-mcrypt": "*",
+
         "laravel/framework": "4.2.*",
+        "barryvdh/laravel-debugbar": "1.*",
 
         "pimple/pimple":           "~3.0",
         "symfony/property-access": "~2.5",
