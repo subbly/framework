@@ -23,7 +23,7 @@ class SubblyFrameworkServiceProvider extends ServiceProvider
     {
         $this->package('subbly/framework');
 
-        include __DIR__.'/../../routes.php';
+        include_once __DIR__ . '/../../routes.php';
 
         // TODO
         Container::boot();

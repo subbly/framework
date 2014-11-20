@@ -1,30 +1,56 @@
 <?php
 
 Route::group(array(
-    'prefix'    => '/api/v1',
-    'namespace' => 'Subbly\\Framework\\Api',
+    'prefix' => '/api',
 ), function() {
 
-    // AuthController
-    Route::get('/auth/test-credentials', 'AuthController@testCredentials');
-    Route::get('/auth/me', 'AuthController@testCurrentUser');
+    /**
+     * API v1
+     */
+    Route::group(array(
+        'prefix'    => '/v1',
+        'namespace' => 'Subbly\\Framework\\Api',
+    ), function() {
 
-    // WelcomeController
-    Route::get('/welcome', 'WelcomeController@index');
+        // AuthController
+        Route::get('/auth/test-credentials', 'AuthController@testCredentials');
+        Route::get('/auth/me', 'AuthController@testCurrentUser');
 
-    // UsersController
-    Route::get('/users/search', 'UsersController@search');
-    Route::resource('/users', 'UsersController', array('except' => array('create', 'edit')));
+        // WelcomeController
+        Route::get('/welcome', 'WelcomeController@index');
 
-    // ProductsController
-    Route::get('/products/search', 'ProductsController@search');
-    Route::resource('/products', 'ProductsController', array('except' => array('create', 'edit')));
+        // UsersController
+        Route::get('/users/search', 'UsersController@search');
+        Route::resource('users', 'UsersController', array('except' => array('create', 'edit')));
 
-    // OrdersController
-    Route::get('/orders/search', 'OrdersController@search');
-    Route::resource('/orders', 'OrdersController', array('except' => array('create', 'edit')));
+        // UserAddressesController
+        Route::get('/users/{users}/user-addresses/search', 'UserAddressesController@search');
+        Route::resource('users.addresses', 'UserAddressesController', array('except' => array('create', 'edit')));
 
-    // SettingsController
-    Route::get('/settings', 'SettingsController@index');
-    Route::match(array('PATCH', 'PUT'), '/settings/{setting_key}', 'SettingsController@update');
+        // ProductsController
+        Route::get('/products/search', 'ProductsController@search');
+        Route::resource('products', 'ProductsController', array('except' => array('create', 'edit')));
+
+        // ProductCategoriesController
+        Route::get('/products/{users}/categories/search', 'ProductCategoriesController@search');
+        Route::resource('products.categories', 'ProductCategoriesController', array('except' => array('create', 'edit')));
+
+        // OrdersController
+        Route::get('/orders/search', 'OrdersController@search');
+        Route::resource('orders', 'OrdersController', array('except' => array('create', 'edit')));
+
+        // SettingsController
+        Route::get('/settings', 'SettingsController@index');
+        Route::match(array('PATCH', 'PUT'), '/settings/{setting_key}', 'SettingsController@update');
+    });
+
+    /**
+     * API v2
+     */
+    Route::group(array(
+        'prefix' => '/v2'
+    ), function() {
+        
+    });
+
 });
