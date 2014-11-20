@@ -30,7 +30,7 @@
     },
 
     "suggest": {
-      "subbly/backend": "The Subbly backend"
+        "subbly/backend": "The Subbly backend"
     },
 
     "autoload": {
@@ -41,6 +41,12 @@
             "Subbly\\Framework\\": "src/"
         }
     },
+
+    "config": {
+        "bin-dir": "bin"
+    },
+
+    "bin": ["bin/subbly"],
 
     "extra": {
         "branch-alias": {
