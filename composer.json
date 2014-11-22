@@ -41,7 +41,7 @@
             "src/migrations"
         ],
         "psr-0": {
-            "Subbly\\Framework\\": "src/"
+            "Subbly": "src/"
         }
     },
 
