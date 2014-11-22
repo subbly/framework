@@ -1,6 +1,6 @@
 <?php
 
-namespace Subbly\Core\Installer;
+namespace Subbly\Framework\Installer;
 
 class Installer
 {

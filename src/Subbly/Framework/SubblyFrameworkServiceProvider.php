@@ -26,7 +26,7 @@ class SubblyFrameworkServiceProvider extends ServiceProvider
         include_once __DIR__ . '/../../routes.php';
 
         // TODO
-        Container::boot();
+        // Container::boot();
     }
 
     /**
@@ -47,13 +47,13 @@ class SubblyFrameworkServiceProvider extends ServiceProvider
     public function provides()
     {
         $providers = array(
-            'Cartalyst\Sentry\SentryServiceProvider',
-            'Spatie\EloquentSortable\SortableServiceProvider',
+            'Cartalyst\\Sentry\\SentryServiceProvider',
+            'Spatie\\EloquentSortable\\SortableServiceProvider',
         );
 
-        // if (Config::get('app.debug')) {
-        //     $providers[] = 'Barryvdh\Debugbar\ServiceProvider';
-        // }
+        if (Config::get('app.debug')) {
+            $providers[] = 'Barryvdh\\Debugbar\\ServiceProvider';
+        }
 
         return $providers;
     }

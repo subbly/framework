@@ -9,7 +9,8 @@ Route::group(array(
      */
     Route::group(array(
         'prefix'    => '/v1',
-        'namespace' => 'Subbly\\Framework\\Api',
+        // 'namespace' => 'Subbly\\Framework\\Api',
+        'namespace' => 'Subbly\\CMS\\Controllers\\Api',
     ), function() {
 
         // AuthController
@@ -44,13 +45,16 @@ Route::group(array(
         Route::match(array('PATCH', 'PUT'), '/settings/{setting_key}', 'SettingsController@update');
     });
 
-    /**
-     * API v2
-     */
-    Route::group(array(
-        'prefix' => '/v2'
-    ), function() {
-        
-    });
+    // /**
+    //  * API v2
+    //  */
+    // Route::group(array(
+    //     'prefix'    => '/v2',
+    //     'namespace' => 'Subbly\\Framework\\Api\\V2',
+    // ), function() {
+    //
+    //     // WelcomeController
+    //     Route::get('/welcome', 'WelcomeController@index');
+    // });
 
 });

@@ -3,11 +3,11 @@
 namespace Subbly\Api;
 
 use Subbly\Api\Service\Service;
-use Subbly\Core\Container;
+use Subbly\Framework\Container;
 
 class Api
 {
-    /** @var Subbly\Core\Container $container */
+    /** @var Subbly\Framework\Container $container */
     private $container;
 
     /** @var ArrayObject $services */

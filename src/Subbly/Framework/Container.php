@@ -1,11 +1,10 @@
 <?php
 
-namespace Subbly\Core;
+namespace Subbly\Framework;
 
 use Pimple;
 
 use Subbly\Api\Api;
-use Subbly\Core\EventDispatcher;
 
 class Container extends Pimple\Container
 {

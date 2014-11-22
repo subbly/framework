@@ -1,6 +1,6 @@
 <?php
 
-namespace Subbly\Core;
+namespace Subbly\Framework;
 
 use Illuminate\Events\Dispatcher;
 
