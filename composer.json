@@ -5,8 +5,19 @@
 
     "authors": [
         {
+            "name": "Benjamin Guedj",
+            "email": "benjamin@subbly.com",
+            "role": "Designer - founder"
+        },
+        {
+            "name":  "Michael Lefebvre",
+            "email": "michael@subbly.com",
+            "role": "Developer"
+        },
+        {
             "name": "Nicolas Brousse",
-            "email": "nicolas@subbly.com"
+            "email": "nicolas@subbly.com",
+            "role": "Developer"
         }
     ],
 
