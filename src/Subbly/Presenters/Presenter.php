@@ -19,7 +19,7 @@ abstract class Presenter
      */
     public static function create()
     {
-        return new self();
+        return new static();
     }
 
     /**

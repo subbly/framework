@@ -17,7 +17,7 @@ class UserPresenter extends Presenter
      *
      * @return array
      */
-    public function single(User $user)
+    public function single($user)
     {
         return array(
             'uid'        => $user->uid,
@@ -45,7 +45,7 @@ class UserPresenter extends Presenter
 
         foreach ($collection as $user)
         {
-            $users->add(array(
+            $users->offsetSet(null, array(
                 'uid'        => $user->uid,
                 'email'      => $user->email,
                 'firstname'  => $user->firstname,
