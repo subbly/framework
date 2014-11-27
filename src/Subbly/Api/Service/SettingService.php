@@ -111,6 +111,31 @@ class SettingService extends Service
     }
 
     /**
+     * Update many settings
+     *
+     * @param array  $settings Settings collection to update
+     *
+     * @return boolean
+     *
+     * @throws \Subbly\Api\Service\Exception If one setting key does not exists
+     * @throws \Subbly\Api\Service\Exception If one setting value has not the good format
+     *
+     * @api
+     */
+    public function updateMany(array $settings)
+    {
+        // TODO Use DB::beginTransaction(), DB::rollback(), DB::commit() ?
+        foreach ($settings as $k=>$v)
+        {
+            if ($this->update($k, $v) === false) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
      * Update a setting value
      *
      * @param string  $key   The setting key

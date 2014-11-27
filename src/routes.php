@@ -42,7 +42,7 @@ Route::group(array(
 
         // SettingsController
         Route::get('/settings', 'SettingsController@index');
-        Route::match(array('PATCH', 'PUT'), '/settings/{setting_key}', 'SettingsController@update');
+        Route::match(array('PATCH', 'PUT'), '/settings', 'SettingsController@update');
     });
 
     // /**
