@@ -16,12 +16,16 @@ use Illuminate\Support\Facades\Response;
 use Subbly\Subbly;
 use Subbly\Model\Collection;
 use Subbly\Model\User;
+use Subbly\Presenter\Presenter;
 
 class BaseController extends Controller
 {
     const LIMIT_DEFAULT = 50;
     const LIMIT_MIN     = 1;
     const LIMIT_MAX     = 100;
+
+    /** */
+    protected $presenter;
 
     /**
      * The constructor.
@@ -256,6 +260,10 @@ class BaseController extends Controller
             ? $key
             : 'entries'
         ;
+
+        if ($this->presenter instanceof Presenter) {
+            $collection = $this->presenter->collection($collection);
+        }
 
         return $this->jsonResponse(array_replace($extras, array(
             $key     => $collection,

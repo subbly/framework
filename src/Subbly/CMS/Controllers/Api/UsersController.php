@@ -4,7 +4,7 @@ namespace Subbly\CMS\Controllers\Api;
 
 use Illuminate\Support\Facades\Input;
 
-use Subbly\Presenters\V1\UserPresenter;
+use Subbly\Presenter\V1\UserPresenter;
 use Subbly\Subbly;
 
 class UsersController extends BaseController
@@ -17,6 +17,8 @@ class UsersController extends BaseController
         parent::__construct();
 
         $this->beforeFilter('@processAuthentication');
+
+        $this->presenter = UserPresenter::create();
     }
 
 
@@ -37,7 +39,7 @@ class UsersController extends BaseController
 
         $users = Subbly::api('subbly.user')->all($options);
 
-        return $this->jsonCollectionResponse('users', UserPresenter::create()->collection($users));
+        return $this->jsonCollectionResponse('users', $users);
     }
 
     /**
@@ -60,7 +62,6 @@ class UsersController extends BaseController
         ));
 
         $users = Subbly::api('subbly.user')->searchBy(Input::get('q'), $options);
-        // $users = UserPresenter::create()->collection($users);
 
         return $this->jsonCollectionResponse('users', $users, array(
             'query' => Input::get('q'),
@@ -82,7 +83,7 @@ class UsersController extends BaseController
         $user = Subbly::api('subbly.user')->find($uid, $options);
 
         return $this->jsonResponse(array(
-            'user' => UserPresenter::create()->single($user),
+            'user' => $this->presenter->single($user),
         ));
     }
 
@@ -101,8 +102,7 @@ class UsersController extends BaseController
         $user = Subbly::api('subbly.user')->create(Input::get('user'));
 
         return $this->jsonResponse(array(
-            // 'user' => UserPresenter::create()->single($user),
-            'user' => $user,
+            'user' => $this->presenter->single($user),
         ),
         array(
             'status' => array(
@@ -127,8 +127,7 @@ class UsersController extends BaseController
         $user = Subbly::api('subbly.user')->update($uid, Input::get('user'));
 
         return $this->jsonResponse(array(
-            'user' => $user,
-            // 'user' => UserPresenter::create()->single($user),
+            'user' => $this->presenter->single($user),
         ),
         array(
             'status' => array(
