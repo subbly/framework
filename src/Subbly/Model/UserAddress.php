@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class UserAddress extends Model implements ModelInterface
 {
     use Concerns\SubblyModel;
-    use Concerns\AddressTrait;
+    use Concerns\Address;
 
     protected $table = 'user_addresses';
 

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class OrderAddress extends Model implements ModelInterface
 {
     use Concerns\SubblyModel;
-    use Concerns\AddressTrait;
+    use Concerns\Address;
 
     /**
      * The database table used by the model.

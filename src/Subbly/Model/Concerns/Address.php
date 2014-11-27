@@ -2,7 +2,7 @@
 
 namespace Subbly\Model\Concerns;
 
-trait AddressTrait
+trait Address
 {
 
 }
