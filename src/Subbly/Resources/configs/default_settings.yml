@@ -6,3 +6,15 @@ default_settings:
   subbly.contact_email:
     type: string
     value: contact@subbly.fr
+
+  subbly.shop_currency:
+    type: string
+    value: EUR
+
+  subbly.backend_language:
+    type: string
+    value: fr
+
+  subbly.shop_status:
+    type: string
+    value: offline

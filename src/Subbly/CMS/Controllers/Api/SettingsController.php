@@ -46,9 +46,11 @@ class SettingsController extends BaseController
             return $this->jsonErrorResponse('"settings" is required.');
         }
 
-        $user = Subbly::api('subbly.setting')->updateMany(Input::get('settings'));
+        $settings = Subbly::api('subbly.setting');
 
-        return $this->jsonResponse(null, array(
+        $user = $settings->updateMany(Input::get('settings'));
+
+        return $this->jsonResponse( $settings->all(), array(
             'status' => array(
                 'code'    => 200,
                 'message' => 'Settings updated',
