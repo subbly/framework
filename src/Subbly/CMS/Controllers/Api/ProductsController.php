@@ -27,12 +27,7 @@ class ProductsController extends BaseController
      */
     public function index()
     {
-        list($offset, $limit) = $this->apiOffsetLimit();
-        $options = $this->formatOptions(array(
-            'offset'   => $offset,
-            'limit'    => $limit,
-            'includes' => $this->includes(),
-        ));
+        $options = $this->getParams('offset', 'limit', 'includes', 'order_by');
 
         $products = Subbly::api('subbly.product')->all($options);
 
@@ -51,12 +46,7 @@ class ProductsController extends BaseController
             return $this->jsonErrorResponse('"q" is required.');
         }
 
-        list($offset, $limit) = $this->apiOffsetLimit();
-        $options = $this->formatOptions(array(
-            'offset'   => $offset,
-            'limit'    => $limit,
-            'includes' => $this->includes(),
-        ));
+        $options = $this->getParams('offset', 'limit', 'includes', 'order_by');
 
         $products = Subbly::api('subbly.product')->searchBy(Input::get('q'), $options);
 
@@ -73,9 +63,7 @@ class ProductsController extends BaseController
      */
     public function show($sku)
     {
-        $options = $this->formatOptions(array(
-            'includes' => $this->includes(),
-        ));
+        $options = $this->getParams('includes');
 
         return $this->jsonResponse(array(
             'product' => Subbly::api('subbly.product')->find($sku, $options),

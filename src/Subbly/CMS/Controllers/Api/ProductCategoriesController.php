@@ -29,11 +29,7 @@ class ProductCategoriesController extends BaseController
     {
         $product = Subbly::api('subbly.product')->find($product_sku);
 
-        list($offset, $limit) = $this->apiOffsetLimit();
-        $options = $this->formatOptions(array(
-            'offset' => $offset,
-            'limit'  => $limit,
-        ));
+        $options = $this->getParams('offset', 'limit', 'includes', 'order_by');
 
         $productCategories = Subbly::api('subbly.product_category')->findByProduct($product, $options);
 

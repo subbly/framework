@@ -79,34 +79,6 @@ class BaseController extends Controller
     }
 
     /**
-     * Get the includes asked in the request
-     *
-     * @return array|null
-     */
-    protected function includes()
-    {
-        if (Input::has('includes')) {
-            return (array) Input::get('includes');
-        }
-
-        return null;
-    }
-
-    protected function formatOptions(array $options = array())
-    {
-        $keysToTrim = array('includes');
-
-        foreach ($options as $k=>$v)
-        {
-            if (in_array($k, $keysToTrim) && empty($v)) {
-                unset($options[$k]);
-            }
-        }
-
-        return $options;
-    }
-
-    /**
      * Get parameters
      *
      * @return array
