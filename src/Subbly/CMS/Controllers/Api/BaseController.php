@@ -122,6 +122,25 @@ class BaseController extends Controller
     }
 
     /**
+     * Load the presenter
+     *
+     * @param string  $presenterClassName
+     */
+    public function loadPresenter($presenterClassName)
+    {
+        if (
+            !class_exists($presenterClassName)
+            || !is_subclass_of($presenterClassName, 'Subbly\\Presenter\\Presenter')
+        ) {
+            return;
+        }
+
+        $this->presenter = call_user_func(array($presenterClassName, 'create'), array(
+            'params' => $this->getParams(),
+        ));
+    }
+
+    /**
      * Controller filter to process to the authentication.
      *
      * @param mixed    $route

@@ -4,7 +4,6 @@ namespace Subbly\CMS\Controllers\Api;
 
 use Illuminate\Support\Facades\Input;
 
-use Subbly\Presenter\V1\UserPresenter;
 use Subbly\Subbly;
 
 class UsersController extends BaseController
@@ -18,7 +17,7 @@ class UsersController extends BaseController
 
         $this->beforeFilter('@processAuthentication');
 
-        $this->presenter = UserPresenter::create();
+        $this->loadPresenter('Subbly\\Presenter\\V1\\UserPresenter');
     }
 
 
