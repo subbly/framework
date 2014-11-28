@@ -295,6 +295,8 @@ class BaseController extends Controller
             : 'entries'
         ;
 
+        $entries = $collection;
+
         if ($this->presenter instanceof Presenter) {
             $entries = $this->presenter->collection($collection);
         }
