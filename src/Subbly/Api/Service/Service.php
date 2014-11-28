@@ -14,8 +14,11 @@ abstract class Service
     /** @var string  The model class if the service is used for a model */
     protected $modelClass;
 
-    /** @var array  The includable relationships */
+    /** @var array  List of includable relationships */
     protected $includableRelationships;
+
+    /** @var array  List of the orderable fields */
+    protected $orderableFields;
 
     /**
      * The constructor.
@@ -73,6 +76,7 @@ abstract class Service
     {
         $options = array_replace(array(
             'includes' => array(),
+            'order_by' => array(),
         ), $options);
 
         if (!is_string($modelClass)) {
@@ -91,6 +95,26 @@ abstract class Service
             {
                 if (in_array($include, $this->includableRelationships)) {
                     $query->with($include);
+                }
+            }
+        }
+
+        /**
+        * orders
+        */
+        if (is_array($options['order_by']))
+        {
+            foreach ($options['order_by'] as $field=>$direction)
+            {
+                $direction = strtoupper($direction);
+
+                // TODO implement orderableFields
+                if (
+                    is_string($field)
+                    && in_array($direction, array('ASC', 'DESC'))
+                    // && in_array($field, $this->orderableFields)
+                ) {
+                    $query->orderBy($field, $direction);
                 }
             }
         }
