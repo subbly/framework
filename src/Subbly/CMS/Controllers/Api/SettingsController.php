@@ -30,7 +30,7 @@ class SettingsController extends BaseController
         $settings = Subbly::api('subbly.setting')->all();
 
         return $this->jsonResponse(array(
-            'settings'  => $settings,
+            'settings' => $settings,
         ));
     }
 
@@ -48,7 +48,7 @@ class SettingsController extends BaseController
 
         $user = Subbly::api('subbly.setting')->updateMany(Input::get('settings'));
 
-        return $this->jsonResponse(array(), array(
+        return $this->jsonResponse(null, array(
             'status' => array(
                 'code'    => 200,
                 'message' => 'Settings updated',
