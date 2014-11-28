@@ -5,24 +5,24 @@ namespace Subbly\Presenter\V1;
 use Illuminate\Support\Collection as ArrayCollection;
 use Illuminate\Database\Eloquent\Collection;
 
-use Subbly\Model\User;
+use Subbly\Model\UserAddress;
 use Subbly\Presenter\Presenter;
 use Subbly\Presenter\Entries;
 use Subbly\Presenter\Entry;
 use Subbly\Subbly;
 
-class UserPresenter extends Presenter
+class UserAddressPresenter extends Presenter
 {
     /**
      * Get formated datas for a single entry
      *
-     * @param \Subbly\Model\User  $user
+     * @param \Subbly\Model\UserAddress  $userAddress
      *
      * @return array
      */
-    public function single($user)
+    public function single($userAddress)
     {
-        $entry = new Entry($user);
+        $entry = new Entry($userAddress);
 
         $entry
             ->conditionalField('id', function() {
@@ -30,13 +30,18 @@ class UserPresenter extends Presenter
             })
 
             ->field('uid')
-            ->field('email')
+            ->field('name')
             ->field('firstname')
             ->field('lastname')
-
-            ->relationshipField('addresses', 'Subbly\\Presenter\\V1\\UserAddressPresenter')
-            ->relationshipField('orders', 'Subbly\\Presenter\\V1\\OrderPresenter')
-            ->relationshipField('groups', 'Subbly\\Presenter\\V1\\GroupPresenter')
+            ->field('address1')
+            ->field('address2')
+            ->field('zipcode')
+            ->field('city')
+            ->field('country')
+            ->field('phone_work')
+            ->field('phone_home')
+            ->field('phone_mobile')
+            ->field('phone_others_informations')
 
             ->dateField('created_at')
             ->dateField('updated_at')
@@ -56,9 +61,9 @@ class UserPresenter extends Presenter
     {
         $entries = new Entries;
 
-        foreach ($collection as $user)
+        foreach ($collection as $userAddress)
         {
-            $entry = new Entry($user);
+            $entry = new Entry($userAddress);
 
             $entry
                 ->conditionalField('id', function() {
@@ -66,13 +71,18 @@ class UserPresenter extends Presenter
                 })
 
                 ->field('uid')
-                ->field('email')
+                ->field('name')
                 ->field('firstname')
                 ->field('lastname')
-
-                ->relationshipField('addresses', 'Subbly\\Presenter\\V1\\UserAddressPresenter')
-                ->relationshipField('orders', 'Subbly\\Presenter\\V1\\OrderPresenter')
-                ->relationshipField('groups', 'Subbly\\Presenter\\V1\\GroupPresenter')
+                ->field('address1')
+                ->field('address2')
+                ->field('zipcode')
+                ->field('city')
+                ->field('country')
+                ->field('phone_work')
+                ->field('phone_home')
+                ->field('phone_mobile')
+                ->field('phone_others_informations')
 
                 ->dateField('created_at')
                 ->dateField('updated_at')

@@ -3,10 +3,13 @@
 namespace Subbly\Presenter\V1;
 
 use Illuminate\Support\Collection as ArrayCollection;
+use Illuminate\Database\Eloquent\Collection;
 
-use Subbly\Model\Collection;
 use Subbly\Model\Order;
 use Subbly\Presenter\Presenter;
+use Subbly\Presenter\Entries;
+use Subbly\Presenter\Entry;
+use Subbly\Subbly;
 
 class OrderPresenter extends Presenter
 {
@@ -19,7 +22,22 @@ class OrderPresenter extends Presenter
      */
     public function single($order)
     {
-        return $order;
+        $entry = new Entry($order);
+
+        $entry
+            ->conditionalField('id', function() {
+                return Subbly::api('subbly.user')->hasAccess('subbly.backend.auth');
+            })
+
+            ->field('uid')
+            ->field('status')
+            ->field('total_price')
+
+            ->dateField('created_at')
+            ->dateField('updated_at')
+        ;
+
+        return $entry->toArray();
     }
 
     /**
@@ -31,6 +49,28 @@ class OrderPresenter extends Presenter
      */
     public function collection(Collection $collection)
     {
-        return $collection;
+        $entries = new Entries;
+
+        foreach ($collection as $order)
+        {
+            $entry = new Entry($order);
+
+            $entry
+                ->conditionalField('id', function() {
+                    return Subbly::api('subbly.user')->hasAccess('subbly.backend.auth');
+                })
+
+                ->field('uid')
+                ->field('status')
+                ->field('total_price')
+
+                ->dateField('created_at')
+                ->dateField('updated_at')
+            ;
+
+            $entries->addEntry($entry);
+        }
+
+        return $entries->toArray();
     }
 }

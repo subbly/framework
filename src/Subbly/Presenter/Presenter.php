@@ -2,18 +2,29 @@
 
 namespace Subbly\Presenter;
 
-use Subbly\Model\Collection;
+use Carbon\Carbon;
+
+use Illuminate\Database\Eloquent\Collection;
+
+use Subbly\Subbly;
 
 abstract class Presenter
 {
     /** */
-    protected $options;
+    protected static $options;
 
     /**
      * The constructor.
      */
-    private function __construct(array $options=array())
+    private function __construct(array $options=null)
     {
+        if (is_array($options))
+        {
+            self::$options = array_replace(array(
+                'params' => array(),
+            ), $options);
+        }
+
         $this->init();
     }
 
@@ -23,11 +34,19 @@ abstract class Presenter
     protected function init() {}
 
     /**
+     *
+     */
+    protected function getCurrentUser()
+    {
+        return Subbly::api('subbly.user')->currentUser();
+    }
+
+    /**
      * Create a new presenter instance
      *
      * @return \Subble\Presenter\Presenter
      */
-    final public static function create(array $options=array())
+    final public static function create(array $options=null)
     {
         return new static($options);
     }

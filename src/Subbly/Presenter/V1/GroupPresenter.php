@@ -5,38 +5,31 @@ namespace Subbly\Presenter\V1;
 use Illuminate\Support\Collection as ArrayCollection;
 use Illuminate\Database\Eloquent\Collection;
 
-use Subbly\Model\User;
 use Subbly\Presenter\Presenter;
 use Subbly\Presenter\Entries;
 use Subbly\Presenter\Entry;
 use Subbly\Subbly;
 
-class UserPresenter extends Presenter
+class GroupPresenter extends Presenter
 {
     /**
      * Get formated datas for a single entry
      *
-     * @param \Subbly\Model\User  $user
+     * @param   $group
      *
      * @return array
      */
-    public function single($user)
+    public function single($group)
     {
-        $entry = new Entry($user);
+        $entry = new Entry($group);
 
         $entry
             ->conditionalField('id', function() {
                 return Subbly::api('subbly.user')->hasAccess('subbly.backend.auth');
             })
 
-            ->field('uid')
-            ->field('email')
-            ->field('firstname')
-            ->field('lastname')
-
-            ->relationshipField('addresses', 'Subbly\\Presenter\\V1\\UserAddressPresenter')
-            ->relationshipField('orders', 'Subbly\\Presenter\\V1\\OrderPresenter')
-            ->relationshipField('groups', 'Subbly\\Presenter\\V1\\GroupPresenter')
+            ->field('name')
+            ->field('permissions')
 
             ->dateField('created_at')
             ->dateField('updated_at')
@@ -56,23 +49,17 @@ class UserPresenter extends Presenter
     {
         $entries = new Entries;
 
-        foreach ($collection as $user)
+        foreach ($collection as $group)
         {
-            $entry = new Entry($user);
+            $entry = new Entry($group);
 
             $entry
                 ->conditionalField('id', function() {
                     return Subbly::api('subbly.user')->hasAccess('subbly.backend.auth');
                 })
 
-                ->field('uid')
-                ->field('email')
-                ->field('firstname')
-                ->field('lastname')
-
-                ->relationshipField('addresses', 'Subbly\\Presenter\\V1\\UserAddressPresenter')
-                ->relationshipField('orders', 'Subbly\\Presenter\\V1\\OrderPresenter')
-                ->relationshipField('groups', 'Subbly\\Presenter\\V1\\GroupPresenter')
+                ->field('name')
+                ->field('permissions')
 
                 ->dateField('created_at')
                 ->dateField('updated_at')
