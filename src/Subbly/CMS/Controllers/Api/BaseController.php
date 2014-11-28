@@ -107,6 +107,49 @@ class BaseController extends Controller
     }
 
     /**
+     * Get parameters
+     *
+     * @return array
+     */
+    protected function getParams()
+    {
+        $keys = array();
+        foreach (func_get_args() as $k)
+        {
+            if (is_string($k)) {
+                $keys[] = $k;
+            }
+        }
+
+        $params = $returnedParams = Input::all();
+
+        list($offset, $limit) = $this->apiOffsetLimit();
+        $params['offset'] = $offset;
+        $params['limit']  = $limit;
+
+        if (Input::has('includes') && is_array(Input::get('includes'))) {
+            $params['includes'] = (array) Input::get('includes');
+        }
+
+        /**
+         * Clean
+         */
+        if (!empty($key) && !empty($params))
+        {
+            $returnedParams = array();
+
+            foreach ($params as $key=>$value)
+            {
+                if (in_array($key, $keys)) {
+                    $returnedParams[$key] = $value;
+                }
+            }
+        }
+
+        return $returnedParams;
+    }
+
+    /**
      * Controller filter to process to the authentication.
      *
      * @param mixed    $route
@@ -262,11 +305,11 @@ class BaseController extends Controller
         ;
 
         if ($this->presenter instanceof Presenter) {
-            $collection = $this->presenter->collection($collection);
+            $entries = $this->presenter->collection($collection);
         }
 
         return $this->jsonResponse(array_replace($extras, array(
-            $key     => $collection,
+            $key     => $entries,
             'offset' => $collection->offset(),
             'limit'  => $collection->limit(),
             'total'  => $collection->total(),
