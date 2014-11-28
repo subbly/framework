@@ -50,11 +50,14 @@ class SettingsController extends BaseController
 
         $user = $settings->updateMany(Input::get('settings'));
 
-        return $this->jsonResponse( $settings->all(), array(
-            'status' => array(
-                'code'    => 200,
-                'message' => 'Settings updated',
-            ),
+        return $this->jsonResponse( array(
+                'settings' => $settings->all(),
+            ), 
+            array(
+                'status' => array(
+                    'code'    => 200,
+                    'message' => 'Settings updated',
+                ),
         ));
     }
 }
