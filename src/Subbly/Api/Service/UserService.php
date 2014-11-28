@@ -65,26 +65,26 @@ class UserService extends Service
     }
 
     /**
-     * Check to see if a user has the permission.
+     * Check to see if a user has the access.
      *
-     * @param string|array        $permissionKey One or array of permission keys
-     * @param \Subbly\Model\User  $user          The User scope (if null, current user is used)
+     * @param string|array        $accessKey One or array of permission keys
+     * @param \Subbly\Model\User  $user      The User scope (if null, current user is used)
      *
      * @return bool
      *
      * @api
      */
-    public function hasPermission($permissionKey, User $user = null)
+    public function hasAccess($accessKey, User $user = null)
     {
         if ($user === null) {
             $user = $this->currentUser();
         }
 
-        if (is_array($permissionKey)) {
-            return $user->hasAnyPermissions($permissionKey);
+        if (is_array($accessKey)) {
+            return $user->hasAnyAccess($accessKey);
         }
         else {
-            return $user->hasPermission($permissionKey);
+            return $user->hasAccess($accessKey);
         }
     }
 
