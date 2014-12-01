@@ -57,16 +57,20 @@ class Entry
      *
      * @return \Subbly\Presenter\Entry
      */
-    public function relationshipField($fieldName, $presenterClassName)
+    public function relationshipField($fieldName, $presenterClassName = null)
     {
-        if (
-            in_array($fieldName, array_keys($this->model->relationsToArray()))
-            && class_exists($presenterClassName)
-            && is_subclass_of($presenterClassName, 'Subbly\\Presenter\\Presenter')
-        ) {
-            $presenter = call_user_func(array($presenterClassName, 'create'));
-            $items     = $this->model->getAttribute($fieldName);
-            $items     = $presenter->collection($items);
+        if (in_array($fieldName, array_keys($this->model->relationsToArray())))
+        {
+            $items = $this->model->getAttribute($fieldName);
+
+            if (
+                is_string($presenterClassName)
+                && class_exists($presenterClassName)
+                && is_subclass_of($presenterClassName, 'Subbly\\Presenter\\Presenter')
+            ) {
+                $presenter = call_user_func(array($presenterClassName, 'create'));
+                $items     = $presenter->collection($items);
+            }
 
             $this->addFieldData($fieldName, $items);
         }

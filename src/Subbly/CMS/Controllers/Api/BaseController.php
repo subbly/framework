@@ -295,14 +295,12 @@ class BaseController extends Controller
             : 'entries'
         ;
 
-        $entries = $collection;
-
         if ($this->presenter instanceof Presenter) {
             $entries = $this->presenter->collection($collection);
         }
 
         return $this->jsonResponse(array_replace($extras, array(
-            $key     => $entries,
+            $key     => isset($entries) ? $entries : $collection,
             'offset' => $collection->offset(),
             'limit'  => $collection->limit(),
             'total'  => $collection->total(),

@@ -15,7 +15,7 @@ class GroupPresenter extends Presenter
     /**
      * Get formated datas for a single entry
      *
-     * @param   $group
+     * @param object  $group
      *
      * @return array
      */

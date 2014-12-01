@@ -29,6 +29,7 @@ class UserAddressPresenter extends Presenter
                 return Subbly::api('subbly.user')->hasAccess('subbly.backend.auth');
             })
 
+            // TODO stringField, integerField, ...
             ->field('uid')
             ->field('name')
             ->field('firstname')
@@ -41,7 +42,7 @@ class UserAddressPresenter extends Presenter
             ->field('phone_work')
             ->field('phone_home')
             ->field('phone_mobile')
-            ->field('phone_others_informations')
+            ->field('others_informations')
 
             ->dateField('created_at')
             ->dateField('updated_at')
@@ -82,7 +83,7 @@ class UserAddressPresenter extends Presenter
                 ->field('phone_work')
                 ->field('phone_home')
                 ->field('phone_mobile')
-                ->field('phone_others_informations')
+                ->field('others_informations')
 
                 ->dateField('created_at')
                 ->dateField('updated_at')
