@@ -31,7 +31,7 @@ class Product extends Model  implements ModelInterface, SortableInterface
     protected $rules = array(
         'status' => 'required',
         'name'   => 'required',
-        'sku'    => 'required|unique:products,sku,{{self_id}}',
+        'sku'    => 'unique:products,sku,{{self_id}}',
         'price'  => 'required|regex:/^\d+(\.\d{1,2})?$/',
     );
 

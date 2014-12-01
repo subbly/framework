@@ -16,6 +16,13 @@ class OrderProduct extends Model implements ModelInterface
     protected $table = 'order_products';
 
     /**
+     * Validations
+     */
+    protected $rules = array(
+        'order_id' => 'required|exists:orders,id',
+    );
+
+    /**
      * Relashionship
      */
     public function order()

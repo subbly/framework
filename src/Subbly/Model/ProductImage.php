@@ -16,6 +16,13 @@ class ProductImage extends Model implements ModelInterface
     protected $table = 'product_images';
 
     /**
+     * Validations
+     */
+    protected $rules = array(
+        'product_id' => 'required|exists:products,id',
+    );
+
+    /**
      * Relashionship
      */
     public function product()
