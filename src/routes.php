@@ -36,6 +36,10 @@ Route::group(array(
         Route::get('/products/{users}/categories/search', 'ProductCategoriesController@search');
         Route::resource('products.categories', 'ProductCategoriesController', array('except' => array('create', 'edit')));
 
+        // ProductImagesController
+        Route::get('/products/{users}/images/search', 'ProductImagesController@search');
+        Route::resource('products.images', 'ProductImagesController', array('except' => array('create', 'edit')));
+
         // OrdersController
         Route::get('/orders/search', 'OrdersController@search');
         Route::resource('orders', 'OrdersController', array('except' => array('create', 'edit')));
