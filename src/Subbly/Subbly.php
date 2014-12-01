@@ -6,7 +6,7 @@ use Subbly\Framework\Container;
 
 class Subbly
 {
-    const VERSION = '0.1.0-dev';
+    const VERSION = '0.2.0-dev';
 
     /** @var Subbly\Framework\Container */
     static private $container;
