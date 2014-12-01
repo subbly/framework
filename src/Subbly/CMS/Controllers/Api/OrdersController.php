@@ -4,6 +4,7 @@ namespace Subbly\CMS\Controllers\Api;
 
 use Illuminate\Support\Facades\Input;
 
+use Subbly\Presenter\V1\OrderPresenter;
 use Subbly\Subbly;
 
 class OrdersController extends BaseController
@@ -16,6 +17,8 @@ class OrdersController extends BaseController
         parent::__construct();
 
         $this->beforeFilter('@processAuthentication');
+
+        $this->loadPresenter('Subbly\\Presenter\\V1\\OrderPresenter');
     }
 
 
@@ -65,8 +68,10 @@ class OrdersController extends BaseController
     {
         $options = $this->getParams('includes');
 
+        $order = Subbly::api('subbly.order')->find($sku, $options);
+
         return $this->jsonResponse(array(
-            'order' => Subbly::api('subbly.order')->find($sku, $options),
+            'order' => $this->presenter->single($order),
         ));
     }
 
@@ -85,7 +90,7 @@ class OrdersController extends BaseController
         $order = Subbly::api('subbly.order')->create(Input::get('order'));
 
         return $this->jsonResponse(array(
-            'order' => $order,
+            'order' => $this->presenter->single($order),
         ),
         array(
             'status' => array(
@@ -110,7 +115,7 @@ class OrdersController extends BaseController
         $order = Subbly::api('subbly.order')->update($sku, Input::get('order'));
 
         return $this->jsonResponse(array(
-            'order' => $order,
+            'order' => $this->presenter->single($order),
         ),
         array(
             'status' => array('message' => 'Order updated'),

@@ -33,6 +33,11 @@ class OrderPresenter extends Presenter
             ->field('status')
             ->field('total_price')
 
+            ->relationshipField('user', 'Subbly\\Presenter\\V1\\UserPresenter')
+            ->relationshipField('billing_address', 'Subbly\\Presenter\\V1\\OrderAddressPresenter')
+            ->relationshipField('shipping_address', 'Subbly\\Presenter\\V1\\OrderAddressPresenter')
+            ->relationshipField('products', 'Subbly\\Presenter\\V1\\OrderProductPresenter')
+
             ->dateField('created_at')
             ->dateField('updated_at')
         ;
@@ -63,6 +68,11 @@ class OrderPresenter extends Presenter
                 ->field('uid')
                 ->field('status')
                 ->field('total_price')
+
+                ->relationshipField('user', 'Subbly\\Presenter\\V1\\UserPresenter')
+                ->relationshipField('billing_address', 'Subbly\\Presenter\\V1\\OrderAddressPresenter')
+                ->relationshipField('shipping_address', 'Subbly\\Presenter\\V1\\OrderAddressPresenter')
+                ->relationshipField('products', 'Subbly\\Presenter\\V1\\OrderProductPresenter')
 
                 ->dateField('created_at')
                 ->dateField('updated_at')

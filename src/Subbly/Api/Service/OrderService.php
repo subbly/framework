@@ -55,7 +55,7 @@ class OrderService extends Service
     public function find($id, array $options = array())
     {
         $options = array_replace(array(
-            'includes' => array('images', 'categories', 'options'),
+            'includes' => array('user'),
         ), $options);
 
         $query = $this->newQuery($options);
