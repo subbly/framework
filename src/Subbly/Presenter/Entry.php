@@ -69,7 +69,13 @@ class Entry
                 && is_subclass_of($presenterClassName, 'Subbly\\Presenter\\Presenter')
             ) {
                 $presenter = call_user_func(array($presenterClassName, 'create'));
-                $items     = $presenter->collection($items);
+
+                if ($items instanceof ArrayCollection) {
+                    $items = $presenter->collection($items);
+                }
+                else {
+                    $items = $presenter->single($items);
+                }
             }
 
             $this->addFieldData($fieldName, $items);
