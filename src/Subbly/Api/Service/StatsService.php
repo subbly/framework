@@ -85,95 +85,49 @@ class StatsService extends Service
      *
      * @api
      */
-    public function create( $service )
+    public function create( $stats )
     {
-        $apiObj = \Subbly\Subbly::api( $service['name'] );
-        $to     = Carbon::now();
-
-        switch ( $service['period'] )
-        {
-            case 'lastweek':
-                $from = new Carbon('last week');
-                break;
-            
-            default:
-                $from = Carbon::createFromDate(2014, 11, 11);
-                break;
+        if (is_array($user)) {
+            $stats = new Stats($stats);
         }
-
-        switch ( $service['type' ] )
-        {
-            case 'average':
-            case 'avg':
-                $value = $apiObj->statisticstGetAvgBetweenTwoDates( $from, $to );
-                break;
-            
-            default:
-                $value = $apiObj->statisticstGetTotalBetweenTwoDates( $from, $to );
-                break;
-        }
-dd( $value );
-
-
-        $statsObject     = ( !is_array( $serviceStats ) ) ?: new Stats( $serviceStats );
-        $serviceDbObject = \DB::table( $statsObject->service );
-
-        // default period start from now
-        $to   = \Carbon\Carbon::now();
-
-        switch ( $options['period'] )
-        {
-            case 'lastweek':
-                $from = new \Carbon\Carbon('last week');
-
-                $serviceDbObject->whereBetween( 'created_at', array( $from, $to ) );
-                break;
-            case 'lastmonth':
-                $from = new \Carbon\Carbon('last month');
-
-                $serviceDbObject->whereBetween( 'created_at', array( $from, $to ) );
-                break;
-            case 'lastyear':
-                $from = new \Carbon\Carbon('last year');
-
-                $serviceDbObject->whereBetween( 'created_at', array( $from, $to ) );
-                break;
-            case 'range':
-                $serviceDbObject->whereBetween('created_at', array( $options['from'], $options['to']));
-                break;
-        }
-
-echo $serviceDbObject->count();
-$queries = \DB::getQueryLog();
-$last_query = end($queries);
-dd( $last_query );
-exit();
 
         if ($service instanceof Stats)
         {
             if ($this->fireEvent('creating', array($service)) === false) return false;
+    
+            $apiObj = \Subbly\Subbly::api( $stats->name );
+            $to     = Carbon::now();
 
-            switch ( $service->service )
+            switch ( $stats->period )
             {
-                case 'customers':
-                    $users = \DB::table('users');
+                case 'lastweek':
+                    $from = new Carbon('last week');
+                    break;
 
-                    switch ( $service->period )
-                    {
-                        case 'all':
-                            $service->value = $users->count();
-                            break;
-                        
-                        default:
-                            $service->value = $users->whereBetween('created_at', array( $options['from'], $options['to']))->count();
-                            break;
-                    }
+                case 'lastmonth':
+                    $from = new Carbon('last month');
+                    break;
 
-                    
+                    // TODO
+                case 'range':
+                    // $from = new Carbon('last month');
+                    break;
+
+                default:
+                    //TODO: get install date from generated config
+                    $from = Carbon::createFromDate(2014, 11, 11);
+                    break;
+            }
+
+            switch ( $stats->type )
+            {
+                case 'average':
+                case 'avg':
+                    $this->value = $apiObj->statisticstGetAvgBetweenTwoDates( $from, $to );
                     break;
                 
                 default:
-                    # code...
+                    $this->value = $apiObj->statisticstGetTotalBetweenTwoDates( $from, $to );
                     break;
             }
 
