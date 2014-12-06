@@ -34,6 +34,10 @@ class OrderService extends Service
      */
     public function all(array $options = array())
     {
+        $options = array_replace(array(
+            'user_uid' => false,
+        ), $options);
+
         $query = $this->newCollectionQuery($options);
 
         return new Collection($query);
@@ -84,9 +88,21 @@ class OrderService extends Service
      */
     public function searchBy($searchQuery, array $options = array(), $statementsType = null)
     {
+
         $query = $this->newSearchQuery($searchQuery, array(
             'status',
+            'total_price',
+            'created_at',
+            'updated_at',
         ), $statementsType, $options);
+
+        if (array_key_exists('user_uid', $searchQuery))
+        {
+            $query
+            ->join('users', 'users.id', '=', 'orders.user_id')
+            ->where('users.uid', '=', $searchQuery['user_uid'])
+            ;
+        }
 
         return new Collection($query);
     }
