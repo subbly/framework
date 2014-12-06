@@ -2,6 +2,8 @@
 
 namespace Subbly\Api\Service;
 
+use Carbon\Carbon;
+
 use Subbly\Model\Collection;
 use Subbly\Model\Stats;
 
@@ -63,15 +65,16 @@ class StatsService extends Service
     }
 
     /**
-     * Create a new User
+     * Create a statistics value
      *
      * @example
-     *     $user = Subbly\Model\User;
-     *     Subbly::api('subbly.user')->create($user);
+     *     $user = Subbly\Model\Stats;
+     *     Subbly::api('subbly.stats')->create($service);
      *
-     *     Subbly::api('subbly.user')->create(array(
-     *         'firstname' => 'Jon',
-     *         'lastname'  => 'Snow',
+     *     Subbly::api('subbly.stats')->create(array(
+     *         'service' => 'users',
+     *         'type'    => 'count',
+     *         'period'  => 'lastweek',
      *     ));
      *
      * @param User|array $user
@@ -82,8 +85,36 @@ class StatsService extends Service
      *
      * @api
      */
-    public function create( $serviceStats, $options )
+    public function create( $service )
     {
+        $apiObj = \Subbly\Subbly::api( $service['name'] );
+        $to     = Carbon::now();
+
+        switch ( $service['period'] )
+        {
+            case 'lastweek':
+                $from = new Carbon('last week');
+                break;
+            
+            default:
+                $from = Carbon::createFromDate(2014, 11, 11);
+                break;
+        }
+
+        switch ( $service['type' ] )
+        {
+            case 'average':
+            case 'avg':
+                $value = $apiObj->statisticstGetAvgBetweenTwoDates( $from, $to );
+                break;
+            
+            default:
+                $value = $apiObj->statisticstGetTotalBetweenTwoDates( $from, $to );
+                break;
+        }
+dd( $value );
+
+
         $statsObject     = ( !is_array( $serviceStats ) ) ?: new Stats( $serviceStats );
         $serviceDbObject = \DB::table( $statsObject->service );
 
@@ -163,27 +194,27 @@ exit();
     }
 
     /**
-     * Delete a User
+     * Delete all Statistic service
      *
-     * @param User|string  $user The user_uid or the user model
+     * @param Service|string  $serice The service name or the service model
      *
-     * @return User
+     * @return Stats
      *
      * @pi
      */
-    public function delete($user)
+    public function delete($service)
     {
-        if (!is_object($user)) {
-            $user = $this->find($user);
+        if (!is_object($service)) {
+            $service = $this->find($service);
         }
 
-        if ($user instanceof User)
+        if ($service instanceof Service)
         {
-            if ($this->fireEvent('deleting', array($user)) === false) return false;
+            if ($this->fireEvent('deleting', array($service)) === false) return false;
 
-            $user->delete($this);
+            $service->delete($this);
 
-            $this->fireEvent('deleted', array($user));
+            $this->fireEvent('deleted', array($service));
         }
     }
 
