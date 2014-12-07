@@ -2,8 +2,6 @@
 
 namespace Subbly\Api\Service;
 
-use Sentry;
-
 use Subbly\Model\Collection;
 use Subbly\Model\ProductImage;
 use Subbly\Model\Product;

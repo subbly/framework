@@ -16,10 +16,23 @@ class ProductImage extends Model implements ModelInterface
     protected $table = 'product_images';
 
     /**
+    * Fields
+    */
+    protected $visible = array('filename', 'product', 'created_at', 'updated_at');
+
+    protected $fillable = array('filename', 'image');
+
+    public $sortable = array(
+        'order_column_name' => 'position',
+    );
+
+    /**
      * Validations
      */
     protected $rules = array(
         'product_id' => 'required|exists:products,id',
+        'filename'   => 'required',
+        'image'      => 'image',
     );
 
     /**
