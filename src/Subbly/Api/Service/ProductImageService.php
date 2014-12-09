@@ -66,7 +66,7 @@ class ProductImageService extends Service
 
         $query = $this->newCollectionQuery($options);
         $query->with(array('product' => function($query) use ($product) {
-            $query->where('uid', '=', $product->uid);
+            $query->where('id', '=', $product->id);
         }));
 
         return new Collection($query);
