@@ -5,6 +5,7 @@ namespace Subbly\Framework;
 use Pimple;
 
 use Subbly\Api\Api;
+use Subbly\Resolver\MediaResolver;
 
 class Container extends Pimple\Container
 {
@@ -45,6 +46,10 @@ class Container extends Pimple\Container
          */
         $this['event_dispatcher'] = function($c) {
             return new EventDispatcher();
+        };
+
+        $this['media_resolver'] = function($c) {
+            return new MediaResolver($c);
         };
 
         /**
