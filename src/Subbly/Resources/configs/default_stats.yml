@@ -1,0 +1,17 @@
+default_stats:
+  subbly.users.total.alltime:
+    value: 0
+  subbly.users.total.yesterday:
+    value: 0
+  subbly.users.total.lastweek:
+    value: 0
+  subbly.users.total.lastmonth:
+    value: 0
+  subbly.orders.total.alltime:
+    value: 0
+  subbly.orders.total.yesterday:
+    value: 0
+  subbly.orders.total.lastweek:
+    value: 0
+  subbly.orders.total.lastmonth:
+    value: 0

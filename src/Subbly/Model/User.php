@@ -90,6 +90,24 @@ class User extends Model implements ModelInterface//, UserInterface, RemindableI
         return $this->attributes['last_name'];
     }
 
+
+    /**
+     * Statistics
+     */
+    public function statisticsGetTotalBetweenTwoDates( $from, $to ) 
+    {
+        dd('ok');
+        return \DB::table( 'users' )->whereBetween( 'created_at', array( $from, $to ) )->count();
+    }
+
+    public function statisticsGetAvgBetweenTwoDates( $from, $to ) 
+    {
+        dd('ok');
+        $totalDays = $from->diffInDays( $to ); 
+        $totalUsers = $this->statisticstGetTotalBetweenTwoDates( $from, $to );
+        return ( $totalUsers / $totalDays );
+    }
+
     /**
      * Get an attribute array of all arrayable attributes.
      *

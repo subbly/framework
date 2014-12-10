@@ -37,6 +37,9 @@ class Container extends Pimple\Container
                 __DIR__ . '/../Resources/configs/default_settings.yml'
             );
 
+            $api->service('subbly.stats')->registerDefaultStats(
+                __DIR__ . '/../Resources/configs/default_stats.yml'
+            );
             return $api;
         };
 
