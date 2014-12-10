@@ -33,6 +33,8 @@
         "symfony/intl":            "~2.5",
         "symfony/yaml":            "~2.5",
 
+        "doctrine/common": "~2.2",
+
         "cartalyst/sentry":         "~2.1",
         "spatie/eloquent-sortable": "0.*"
     },

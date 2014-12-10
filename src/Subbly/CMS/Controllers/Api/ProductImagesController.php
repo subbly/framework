@@ -46,11 +46,13 @@ class ProductImagesController extends BaseController
     {
         $product = Subbly::api('subbly.product')->find($product_sku);
 
-        if (!Input::has('product_image')) {
+        if (!Input::hasFile('product_image')) {
             return $this->jsonErrorResponse('"product_image" is required.');
         }
 
-        $productImage = Subbly::api('subbly.product_image')->create(Input::get('product_image'), $product);
+        $productImage = Subbly::api('subbly.product_image')->create(array(
+            'image' => Input::file('product_image'),
+        ), $product);
 
         return $this->jsonResponse(array(
             'product_image' => $productImage,
@@ -73,11 +75,13 @@ class ProductImagesController extends BaseController
     {
         $product = Subbly::api('subbly.product')->find($product_sku);
 
-        if (!Input::has('product_image')) {
+        if (!Input::hasFile('product_image')) {
             return $this->jsonErrorResponse('"product_image" is required.');
         }
 
-        $productImage = Subbly::api('subbly.product_image')->update($uid, Input::get('product_image'));
+        $productImage = Subbly::api('subbly.product_image')->update($uid, array(
+            'image' => Input::file('product_image'),
+        ));
 
         return $this->jsonResponse(array(
             'product_image' => $productImage,

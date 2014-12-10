@@ -84,9 +84,29 @@ class OrderService extends Service
      */
     public function searchBy($searchQuery, array $options = array(), $statementsType = null)
     {
+
         $query = $this->newSearchQuery($searchQuery, array(
             'status',
+            'total_price',
+            'created_at',
+            'updated_at',
         ), $statementsType, $options);
+
+
+        if (
+            array_key_exists('user_uid', $searchQuery)
+            || array_key_exists('user_id', $searchQuery)
+        ) {
+            $query->join('users', 'users.id', '=', 'orders.user_id');
+        }
+
+        if (array_key_exists('user_uid', $searchQuery)) {
+            $query->where('users.uid', '=', $searchQuery['user_uid']);
+        }
+
+        if (array_key_exists('user_id', $searchQuery)) {
+            $query->where('users.uid', '=', $searchQuery['user_id']);
+        }
 
         return new Collection($query);
     }

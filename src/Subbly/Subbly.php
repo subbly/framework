@@ -52,7 +52,7 @@ class Subbly
      *
      * @return Subbly\Framework\Container
      */
-    static private function getContainer()
+    static public function getContainer()
     {
         if (!(self::$container instanceof Container))
         {
