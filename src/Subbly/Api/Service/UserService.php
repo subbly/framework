@@ -293,15 +293,17 @@ class UserService extends Service
     /**
      * Statistics
      */
-    public function statisticstGetTotalBetweenTwoDates( $from, $to ) 
+    public function statisticsGetTotalBetweenTwoDates( $from, $to ) 
     {
-        return \DB::table( 'users' )->whereBetween( 'created_at', array( $from, $to ) )->count();
+        // dd( $from, $to);
+        return \DB::table( 'users' )->whereBetween( 'created_at', array( $from->toDateTimeString(), $to->toDateTimeString() ) )->count();
     }
 
-    public function statisticstGetAvgBetweenTwoDates( $from, $to ) 
+    public function statisticsGetAvgBetweenTwoDates( $from, $to ) 
     {
         $totalDays = $from->diffInDays( $to ); 
-        $totalUsers = $this->statisticstGetTotalBetweenTwoDates( $from, $to );
+        $totalUsers = $this->statisticsGetTotalBetweenTwoDates( $from, $to );
+
         return ( $totalUsers / $totalDays );
     }
 
