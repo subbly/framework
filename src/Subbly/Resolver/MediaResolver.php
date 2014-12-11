@@ -17,8 +17,8 @@ class MediaResolver
 
     public function __construct(Container $container)
     {
-        $this->basePath         = storage_path();
-        $this->baseSource       = storage_path() . '/uploads';
+        $this->basePath         = app_upload();
+        $this->baseSource       = app_upload() . '/uploads';
         $this->propertyAccessor = PropertyAccess::getPropertyAccessor();
         $this->basedirs         = array();
     }
