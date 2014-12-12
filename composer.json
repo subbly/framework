@@ -39,7 +39,7 @@
         "doctrine/common":         "~2.2",
 
         "cartalyst/sentry":        "~2.1",
-        "rutorika/sortable":       "@dev"
+        "rutorika/sortable":       "0.9.8"
     },
 
     "require-dev": {
