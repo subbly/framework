@@ -32,6 +32,9 @@ Route::group(array(
         Route::get('/products/search', 'ProductsController@search');
         Route::resource('products', 'ProductsController', array('except' => array('create', 'edit')));
 
+        // ProductController Sort
+        Route::post('products/{users}/sort', 'ProductsController@sort');
+
         // ProductCategoriesController
         Route::get('/products/{users}/categories/search', 'ProductCategoriesController@search');
         Route::resource('products.categories', 'ProductCategoriesController', array('except' => array('create', 'edit')));

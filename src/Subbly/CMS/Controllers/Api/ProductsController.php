@@ -116,4 +116,26 @@ class ProductsController extends BaseController
             'status' => array('message' => 'Product updated'),
         ));
     }
+
+    /**
+     * Set Product order
+     *
+     * @route GET /api/v1/products/:sku/sort
+     * @authentication required
+     */
+    public function sort($sku)
+    {
+        if (!Input::has('products')) {
+            return $this->jsonErrorResponse('"products" is required.');
+        }
+        
+        $product = Subbly::api('subbly.product')->sort( Input::get('products') );
+
+        return $this->jsonResponse(array(
+            'product' => $product,
+        ),
+        array(
+            'status' => array('message' => 'Product updated'),
+        ));
+    }
 }

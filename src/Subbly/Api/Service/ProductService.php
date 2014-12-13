@@ -189,6 +189,35 @@ class ProductService extends Service
     }
 
     /**
+     * Set the model position in the database.
+     *
+     * @param  array  $attributes
+     * @return \Subbly\Model\Product
+     */
+    final public function sort(array $attributes = array())
+    {
+        $product        = $this->find( $attributes['movingId']  );
+        $positionEntity = $this->find( $attributes['movedId'] );
+
+        if ($product instanceof Product)
+        {
+            if ($this->fireEvent('sorting', array($product)) === false) return false;
+            
+            $product->setCaller($this);
+            $product->{$attributes['type']}( $positionEntity );
+
+            $this->fireEvent('sorted', array($product));
+
+            return $product;
+        }
+        
+        throw new Exception(sprintf(Exception::CANT_UPDATE_MODEL,
+            'Subbly\\Model\\Product',
+            $this->name()
+        ));
+    }
+
+    /**
      * Service name
      */
     public function name()

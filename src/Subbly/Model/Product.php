@@ -4,20 +4,17 @@ namespace Subbly\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
-use Spatie\EloquentSortable\Sortable;
-use Spatie\EloquentSortable\SortableInterface;
-
-class Product extends Model  implements ModelInterface, SortableInterface
+class Product extends Model  implements ModelInterface
 {
     use Concerns\SubblyModel;
-    use Sortable;
+    use \Rutorika\Sortable\SortableTrait;
 
     protected $table = 'products';
 
     /**
      * Fields
      */
-    protected $visible = array('position', 'status', 'sku', 'name', 'description', 'price', 'sale_price', 'quantity', 'images', 'options', 'categories', 'created_at', 'updated_at');
+    protected $visible = array('id', 'position', 'status', 'sku', 'name', 'description', 'price', 'sale_price', 'quantity', 'images', 'options', 'categories', 'created_at', 'updated_at');
 
     protected $fillable = array('status', 'sku', 'name', 'description', 'price', 'sale_price', 'quantity');
 
@@ -62,7 +59,6 @@ class Product extends Model  implements ModelInterface, SortableInterface
     {
         return $this->hasMany('Subbly\\Model\\ProductCategory');
     }
-
 
     public function getPriceAttribute()
     {
