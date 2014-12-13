@@ -39,7 +39,6 @@
         "doctrine/common":             "~2.2",
 
         "cartalyst/sentry":            "~2.1",
-        "rutorika/sortable":           "0.9.8",
         "dimsav/laravel-translatable": "4.3.*"
     },
 
