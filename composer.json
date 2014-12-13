@@ -31,15 +31,16 @@
         "laravel/framework": "4.2.*",
         "barryvdh/laravel-debugbar": "1.*",
 
-        "pimple/pimple":           "~3.0",
-        "symfony/property-access": "~2.5",
-        "symfony/intl":            "~2.5",
-        "symfony/yaml":            "~2.5",
+        "pimple/pimple":               "~3.0",
+        "symfony/property-access":     "~2.5",
+        "symfony/intl":                "~2.5",
+        "symfony/yaml":                "~2.5",
 
-        "doctrine/common":         "~2.2",
+        "doctrine/common":             "~2.2",
 
-        "cartalyst/sentry":        "~2.1",
-        "rutorika/sortable":       "0.9.8"
+        "cartalyst/sentry":            "~2.1",
+        "rutorika/sortable":           "0.9.8",
+        "dimsav/laravel-translatable": "4.3.*"
     },
 
     "require-dev": {
