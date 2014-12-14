@@ -86,10 +86,10 @@ class ProductsController extends BaseController
             return $this->jsonErrorResponse('"product" is required.');
         }
 
-        $product = Subbly::api('subbly.product')->create(Input::get('product'));
+        $product = Subbly::api('subbly.product')->create( Input::get('product'), Input::get('locale', null ) );
 
         return $this->jsonResponse(array(
-            'product' => $product,
+            'product' => $this->presenter->single($product),
         ),
         array(
             'status' => array(
@@ -107,14 +107,16 @@ class ProductsController extends BaseController
      */
     public function update($sku)
     {
+        $options = $this->getParams('includes');
+
         if (!Input::has('product')) {
             return $this->jsonErrorResponse('"product" is required.');
         }
 
-        $product = Subbly::api('subbly.product')->update($sku, Input::get('product'));
+        $product = Subbly::api('subbly.product')->update($sku, Input::get('product'), Input::get('locale', null ));
 
         return $this->jsonResponse(array(
-            'product' => $product,
+            'product' => $this->presenter->single($product),
         ),
         array(
             'status' => array('message' => 'Product updated'),

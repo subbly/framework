@@ -106,7 +106,7 @@ class ProductService extends Service
      *     Subbly::api('subbly.product')->create(array(
      *         'firstname' => 'Jon',
      *         'lastname'  => 'Snow',
-     *     ));
+     *     ), 'en');
      *
      * @param \Subbly\Model\Product|array $product
      *
@@ -114,10 +114,16 @@ class ProductService extends Service
      *
      * @api
      */
-    public function create($product)
+    public function create($product, $locale = null)
     {
         if (is_array($product)) {
             $product = new Product($product);
+        }
+
+        // set locale
+        if( !is_null( $locale ) )
+        {
+            $product->setFrontLocale( $locale );
         }
 
         if ($product instanceof Product)
@@ -125,7 +131,7 @@ class ProductService extends Service
             if ($this->fireEvent('creating', array($product)) === false) return false;
 
             $product->setCaller($this);
-            $product->save();
+            $product->saveWithTranslation();
 
             $product = $this->find($product->sku);
 
@@ -150,7 +156,7 @@ class ProductService extends Service
      *     Subbly::api('subbly.product')->update($product_sku, array(
      *         'firstname' => 'Jon',
      *         'lastname'  => 'Snow',
-     *     ));
+     *     ), 'en');
      *
      * @return \Subbly\Model\Product
      *
@@ -164,9 +170,16 @@ class ProductService extends Service
         if (count($args) == 1 && $args[0] instanceof Product) {
             $product = $args[0];
         }
-        else if (count($args) == 2 && !empty($args[0]) && is_array($args[1]))
+        else if (count($args) >= 2 && !empty($args[0]) && is_array($args[1]))
         {
             $product = $this->find($args[0]);
+
+            // set locale
+            if( isset( $args[2] ) && is_string( $args[2] ) )
+            {
+                $product->setFrontLocale( $args[2] );
+            }
+            
             $product->fill($args[1]);
         }
 
@@ -175,7 +188,7 @@ class ProductService extends Service
             if ($this->fireEvent('updating', array($product)) === false) return false;
 
             $product->setCaller($this);
-            $product->save();
+            $product->saveWithTranslation();
 
             $this->fireEvent('updated', array($product));
 

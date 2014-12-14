@@ -23,7 +23,7 @@ class Product extends Model  implements ModelInterface
         'order_column_name' => 'position',
     );
 
-    public $translatedAttributes = array( 'name', 'description' );
+    public $translatedAttributes = array( 'name', 'description', 'locale' );
 
     /**
      * Validation rules

@@ -8,6 +8,33 @@ use Illuminate\Database\Eloquent\Model;
 
 trait Translatable {
 
+    /** @var string  entry locale */
+    protected $frontendLocale = null;
+
+    /*
+     * Define current locale
+     */
+    public function setFrontLocale( $key = null )
+    {
+        if( $this->isKeyALocale( $key ) )
+        {
+            $this->frontendLocale = $key;
+        }
+    }
+
+    /*
+     * Get current locale
+     */
+    public function getFrontLocale()
+    {
+        if( is_null( $this->frontendLocale ) )
+        {
+            return App::make('config')->get('subbly.frontendFallbackLocale');
+        }
+
+        return $this->frontendLocale;
+    }
+
     /*
      * Alias for getTranslation()
      */
@@ -26,7 +53,7 @@ trait Translatable {
 
     public function getTranslation($locale = null, $fallback = false)
     {
-        $locale = $locale ?: App::getLocale();
+        $locale = ( !is_null( $locale ) ) ? $locale : $this->getFrontLocale();
         $fallback = isset($this->useTranslationFallback) ? $this->useTranslationFallback : $fallback;
 
         if ($this->getTranslationByLocaleKey($locale))
@@ -34,11 +61,11 @@ trait Translatable {
             $translation = $this->getTranslationByLocaleKey($locale);
         }
         elseif ($fallback
-            && App::make('config')->has('app.fallback_locale')
-            && $this->getTranslationByLocaleKey(App::make('config')->get('app.fallback_locale'))
+            && App::make('config')->has('subbly.frontendLocales')
+            && $this->getTranslationByLocaleKey(App::make('config')->get('subbly.frontendLocales'))
         )
         {
-            $translation = $this->getTranslationByLocaleKey(App::make('config')->get('app.fallback_locale'));
+            $translation = $this->getTranslationByLocaleKey(App::make('config')->get('subbly.frontendLocales'));
         }
         else
         {
@@ -111,7 +138,7 @@ trait Translatable {
         }
     }
 
-    public function saveWithTranslation(array $options = array())
+    public function saveWithTranslation( array $options = array() )
     {
         if ($this->exists)
         {
@@ -194,7 +221,7 @@ trait Translatable {
     protected function getLocales()
     {
         $config = App::make('config');
-        return $config->get('app.locales', array());
+        return $config->get('subbly.frontendLocales', array());
     }
 
     protected function saveTranslations()

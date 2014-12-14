@@ -37,6 +37,7 @@ class ProductPresenter extends Presenter
             ->field('price')
             ->field('sale_price')
             ->field('quantity')
+            ->field('locale')
 
             ->relationshipField('images', 'Subbly\\Presenter\\V1\\ProductImagePresenter')
             ->relationshipField('options', 'Subbly\\Presenter\\V1\\ProductOptionPresenter')
