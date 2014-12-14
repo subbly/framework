@@ -12,12 +12,12 @@ class AddTypeToStatsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::table('statistics', function(Blueprint $table)
-		{
-			// $table->dropColumn('period');
-			$table->enum('type', array('all', 'range'));
-			//
-		});
+		// Schema::table('statistics', function(Blueprint $table)
+		// {
+		// 	// $table->dropColumn('period');
+		// 	$table->enum('type', array('all', 'range'));
+		// 	//
+		// });
 	}
 
 	/**
@@ -27,10 +27,10 @@ class AddTypeToStatsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::table('statistics', function(Blueprint $table)
-		{
-			$table->string('period');
-		});
+		// Schema::table('statistics', function(Blueprint $table)
+		// {
+		// 	$table->string('period');
+		// });
 	}
 
 }

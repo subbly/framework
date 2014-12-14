@@ -12,10 +12,10 @@ class AddTimestampToStatsTable extends Migration {
 	 */
 	public function up()
 	{
-		Schema::table('statistics', function(Blueprint $table)
-		{
-      $table->timestamps();
-		});
+		// Schema::table('statistics', function(Blueprint $table)
+		// {
+  //     $table->timestamps();
+		// });
 	}
 
 	/**
@@ -25,10 +25,10 @@ class AddTimestampToStatsTable extends Migration {
 	 */
 	public function down()
 	{
-		Schema::table('statistics', function(Blueprint $table)
-		{
-      $table->dropColumn(array('created_at', 'updated_at'));
-		});
+		// Schema::table('statistics', function(Blueprint $table)
+		// {
+  //     $table->dropColumn(array('created_at', 'updated_at'));
+		// });
 	}
 
 }
