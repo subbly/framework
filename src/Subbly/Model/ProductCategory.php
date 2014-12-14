@@ -4,13 +4,9 @@ namespace Subbly\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
-use Spatie\EloquentSortable\Sortable;
-use Spatie\EloquentSortable\SortableInterface;
-
-class ProductCategory extends Model implements ModelInterface, SortableInterface
+class ProductCategory extends Model implements ModelInterface
 {
     use Concerns\SubblyModel;
-    use Sortable;
 
     protected $table = 'product_categories';
 

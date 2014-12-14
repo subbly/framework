@@ -16,6 +16,8 @@ class ProductsController extends BaseController
         parent::__construct();
 
         $this->beforeFilter('@processAuthentication');
+
+        $this->loadPresenter('Subbly\\Presenter\\V1\\ProductPresenter');
     }
 
 
@@ -65,8 +67,10 @@ class ProductsController extends BaseController
     {
         $options = $this->getParams('includes');
 
+        $product = Subbly::api('subbly.product')->find($sku, $options);
+
         return $this->jsonResponse(array(
-            'product' => Subbly::api('subbly.product')->find($sku, $options),
+            'product' => $this->presenter->single($product),
         ));
     }
 

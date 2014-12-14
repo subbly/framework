@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model  implements ModelInterface
 {
     use Concerns\SubblyModel;
+    use Concerns\Translatable;
     use \Rutorika\Sortable\SortableTrait;
 
     protected $table = 'products';
@@ -21,6 +22,8 @@ class Product extends Model  implements ModelInterface
     public $sortable = array(
         'order_column_name' => 'position',
     );
+
+    public $translatedAttributes = array( 'name', 'description' );
 
     /**
      * Validation rules
