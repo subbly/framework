@@ -39,7 +39,6 @@
         "doctrine/common":             "~2.2",
 
         "cartalyst/sentry":            "~2.1",
-        "dimsav/laravel-translatable": "4.3.*"
     },
 
     "require-dev": {

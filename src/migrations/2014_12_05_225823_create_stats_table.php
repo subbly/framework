@@ -16,9 +16,12 @@ class CreateStatsTable extends Migration {
 		{
 			$table->increments('id');
 			$table->string('service');
-			$table->string('period');
+			$table->enum('type', array('total','average'));
+			$table->string('range', 40);
+			$table->enum('period', array('all','yesterday','lastweek','lastmonth','range'));
 			$table->string('value');
 			$table->index(array('service', 'period'));
+      $table->timestamps();
 		});
 	}
 
