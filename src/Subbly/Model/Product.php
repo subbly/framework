@@ -8,7 +8,7 @@ class Product extends Model  implements ModelInterface
 {
     use Concerns\SubblyModel;
     use Concerns\Translatable;
-    use \Rutorika\Sortable\SortableTrait;
+    use Concerns\Sortable;
 
     protected $table = 'products';
 
@@ -44,6 +44,16 @@ class Product extends Model  implements ModelInterface
     const STATUS_HIDDEN     = 'hidden';
     const STATUS_SOLDOUT    = 'sold_out';
     const STATUS_COMINGSOON = 'coming_soon';
+
+    /**
+     * Get visible fields
+     *
+     * @return array
+     */
+    public function getSaveMethod()
+    {
+        return 'saveWithTranslation';
+    }
 
     /**
      * Relashionship

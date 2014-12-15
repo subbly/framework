@@ -20,6 +20,16 @@ trait SubblyModel
      *
      * @return array
      */
+    public function getSaveMethod()
+    {
+        return 'save';
+    }
+
+    /**
+     * Get visible fields
+     *
+     * @return array
+     */
     final public function getVisible()
     {
         return $this->visible;
