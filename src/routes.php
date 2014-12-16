@@ -28,12 +28,13 @@ Route::group(array(
         Route::get('/users/{users}/user-addresses/search', 'UserAddressesController@search');
         Route::resource('users.addresses', 'UserAddressesController', array('except' => array('create', 'edit')));
 
+
+        // ProductController Sort
+        Route::post('products/sort', 'ProductsController@sort');
+
         // ProductsController
         Route::get('/products/search', 'ProductsController@search');
         Route::resource('products', 'ProductsController', array('except' => array('create', 'edit')));
-
-        // ProductController Sort
-        Route::post('products/{users}/sort', 'ProductsController@sort');
 
         // ProductCategoriesController
         Route::get('/products/{users}/categories/search', 'ProductCategoriesController@search');

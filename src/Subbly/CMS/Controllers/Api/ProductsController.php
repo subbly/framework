@@ -126,10 +126,10 @@ class ProductsController extends BaseController
     /**
      * Set Product order
      *
-     * @route GET /api/v1/products/:sku/sort
+     * @route GET /api/v1/products/sort
      * @authentication required
      */
-    public function sort($sku)
+    public function sort()
     {
         if (!Input::has('products')) {
             return $this->jsonErrorResponse('"products" is required.');
@@ -137,9 +137,7 @@ class ProductsController extends BaseController
         
         $product = Subbly::api('subbly.product')->sort( Input::get('products') );
 
-        return $this->jsonResponse(array(
-            'product' => $product,
-        ),
+        return $this->jsonResponse(array(),
         array(
             'status' => array('message' => 'Product updated'),
         ));
