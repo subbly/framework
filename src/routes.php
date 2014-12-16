@@ -28,6 +28,8 @@ Route::group(array(
         Route::get('/users/{users}/user-addresses/search', 'UserAddressesController@search');
         Route::resource('users.addresses', 'UserAddressesController', array('except' => array('create', 'edit')));
 
+        // Files Uploader
+        Route::post('uploader', 'UploaderController@store');
 
         // ProductController Sort
         Route::post('products/sort', 'ProductsController@sort');

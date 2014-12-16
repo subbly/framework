@@ -5,15 +5,16 @@ namespace Subbly\Model;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 
-use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
+// use Symfony\Component\HttpFoundation\File\UploadedFile;
+// use Symfony\Component\Filesystem\Filesystem;
+// use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 
 use Subbly\Subbly;
 
 class ProductImage extends Model implements ModelInterface
 {
     use Concerns\SubblyModel;
+    use Concerns\Sortable;
 
     /**
      * The database table used by the model.
@@ -27,7 +28,7 @@ class ProductImage extends Model implements ModelInterface
     */
     protected $visible = array('filename', 'product', 'created_at', 'updated_at');
 
-    protected $fillable = array('filename', 'image');
+    protected $fillable = array('filename');
 
     public $imageToUpload = null;
 
@@ -41,7 +42,6 @@ class ProductImage extends Model implements ModelInterface
     protected $rules = array(
         'product_id' => 'required|exists:products,id',
         'filename'   => 'required',
-        'image'      => 'image',
     );
 
     /**
@@ -51,7 +51,7 @@ class ProductImage extends Model implements ModelInterface
     {
         parent::boot();
 
-        ProductImage::observe(new Observer\ProductImageObserver);
+        // ProductImage::observe(new Observer\ProductImageObserver);
     }
 
     /**
@@ -71,25 +71,9 @@ class ProductImage extends Model implements ModelInterface
     {
         return $this->belongsTo('Subbly\\Model\\Product', 'product_id');
     }
-
-    /**
-     *
-     */
-    public function setImageAttribute($file)
+    
+    public function getFilenameAttribute()
     {
-        if (!$file instanceof UploadedFile) {
-            return;
-        }
-
-        $this->imageToUpload = $file;
-
-        $this->attributes['filename'] = sprintf('%s.%s',
-            hash('sha256', uniqid(mt_rand(), true)),
-            $file->getClientOriginalExtension()
-        );
-    }
-    public function getImageAttribute()
-    {
-        return $this->attributes['filename'];
+        return public_upload( 'product_image/' . $this->attributes['filename'] );
     }
 }

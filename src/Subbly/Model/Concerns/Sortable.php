@@ -12,7 +12,7 @@ trait Sortable
     /**
      * Adds position to model on creating event
      */
-    public static function bootSortableTrait()
+    public static function bootSortable()
     {
         static::creating(
             function ($model) {
