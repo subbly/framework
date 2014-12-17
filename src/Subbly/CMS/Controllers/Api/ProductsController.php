@@ -107,8 +107,6 @@ class ProductsController extends BaseController
      */
     public function update($sku)
     {
-        $options = $this->getParams('includes');
-
         if (!Input::has('product')) {
             return $this->jsonErrorResponse('"product" is required.');
         }
