@@ -1,6 +1,6 @@
 {
     "name": "subbly/framework",
-    "description": "",
+    "description": "Framework of Subbly CMS",
     "license": "MIT",
 
     "authors": [
@@ -20,9 +20,6 @@
             "role": "Developer"
         }
     ],
-    "utils": "dev-master",
-    "minimum-stability": "dev",
-    "prefer-stable" : true,
 
     "require": {
         "php": ">=5.4.0",
@@ -38,7 +35,7 @@
 
         "doctrine/common":             "~2.2",
 
-        "cartalyst/sentry":            "~2.1",
+        "cartalyst/sentry":            "~2.1"
     },
 
     "require-dev": {
