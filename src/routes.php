@@ -2,7 +2,7 @@
 
 Route::group(array(
     'prefix' => '/api',
-), function() {
+), function () {
 
     /**
      * API v1
@@ -11,7 +11,7 @@ Route::group(array(
         'prefix'    => '/v1',
         // 'namespace' => 'Subbly\\Framework\\Api',
         'namespace' => 'Subbly\\CMS\\Controllers\\Api',
-    ), function() {
+    ), function () {
 
         // AuthController
         Route::get('/auth/test-credentials', 'AuthController@testCredentials');
@@ -28,14 +28,12 @@ Route::group(array(
         Route::get('/users/{users}/user-addresses/search', 'UserAddressesController@search');
         Route::resource('users.addresses', 'UserAddressesController', array('except' => array('create', 'edit')));
 
-        // Files Uploader
+        // UploaderController
         Route::post('uploader', 'UploaderController@store');
-
-        // ProductController Sort
-        Route::post('products/sort', 'ProductsController@sort');
 
         // ProductsController
         Route::get('/products/search', 'ProductsController@search');
+        Route::match(array('PATCH', 'PUT'), '/products/sort', 'SettingsController@sort');
         Route::resource('products', 'ProductsController', array('except' => array('create', 'edit')));
 
         // ProductCategoriesController
