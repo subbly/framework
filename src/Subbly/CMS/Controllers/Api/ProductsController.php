@@ -126,7 +126,7 @@ class ProductsController extends BaseController
     /**
      * Set Product order
      *
-     * @route GET /api/v1/products/sort
+     * @route POST /api/v1/products/sort
      * @authentication required
      */
     public function sort()

@@ -32,6 +32,8 @@ class ProductImagePresenter extends Presenter
             // TODO stringField, integerField, ...
             ->field('filename')
             ->field('product')
+            ->field('uid')
+            ->field('position')
 
             ->dateField('created_at')
             ->dateField('updated_at')
@@ -62,6 +64,8 @@ class ProductImagePresenter extends Presenter
 
                 ->field('filename')
                 ->field('product')
+                ->field('uid')
+                ->field('position')
 
                 ->dateField('created_at')
                 ->dateField('updated_at')

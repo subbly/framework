@@ -116,4 +116,24 @@ class ProductImagesController extends BaseController
             ),
         ));
     }
+
+    /**
+     * Set Product order
+     *
+     * @route POST /api/v1/products/{sku}/images/sort
+     * @authentication required
+     */
+    public function sort( $product_sku )
+    {
+        if (!Input::has('images')) {
+            return $this->jsonErrorResponse('"images" is required.');
+        }
+        
+        $images = Subbly::api('subbly.product_image')->sort( Input::get('images') );
+
+        return $this->jsonResponse(array(),
+        array(
+            'status' => array('message' => 'Product updated'),
+        ));
+    }
 }

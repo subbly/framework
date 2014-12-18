@@ -43,6 +43,7 @@ Route::group(array(
         Route::resource('products.categories', 'ProductCategoriesController', array('except' => array('create', 'edit')));
 
         // ProductImagesController
+        Route::post('products/{sku}/images/sort', 'ProductImagesController@sort');
         Route::get('/products/{users}/images/search', 'ProductImagesController@search');
         Route::resource('products.images', 'ProductImagesController', array('except' => array('create', 'edit')));
 

@@ -198,6 +198,36 @@ class ProductImageService extends Service
         }
     }
 
+
+    /**
+     * Set the model position in the database.
+     *
+     * @param  array  $attributes
+     * @return \Subbly\Model\Product
+     */
+    final public function sort( array $attributes = array())
+    {
+        $productImage   = $this->find( $attributes['movingId']  );
+        $positionEntity = $this->find( $attributes['movedId'] );
+
+        if ($productImage instanceof ProductImage)
+        {
+            if ($this->fireEvent('sorting', array($productImage)) === false) return false;
+            
+            $productImage->setCaller($this);
+            $productImage->{$attributes['type']}( $positionEntity );
+
+            $this->fireEvent('sorted', array($productImage));
+
+            return $productImage;
+        }
+        
+        throw new Exception(sprintf(Exception::CANT_UPDATE_MODEL,
+            'Subbly\\Model\\Product',
+            $this->name()
+        ));
+    }
+
     /**
      * Service name
      */
