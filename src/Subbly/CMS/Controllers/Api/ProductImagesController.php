@@ -125,11 +125,11 @@ class ProductImagesController extends BaseController
      */
     public function sort( $product_sku )
     {
-        if (!Input::has('images')) {
-            return $this->jsonErrorResponse('"images" is required.');
+        if (!Input::has('sortable')) {
+            return $this->jsonErrorResponse('"sortable" is required.');
         }
         
-        $images = Subbly::api('subbly.product_image')->sort( Input::get('images') );
+        $images = Subbly::api('subbly.product_image')->sort( Input::get('sortable') );
 
         return $this->jsonResponse(array(),
         array(

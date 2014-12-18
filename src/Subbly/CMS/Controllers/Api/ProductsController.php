@@ -129,11 +129,11 @@ class ProductsController extends BaseController
      */
     public function sort()
     {
-        if (!Input::has('products')) {
-            return $this->jsonErrorResponse('"products" is required.');
+        if (!Input::has('sortable')) {
+            return $this->jsonErrorResponse('"sortable" is required.');
         }
         
-        $product = Subbly::api('subbly.product')->sort( Input::get('products') );
+        $product = Subbly::api('subbly.product')->sort( Input::get('sortable') );
 
         return $this->jsonResponse(array(),
         array(
