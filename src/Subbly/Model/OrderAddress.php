@@ -16,6 +16,8 @@ class OrderAddress extends Model implements ModelInterface
      */
     protected $table = 'order_addresses';
 
+    protected $defaultValues = array();
+
     /**
      * Relashionship
      */

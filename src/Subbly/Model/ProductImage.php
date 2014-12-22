@@ -44,6 +44,8 @@ class ProductImage extends Model implements ModelInterface
         'filename'   => 'required',
     );
 
+    protected $defaultValues = array();
+
     /**
      *
      */

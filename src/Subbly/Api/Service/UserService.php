@@ -166,6 +166,7 @@ class UserService extends Service
             'first_name',
             'last_name',
             'email',
+            'id',
         ), $statementsType, $options);
 
         return new Collection($query);

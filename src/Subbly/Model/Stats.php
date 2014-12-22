@@ -19,7 +19,7 @@ class Stats extends Model implements ModelInterface
     
     protected $visible = array('service', 'period', 'type', 'value');
     protected $fillable = array('service', 'period', 'type');
-
+    protected $defaultValues = array();
     // /**
     //  *
     //  */

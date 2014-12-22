@@ -32,6 +32,8 @@ class UserAddress extends Model implements ModelInterface
         'country'   => 'required', // 'required|country',
     );
 
+    protected $defaultValues = array();
+
     /**
      *
      */

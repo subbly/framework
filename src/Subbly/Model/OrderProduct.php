@@ -21,7 +21,9 @@ class OrderProduct extends Model implements ModelInterface
     protected $rules = array(
         'order_id' => 'required|exists:orders,id',
     );
-
+    
+    protected $defaultValues = array();
+    
     /**
      * Relashionship
      */

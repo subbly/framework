@@ -18,7 +18,9 @@ class Setting extends Model implements ModelInterface
     protected $primaryKey = 'identifier';
 
     protected $fillable = array('identifier', 'plugin_identifier', 'value');
-
+    
+    protected $defaultValues = array();
+    
     /**
      *
      */

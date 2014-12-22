@@ -29,6 +29,8 @@ class ProductCategory extends Model implements ModelInterface
         'name'       => 'required',
     );
 
+    protected $defaultValues = array();
+
     /**
      *
      */

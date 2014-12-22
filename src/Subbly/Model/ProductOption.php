@@ -22,6 +22,8 @@ class ProductOption extends Model implements ModelInterface
         'product_id' => 'required|exists:products,id',
     );
 
+    protected $defaultValues = array();
+
     /**
      * Relashionship
      */

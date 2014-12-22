@@ -40,6 +40,8 @@ class User extends Model implements ModelInterface//, UserInterface, RemindableI
         'email'      => 'required|email',
     );
 
+    protected $defaultValues = array();
+
     /**
      * Boot
      */
@@ -66,7 +68,7 @@ class User extends Model implements ModelInterface//, UserInterface, RemindableI
     /**
      *
      */
-    protected function performInsert(\Illuminate\Database\Eloquent\Builder $query, array $options)
+    protected function performInsert(\Illuminate\Database\Eloquent\Builder $query, array $options = array())
     {
         $this->attributes['uid'] = md5(uniqid(mt_rand(), true));
 
