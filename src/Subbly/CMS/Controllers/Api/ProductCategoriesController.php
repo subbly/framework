@@ -37,12 +37,12 @@ class ProductCategoriesController extends BaseController
     }
 
     /**
-     * Create a new ProductCategory
+     * Create/Update Product's 'categories
      *
-     * @route POST /api/v1/products/:product_sku/categories
+     * @route POST/PUT /api/v1/products/:product_sku/categories
      * @authentication required
      */
-    public function store($product_sku)
+    private function manage( $product_sku )
     {
         $product = Subbly::api('subbly.product')->find($product_sku);
 
@@ -50,17 +50,30 @@ class ProductCategoriesController extends BaseController
             return $this->jsonErrorResponse('"product_category" is required.');
         }
 
-        $productCategory = Subbly::api('subbly.product_category')->create(Input::get('product_category'), $product);
+        if (!is_array( Input::get('product_category'))) {
+            return $this->jsonErrorResponse('"product_category" must be an array.');
+        }
 
-        return $this->jsonResponse(array(
-            'product_category' => $productCategory,
-        ),
+        Subbly::api('subbly.product_category')->create(Input::get('product_category'), $product);
+
+        return $this->jsonResponse(array(),
         array(
             'status' => array(
                 'code'    => 201,
                 'message' => 'ProductCategory created',
             ),
-        ));
+        ));        
+    }
+
+    /**
+     * Create a new ProductCategory
+     *
+     * @route POST /api/v1/products/:product_sku/categories
+     * @authentication required
+     */
+    public function store( $product_sku )
+    {
+        $this->manage( $product_sku );
     }
 
     /**
@@ -69,25 +82,9 @@ class ProductCategoriesController extends BaseController
      * @route PUT|PATCH /api/v1/products/:product_sku/categories/:uid
      * @authentication required
      */
-    public function update($product_sku, $uid)
+    public function update( $product_sku, $uid )
     {
-        $product = Subbly::api('subbly.product')->find($product_sku);
-
-        if (!Input::has('product_category')) {
-            return $this->jsonErrorResponse('"product_category" is required.');
-        }
-
-        $productCategory = Subbly::api('subbly.product_category')->update($uid, Input::get('product_category'));
-
-        return $this->jsonResponse(array(
-            'product_category' => $productCategory,
-        ),
-        array(
-            'status' => array(
-                'code'    => 200,
-                'message' => 'ProductCategory updated',
-            ),
-        ));
+        $this->manage( $product_sku );
     }
 
     /**
@@ -98,18 +95,18 @@ class ProductCategoriesController extends BaseController
      */
     public function delete($product_sku, $uid)
     {
-        $product = Subbly::api('subbly.product')->find($product_sku);
+        // $product = Subbly::api('subbly.product')->find($product_sku);
 
-        $productCategory = Subbly::api('subbly.product_category')->delete($uid);
+        // $productCategory = Subbly::api('subbly.product_category')->delete($uid);
 
-        return $this->jsonResponse(array(
-            'product_category' => $productCategory,
-        ),
-        array(
-            'status' => array(
-                'code'    => 200,
-                'message' => 'ProductCategory deleted',
-            ),
-        ));
+        // return $this->jsonResponse(array(
+        //     'product_category' => $productCategory,
+        // ),
+        // array(
+        //     'status' => array(
+        //         'code'    => 200,
+        //         'message' => 'ProductCategory deleted',
+        //     ),
+        // ));
     }
 }

@@ -15,6 +15,8 @@ trait SubblyModel
     private $callerService;
     private static $callerServiceForNext;
 
+    // protected $defaultValues = array();
+    
     /**
      * Get visible fields
      *

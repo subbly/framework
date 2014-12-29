@@ -101,24 +101,26 @@ class ProductCategoryService extends Service
             $product = $this->api('subbly.product')->find($product);
         }
 
-        if (is_array($productCategory)) {
-            $productCategory = new ProductCategory($productCategory);
-        }
+        // if (is_array($productCategory)) {
+        //     $productCategory = new ProductCategory($productCategory);
+        // }
 
-        if ($productCategory instanceof ProductCategory)
+        // if ($productCategory instanceof ProductCategory)
+        if ($product instanceof Product)
         {
-            if ($this->fireEvent('creating', array($productCategory)) === false) return false;
+            if ($this->fireEvent('creating', array($productCategory, $product)) === false) return false;
 
-            $productCategory->product()->associate($product);
+            // $productCategory->product()->associate($product);
+            $product->categories()->sync( $productCategory );
 
-            $productCategory->setCaller($this);
-            $productCategory->save();
+            // $productCategory->setCaller($this);
+            // $productCategory->save();
 
-            $this->fireEvent('created', array($productCategory));
+            $this->fireEvent('created', array($productCategory, $product));
 
-            $productCategory = $this->find($productCategory->uid);
+            // $productCategory = $this->find($productCategory->uid);
 
-            return $productCategory;
+            return true;
         }
 
         throw new Exception(sprintf(Exception::CANT_CREATE_MODEL,

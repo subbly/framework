@@ -5,38 +5,31 @@ namespace Subbly\Presenter\V1;
 use Illuminate\Support\Collection as ArrayCollection;
 use Illuminate\Database\Eloquent\Collection;
 
-use Subbly\Model\ProductCategory;
+use Subbly\Model\Category;
 use Subbly\Presenter\Presenter;
 use Subbly\Presenter\Entries;
 use Subbly\Presenter\Entry;
 use Subbly\Subbly;
 
-class ProductCategoryPresenter extends Presenter
+class CategoryPresenter extends Presenter
 {
     /**
      * Get formated datas for a single entry
      *
-     * @param \Subbly\Model\ProductCategory  $productCategory
+     * @param \Subbly\Model\Category  $category
      *
      * @return array
      */
-    public function single($productCategory)
+    public function single($category)
     {
-        $entry = new Entry($productCategory);
+        $entry = new Entry($category);
 
         $entry
-            ->conditionalField('id', function() {
-                return Subbly::api('subbly.user')->hasAccess('subbly.backend.auth');
-            })
-
-            // TODO stringField, integerField, ...
+            ->field('id')
             ->field('label')
             ->field('slug')
             ->field('parent')
             ->field('position')
-
-            ->dateField('created_at')
-            ->dateField('updated_at')
         ;
 
         return $entry->toArray();
@@ -53,22 +46,16 @@ class ProductCategoryPresenter extends Presenter
     {
         $entries = new Entries;
 
-        foreach ($collection as $productCategory)
+        foreach ($collection as $category)
         {
-            $entry = new Entry($productCategory);
+            $entry = new Entry($category);
 
             $entry
-                ->conditionalField('id', function() {
-                    return Subbly::api('subbly.user')->hasAccess('subbly.backend.auth');
-                })
-
+                ->field('id')
                 ->field('label')
                 ->field('slug')
                 ->field('parent')
                 ->field('position')
-
-                ->dateField('created_at')
-                ->dateField('updated_at')
             ;
 
             $entries->addEntry($entry);

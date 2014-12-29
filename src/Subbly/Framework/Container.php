@@ -23,15 +23,16 @@ class Container extends Pimple\Container
             $api = new Api($c);
 
             $api->registerServices(array(
+                'Subbly\\Api\\Service\\CategoryService',
                 'Subbly\\Api\\Service\\CartService',
                 'Subbly\\Api\\Service\\OrderService',
                 'Subbly\\Api\\Service\\ProductService',
                 'Subbly\\Api\\Service\\ProductCategoryService',
                 'Subbly\\Api\\Service\\ProductImageService',
                 'Subbly\\Api\\Service\\SettingService',
+                'Subbly\\Api\\Service\\StatsService',
                 'Subbly\\Api\\Service\\UserService',
                 'Subbly\\Api\\Service\\UserAddressService',
-                'Subbly\\Api\\Service\\StatsService',
             ));
 
             $api->service('subbly.setting')->registerDefaultSettings(

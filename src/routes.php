@@ -52,6 +52,11 @@ Route::group(array(
         // SettingsController
         Route::get('/settings', 'SettingsController@index');
         Route::match(array('PATCH', 'PUT'), '/settings', 'SettingsController@update');
+
+        // CategoriesController
+        Route::get('/categories', 'CategoriesController@index');
+        Route::match(array('PATCH', 'PUT'), '/categories/sort', 'CategoriesController@sort');
+        Route::resource('categories', 'CategoriesController', array('except' => array('create', 'edit', 'delete')));
     });
 
     // /**

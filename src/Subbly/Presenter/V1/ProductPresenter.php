@@ -41,7 +41,7 @@ class ProductPresenter extends Presenter
 
             ->relationshipField('images', 'Subbly\\Presenter\\V1\\ProductImagePresenter')
             ->relationshipField('options', 'Subbly\\Presenter\\V1\\ProductOptionPresenter')
-            ->relationshipField('categories', 'Subbly\\Presenter\\V1\\ProductCategoryPresenter')
+            ->relationshipField('categories', 'Subbly\\Presenter\\V1\\CategoryPresenter')
 
             ->dateField('created_at')
             ->dateField('updated_at')

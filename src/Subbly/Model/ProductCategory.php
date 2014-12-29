@@ -8,25 +8,25 @@ class ProductCategory extends Model implements ModelInterface
 {
     use Concerns\SubblyModel;
 
-    protected $table = 'product_categories';
+    protected $table = 'category_product';
 
     /**
      * Fields
      */
-    protected $visible = array('name', 'position', 'created_at', 'updated_at');
+    // protected $visible = array('name', 'position', 'created_at', 'updated_at');
 
-    protected $fillable = array('name');
+    protected $fillable = array('product_id', 'category_id');
 
-    public $sortable = array(
-        'order_column_name' => 'position',
-    );
+    // public $sortable = array(
+    //     'order_column_name' => 'position',
+    // );
 
     /**
      * Validations
      */
     protected $rules = array(
-        'product_id' => 'required|exists:products,id',
-        'name'       => 'required',
+        'product_id'  => 'required|exists:products,id',
+        'category_id' => 'required',
     );
 
     protected $defaultValues = array();
