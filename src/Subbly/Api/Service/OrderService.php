@@ -92,20 +92,22 @@ class OrderService extends Service
             'updated_at',
         ), $statementsType, $options);
 
+        if (is_array($searchQuery))
+        {
+            if (
+                array_key_exists('user_uid', $searchQuery)
+                || array_key_exists('user_id', $searchQuery)
+            ) {
+                $query->join('users', 'users.id', '=', 'orders.user_id');
+            }
 
-        if (
-            array_key_exists('user_uid', $searchQuery)
-            || array_key_exists('user_id', $searchQuery)
-        ) {
-            $query->join('users', 'users.id', '=', 'orders.user_id');
-        }
+            if (array_key_exists('user_uid', $searchQuery)) {
+                $query->where('users.uid', '=', $searchQuery['user_uid']);
+            }
 
-        if (array_key_exists('user_uid', $searchQuery)) {
-            $query->where('users.uid', '=', $searchQuery['user_uid']);
-        }
-
-        if (array_key_exists('user_id', $searchQuery)) {
-            $query->where('users.uid', '=', $searchQuery['user_id']);
+            if (array_key_exists('user_id', $searchQuery)) {
+                $query->where('users.uid', '=', $searchQuery['user_id']);
+            }
         }
 
         return new Collection($query);
