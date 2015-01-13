@@ -15,7 +15,7 @@ class Category extends Model implements ModelInterface
     /**
      * Fields
      */
-    protected $visible = array('label', 'slug', 'position', 'parent', 'locale');
+    protected $visible = array('id', 'label', 'slug', 'position', 'parent', 'locale');
 
     protected $fillable = array('label', 'slug', 'position', 'parent', 'locale');
 

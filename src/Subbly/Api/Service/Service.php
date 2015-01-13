@@ -77,6 +77,8 @@ abstract class Service
         $options = array_replace(array(
             'includes' => array(),
             'order_by' => array(),
+            'where'    => array(),
+            'has'      => array(), // relationships
         ), $options);
 
         if (!is_string($modelClass)) {
@@ -95,6 +97,66 @@ abstract class Service
             {
                 if (in_array($include, $this->includableRelationships)) {
                     $query->with($include);
+                }
+            }
+        }
+
+        /**
+         * Where
+         */
+        if (is_array($options['where']))
+        {
+            foreach ($options['where'] as $condition)
+            {
+                if (
+                    is_array($condition)
+                    && count($condition) == 3
+                ) {
+                    $query->where($condition[0], $condition[1], $condition[2]);
+                }
+            }
+        }
+
+        /**
+         * Has
+         */
+        if (is_array($options['has']))
+        {
+            foreach ($options['has'] as $relation=>$conditions)
+            {
+                if (
+                    is_string($relation)
+                    && is_array($conditions)
+                ) {
+
+                    $query->whereHas( $relation, function( $q ) use ( $conditions )
+                    {
+                        $i = 0;
+                        foreach( $conditions as $condition)
+                        {
+                            if( 
+                                is_array($condition)
+                                && count($condition) == 2
+                            )
+                            {
+                                // TODO: our goal is to reduce the subcondition, e.g.:
+                                // select * from `categories` where (select count(*) from `category_translations` where `category_translations`.`category_id` = `categories`.`id` and (`slug` = "men" or `slug` = "shoes")) >= 1
+                                // current implementation is missing the "()" between the `slug` condition, like this:
+                                // select * from `categories` where (select count(*) from `category_translations` where `category_translations`.`category_id` = `categories`.`id` and `slug` = "men" and `slug` = "shoes") >= 1
+                                // obviously, not the same result
+                                // if( $i == 0 )
+                                // {
+                                    $q->where($condition[0], $condition[1]);
+                                // }
+                                // else
+                                // {
+                                //     $q->orWhere($condition[0], $condition[1]);
+                                // }
+
+                                // ++$i;
+                            }
+                        }
+                    });
                 }
             }
         }
