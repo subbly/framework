@@ -258,4 +258,17 @@ trait Translatable {
         return (in_array($key, $this->translatedAttributes) || parent::__isset($key));
     }
 
+    public function toArray()
+    {
+        $attributes = parent::toArray();
+        foreach($this->translatedAttributes AS $field)
+        {
+            if ($translations = $this->getTranslation())
+            {
+                $attributes[$field] = $translations->$field;
+            }
+        }
+        return $attributes;
+    }
+
 }
