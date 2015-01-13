@@ -59,7 +59,7 @@ class ProductImage extends Model implements ModelInterface
     /**
      *
      */
-    protected function performInsert(\Illuminate\Database\Eloquent\Builder $query, array $options)
+    protected function performInsert( \Illuminate\Database\Eloquent\Builder $query, array $options = array() )
     {
         $this->attributes['uid'] = md5(uniqid(mt_rand(), true));
 
