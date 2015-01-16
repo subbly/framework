@@ -60,7 +60,7 @@ class Product extends Model  implements ModelInterface
      */
     public function images()
     {
-        return $this->hasMany('Subbly\\Model\\ProductImage');
+        return $this->hasMany('Subbly\\Model\\ProductImage')->orderBy('position', 'asc');
     }
 
     public function options()

@@ -26,7 +26,7 @@ class ProductImage extends Model implements ModelInterface
     /**
     * Fields
     */
-    protected $visible = array('filename', 'product', 'created_at', 'updated_at');
+    protected $visible = array('filename', 'product', 'position', 'created_at', 'updated_at');
 
     protected $fillable = array('filename');
 
