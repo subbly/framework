@@ -9,7 +9,7 @@ class ProductService extends Service
 {
     protected $modelClass = 'Subbly\\Model\\Product';
 
-    protected $includableRelationships = array('images', 'options', 'categories');
+    protected $includableRelationships = array('images', 'options', 'categories', 'translations');
 
     /**
      * Return an empty model
@@ -55,7 +55,7 @@ class ProductService extends Service
     public function find($sku, array $options = array())
     {
         $options = array_replace(array(
-            'includes' => array('images', 'categories', 'options'),
+            'includes' => array('images', 'categories', 'options', 'translations'),
         ), $options);
 
         $query = $this->newQuery($options);
