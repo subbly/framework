@@ -41,8 +41,8 @@ class CreateCategoriesTable extends Migration {
         $table->integer('category_id')->unsigned();
         $table->integer('product_id')->unsigned();
 
-        $table->foreign('category_id')->references('category_id')->on('categories')->onDelete('cascade');
-        $table->foreign('product_id')->references('product_id')->on('products')->onDelete('cascade');
+        // $table->foreign('category_id')->references('category_id')->on('categories')->onDelete('cascade');
+        // $table->foreign('product_id')->references('product_id')->on('products')->onDelete('cascade');
     });
 	}
 
