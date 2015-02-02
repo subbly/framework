@@ -60,14 +60,14 @@ class ProductsController extends BaseController
     /**
      * Get Product datas
      *
-     * @route GET /api/v1/products/:sku
+     * @route GET /api/v1/products/:id
      * @authentication required
      */
-    public function show($sku)
+    public function show($id)
     {
         $options = $this->getParams('includes');
 
-        $product = Subbly::api('subbly.product')->find($sku, $options);
+        $product = Subbly::api('subbly.product')->find($id, $options);
 
         return $this->jsonResponse(array(
             'product' => $this->presenter->single($product),

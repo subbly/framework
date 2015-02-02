@@ -45,21 +45,22 @@ class ProductService extends Service
      * @example
      *     $product = Subbly::api('subbly.product')->find('sku');
      *
-     * @param string  $sku
+     * @param string  product's 'identifier
      * @param array   $options
+     * @param string  field to match again
      *
      * @return \Subbly\Model\Product
      *
      * @api
      */
-    public function find($sku, array $options = array())
+    public function find($value, array $options = array(), $field = 'sku')
     {
         $options = array_replace(array(
             'includes' => array('images', 'categories', 'options', 'translations'),
         ), $options);
 
         $query = $this->newQuery($options);
-        $query->where('sku', '=', $sku);
+        $query->where($field, '=', $value);
 
         return $query->firstOrFail();
     }
