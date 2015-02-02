@@ -12,7 +12,7 @@ class CategoryService extends Service
 {
     protected $modelClass = 'Subbly\\Model\\Category';
 
-    protected $includableRelationships = array();
+    protected $includableRelationships = array('translations');
 
     /**
      * Return an empty model

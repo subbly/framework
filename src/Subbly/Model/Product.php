@@ -70,8 +70,7 @@ class Product extends Model  implements ModelInterface
 
     public function categories()
     {
-        // return $this->hasMany('Subbly\\Model\\ProductCategory');
-        return $this->belongsToMany('Subbly\\Model\\Category');
+        return $this->belongsToMany('Subbly\\Model\\Category')->with('translations');
     }
 
     public function getPriceAttribute()
