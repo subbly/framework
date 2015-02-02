@@ -33,6 +33,7 @@ class ProductPresenter extends Presenter
             ->field('name')
             ->field('description')
             ->field('sku')
+            ->field('slug')
             ->field('status')
             ->field('price')
             ->field('sale_price')

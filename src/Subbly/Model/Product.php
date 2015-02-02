@@ -15,15 +15,15 @@ class Product extends Model  implements ModelInterface
     /**
      * Fields
      */
-    protected $visible = array('id', 'position', 'status', 'sku', 'name', 'description', 'price', 'sale_price', 'quantity', 'images', 'options', 'categories', 'created_at', 'updated_at');
+    protected $visible = array('id', 'position', 'status', 'sku', 'slug', 'name', 'description', 'price', 'sale_price', 'quantity', 'images', 'options', 'categories', 'created_at', 'updated_at');
 
-    protected $fillable = array('status', 'sku', 'name', 'description', 'price', 'sale_price', 'quantity');
+    protected $fillable = array('status', 'sku', 'slug', 'name', 'description', 'price', 'sale_price', 'quantity');
 
     public $sortable = array(
         'order_column_name' => 'position',
     );
 
-    public $translatedAttributes = array( 'name', 'description', 'locale' );
+    public $translatedAttributes = array( 'name', 'slug', 'description', 'locale' );
 
     /**
      * Validation rules
