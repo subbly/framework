@@ -27,22 +27,22 @@ class UserAddressService extends Service
     }
 
     /**
-     * Find a UserAddress by $uid
+     * Find a UserAddress by $id
      *
      * @example
-     *     $userAddress = Subbly::api('subbly.user_address')->find($uid);
+     *     $userAddress = Subbly::api('subbly.user_address')->find($id);
      *
-     * @param string  $uid
+     * @param string  $id
      * @param array   $options
      *
      * @return \Subbly\Model\UserAddress
      *
      * @api
      */
-    public function find($uid, array $options = array())
+    public function find($id, array $options = array())
     {
         $query = $this->newQuery($options);
-        $query->where('uid', '=', $uid);
+        $query->where('id', '=', $id);
 
         return $query->firstOrFail();
     }
