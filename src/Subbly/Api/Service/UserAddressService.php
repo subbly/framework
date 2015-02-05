@@ -116,7 +116,7 @@ class UserAddressService extends Service
 
             $this->fireEvent('created', array($userAddress));
 
-            $userAddress = $this->find($userAddress->uid);
+            $userAddress = $this->find($userAddress->id);
 
             return $userAddress;
         }

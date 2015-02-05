@@ -14,9 +14,9 @@ class UserAddress extends Model implements ModelInterface
     /**
      * Fields
      */
-    protected $visible = array('uid', 'name', 'firstname', 'lastname', 'address1', 'address2', 'zipcode', 'city', 'country', 'phone_work', 'phone_home', 'phone_mobile', 'others_informations', 'created_at', 'updated_at');
+    protected $visible = array('id', 'uid', 'name', 'firstname', 'lastname', 'address1', 'address2', 'zipcode', 'city', 'country', 'phone_work', 'phone_home', 'phone_mobile', 'other_informations', 'created_at', 'updated_at');
 
-    protected $fillable = array('name', 'firstname', 'lastname', 'address1', 'address2', 'zipcode', 'city', 'country', 'phone_work', 'phone_home', 'phone_mobile', 'others_informations');
+    protected $fillable = array('name', 'firstname', 'lastname', 'address1', 'address2', 'zipcode', 'city', 'country', 'phone_work', 'phone_home', 'phone_mobile', 'other_informations');
 
     /**
      * Validations
@@ -39,7 +39,8 @@ class UserAddress extends Model implements ModelInterface
      */
     protected function performInsert(\Illuminate\Database\Eloquent\Builder $query, array $options = array())
     {
-        $this->attributes['uid'] = md5(uniqid(mt_rand(), true));
+        // $this->attributes['uid'] = md5(uniqid(mt_rand(), true));
+        $this->attributes['uid'] = $this->user->uid;
 
         parent::performInsert($query, $options);
     }
