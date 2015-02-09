@@ -35,7 +35,8 @@
 
         "doctrine/common":             "~2.2",
 
-        "cartalyst/sentry":            "~2.1"
+        "cartalyst/sentry":            "~2.1",
+        "gloudemans/shoppingcart":     "~1.2"
     },
 
     "require-dev": {
