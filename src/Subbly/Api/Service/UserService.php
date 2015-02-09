@@ -64,6 +64,20 @@ class UserService extends Service
         return Sentry::check();
     }
 
+
+    /**
+     * logs the user out and destroys all 
+     * Sentry sessions / cookies for the user.
+     *
+     * @return bool
+     *
+     * @api
+     */
+    public function logout()
+    {
+        return Sentry::logout();
+    }
+
     /**
      * Check to see if a user has the access.
      *
