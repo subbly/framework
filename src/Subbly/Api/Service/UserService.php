@@ -208,6 +208,8 @@ class UserService extends Service
      */
     public function create($user)
     {
+
+
         if (is_array($user)) {
             $user = new User($user);
         }
@@ -217,7 +219,15 @@ class UserService extends Service
             if ($this->fireEvent('creating', array($user)) === false) return false;
 
             $user->setCaller($this);
-            $user->save();
+            
+            try
+            {
+                $user->save();
+            }
+            catch (\Exception $e)
+            {
+                throw new Exception( $e->getMessage() );
+            }
 
             $this->fireEvent('created', array($user));
 
