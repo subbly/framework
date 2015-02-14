@@ -27,7 +27,7 @@ class User extends Model implements ModelInterface//, UserInterface, RemindableI
      */
     protected $visible = array('uid', 'email', 'firstname', 'lastname', 'addresses', 'orders', 'groups', 'created_at', 'updated_at');
 
-    protected $fillable = array('email', 'password', 'firstname', 'lastname');
+    protected $fillable = array('email', 'password', 'firstname', 'lastname', 'activated');
 
     protected $dates = array('deleted_at');
 
