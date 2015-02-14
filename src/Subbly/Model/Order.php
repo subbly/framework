@@ -13,7 +13,7 @@ class Order extends Model implements ModelInterface
     /**
      * Fields
      */
-    protected $visible = array('id', 'status', 'total_price', 'shipping_address_id', 'billing_address_id', 'created_at', 'updated_at');
+    protected $visible = array('id', 'status', 'total_price', 'shipping_address_id', 'billing_address_id', 'user', 'products', 'shipping_address', 'billing_address', 'created_at', 'updated_at');
     protected $fillable = array('status', 'user_id', 'total_price', 'shipping_address_id', 'billing_address_id');
 
     /**

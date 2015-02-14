@@ -36,7 +36,7 @@ class OrderAddressPresenter extends Presenter
             ->field('phone_work')
             ->field('phone_home')
             ->field('phone_mobile')
-            ->field('other_informations')
+            ->field('other_informations');
         ;
 
         return $entry->toArray();
@@ -70,6 +70,7 @@ class OrderAddressPresenter extends Presenter
                 ->field('phone_home')
                 ->field('phone_mobile')
                 ->field('other_informations')
+            ;
 
             $entries->addEntry($entry);
         }

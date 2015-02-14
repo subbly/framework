@@ -73,7 +73,7 @@ class Entry
                 if ($items instanceof ArrayCollection) {
                     $items = $presenter->collection($items);
                 }
-                else {
+                else if ($items instanceof Model) {
                     $items = $presenter->single($items);
                 }
             }
