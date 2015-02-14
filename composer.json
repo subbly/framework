@@ -36,7 +36,8 @@
         "doctrine/common":             "~2.2",
 
         "cartalyst/sentry":            "~2.1",
-        "gloudemans/shoppingcart":     "~1.2"
+        "gloudemans/shoppingcart":     "~1.2",
+        "omnipay/omnipay":             "~2.0"
     },
 
     "require-dev": {
