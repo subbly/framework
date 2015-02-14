@@ -9,6 +9,12 @@ class OrderProduct extends Model implements ModelInterface
     use Concerns\SubblyModel;
 
     /**
+     * Fields
+     */
+    protected $visible = array('id', 'order_id', 'product_id', 'price', 'sale_price', 'quantity', 'options');
+    protected $fillable = array('order_id', 'product_id', 'price', 'sale_price', 'quantity', 'options');
+
+    /**
      * The database table used by the model.
      *
      * @var string
@@ -19,7 +25,7 @@ class OrderProduct extends Model implements ModelInterface
      * Validations
      */
     protected $rules = array(
-        'order_id' => 'required|exists:orders,id',
+        'order_id' => 'required',
     );
     
     protected $defaultValues = array();

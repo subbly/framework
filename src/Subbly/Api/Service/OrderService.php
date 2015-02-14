@@ -131,7 +131,7 @@ class OrderService extends Service
      *
      * @api
      */
-    public function create($order)
+    public function create( $order, $address, $cart )
     {
         if (is_array($order)) {
             $order = new Order($order);
@@ -142,7 +142,29 @@ class OrderService extends Service
             if ($this->fireEvent('creating', array($order)) === false) return false;
 
             $order->setCaller($this);
-            $order->save();
+
+            \DB::transaction( function() use( $order, $address, $cart )
+            {
+                $address = \Subbly\Subbly::api('subbly.orderaddress')->create( $address );
+
+                $order->shipping_address_id = $address->id;
+
+                $order->save();
+
+                foreach( $cart as $item )
+                {
+                    $product = [
+                        'order_id'   => $order->id
+                      , 'product_id' => $item['id']
+                      , 'price'      => $item['price']
+                      , 'sale_price' => 0
+                      , 'quantity'   => $item['qty']
+                      , 'options'    => json_encode( $item['options'] )
+                    ];
+
+                    $ret = \Subbly\Subbly::api('subbly.orderproduct')->create( $product );
+                }
+            });
 
             $this->fireEvent('created', array($order));
 
