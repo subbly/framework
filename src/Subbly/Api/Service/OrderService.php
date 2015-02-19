@@ -149,7 +149,7 @@ class OrderService extends Service
 
                 $order->shipping_address_id = $shipping->id;
 
-                if( !is_null( $billing ) )
+                if( $billing )
                 {
                     $billing = \Subbly\Subbly::api('subbly.orderaddress')->create( $billing );
 
