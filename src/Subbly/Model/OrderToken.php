@@ -22,7 +22,7 @@ class OrderToken extends Model  implements ModelInterface
      */
     protected $rules = array(
         'token'    => 'required',
-        'order_id' => 'required|unique:gateways',
+        'order_id' => 'required|unique:order_tokens',
     );
 
     /**

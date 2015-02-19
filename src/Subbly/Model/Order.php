@@ -21,6 +21,7 @@ class Order extends Model implements ModelInterface
      */
     protected $rules = array(
         'user_id' => 'required',
+        'gateway' => 'required'
     );
 
     protected $defaultValues = array(
