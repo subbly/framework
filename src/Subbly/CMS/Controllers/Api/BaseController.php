@@ -150,6 +150,11 @@ class BaseController extends Controller
      */
     public function processAuthentication($route, $request)
     {
+        if (\App::isDownForMaintenance())
+        {
+            return $this->jsonErrorResponse("We're currently down for maintenance.", 503);
+        }
+
         $user = null;
 
         try {
