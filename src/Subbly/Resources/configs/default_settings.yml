@@ -18,3 +18,31 @@ default_settings:
   subbly.shop_status:
     type: string
     value: offline
+
+  subbly.payment.stripe.active:
+    type: string
+    value: 0
+
+  subbly.payment.stripe.key:
+    type: string
+    value: null
+
+  subbly.payment.paypal_express.active:
+    type: string
+    value: 0
+
+  subbly.payment.paypal_express.username:
+    type: string
+    value: null
+
+  subbly.payment.paypal_express.password:
+    type: string
+    value: null
+
+  subbly.payment.paypal_express.signature:
+    type: string
+    value: null
+
+  subbly.payment.paypal_express.testmode:
+    type: boolean
+    value: 0

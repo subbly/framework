@@ -31,6 +31,7 @@ class OrderPresenter extends Presenter
 
             ->field('uid')
             ->field('status')
+            ->field('gateway')
             ->field('total_price')
 
             ->relationshipField('user', 'Subbly\\Presenter\\V1\\UserPresenter')

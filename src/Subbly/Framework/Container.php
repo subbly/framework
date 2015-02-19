@@ -28,6 +28,7 @@ class Container extends Pimple\Container
                 'Subbly\\Api\\Service\\OrderService',
                 'Subbly\\Api\\Service\\OrderAddressService',
                 'Subbly\\Api\\Service\\OrderProductService',
+                'Subbly\\Api\\Service\\OrderTokenService',
                 'Subbly\\Api\\Service\\ProductService',
                 'Subbly\\Api\\Service\\ProductCategoryService',
                 'Subbly\\Api\\Service\\ProductImageService',
@@ -35,6 +36,7 @@ class Container extends Pimple\Container
                 'Subbly\\Api\\Service\\StatsService',
                 'Subbly\\Api\\Service\\UserService',
                 'Subbly\\Api\\Service\\UserAddressService',
+                'Subbly\\Api\\Service\\PaymentService',
             ));
 
             $api->service('subbly.setting')->registerDefaultSettings(
