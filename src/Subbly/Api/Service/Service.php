@@ -192,7 +192,7 @@ abstract class Service
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
-    protected function newCollectionQuery(array $options = array(), $modelClass = null)
+    protected function newCollectionQuery(array &$options = array(), $modelClass = null)
     {
         $options = array_replace(array(
             'limit'  => null,
@@ -204,6 +204,12 @@ abstract class Service
         /**
          * Offset & limit
          */
+        if (is_numeric($options['limit'])) {
+            $options['limit'] = (int) $options['limit'];
+        }
+        if (is_numeric($options['offset'])) {
+            $options['offset'] = (int) $options['offset'];
+        }
         if (is_integer($options['limit'])) {
             $query->limit($options['limit']);
         }
