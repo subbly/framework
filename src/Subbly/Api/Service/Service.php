@@ -164,6 +164,10 @@ abstract class Service
         /**
         * orders
         */
+        if (is_string($options['order_by']))
+        {
+            $options['order_by'] = json_decode( $options['order_by'], true );
+        }
         if (is_array($options['order_by']))
         {
             foreach ($options['order_by'] as $field=>$direction)
