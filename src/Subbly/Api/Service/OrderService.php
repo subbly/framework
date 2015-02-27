@@ -52,14 +52,14 @@ class OrderService extends Service
      *
      * @api
      */
-    public function find($id, array $options = array())
+    public function find($id, array $options = array(), $field = 'uid' )
     {
         $options = array_replace(array(
             'includes' => array('user'),
         ), $options);
 
         $query = $this->newQuery($options);
-        $query->where('id', '=', $id);
+        $query->where( $field, '=', $id);
 
         return $query->firstOrFail();
     }
