@@ -25,7 +25,7 @@ class User extends Model implements ModelInterface//, UserInterface, RemindableI
      *
      * @var array
      */
-    protected $visible = array('uid', 'email', 'firstname', 'lastname', 'addresses', 'orders', 'groups', 'created_at', 'updated_at');
+    protected $visible = array('uid', 'email', 'firstname', 'lastname', 'addresses', 'orders', 'groups', 'created_at', 'updated_at', 'last_login');
 
     protected $fillable = array('email', 'password', 'firstname', 'lastname', 'activated');
 
@@ -122,5 +122,25 @@ class User extends Model implements ModelInterface//, UserInterface, RemindableI
         $attributes['lastname']  = $attributes['last_name'];
 
         return $this->getArrayableItems($attributes);
+    }
+
+
+    /**
+     * Gets a code for when the user is
+     * persisted to a cookie or session which
+     * identifies the user.
+     *
+     * @return string
+     */
+    public function getPersistCode()
+    {
+        $this->persist_code = $this->getRandomString();
+
+        // Our code got hashed
+        $persistCode = $this->persist_code;
+
+        $this->save();
+
+        return $persistCode;
     }
 }

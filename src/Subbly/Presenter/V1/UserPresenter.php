@@ -39,6 +39,7 @@ class UserPresenter extends Presenter
             ->relationshipField('orders', 'Subbly\\Presenter\\V1\\OrderPresenter')
             ->relationshipField('groups', 'Subbly\\Presenter\\V1\\GroupPresenter')
 
+            ->dateField('last_login')
             ->dateField('created_at')
             ->dateField('updated_at')
         ;

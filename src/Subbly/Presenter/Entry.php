@@ -119,7 +119,9 @@ class Entry
     public function dateField($fieldName)
     {
         $date = $this->model->getAttribute($fieldName);
-        $this->addFieldData($fieldName, $date->format(\DateTime::ISO8601));
+    
+        if( !is_null( $date ) )
+            $this->addFieldData($fieldName, $date->format(\DateTime::ISO8601));
 
         return $this;
     }
