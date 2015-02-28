@@ -38,6 +38,33 @@ class Entry
         return $this;
     }
 
+
+    /**
+     *
+     *
+     * @return \Subbly\Presenter\Entry
+     */
+    public function composite()
+    {
+        $args = func_get_args();
+
+        $fieldName = $args[0];
+        $argsTotal = count( $args );
+        $composite = '';
+
+        for( $i = 1; $i < $argsTotal; ++$i )
+        {
+            if( $i != 1 )
+                $composite .= ' ';
+            
+            $composite .= $this->model->getAttribute( $args[ $i ] );
+        }
+
+        $this->addFieldData($fieldName, $composite);
+
+        return $this;
+    }
+
     /**
      *
      *
