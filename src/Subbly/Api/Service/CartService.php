@@ -27,9 +27,9 @@ class CartService extends Service
      * @param float        $price   Price of one item
      * @param Array        $options Array of additional options, such as 'size' or 'color'
      */
-    public function add( $id, $name, $qty, $price, $options = array() )
+    public function add( $product, $qty, $price, $options = array() )
     {
-        return Cart::add( $id, $name, $qty, $price, $options );
+        return Cart::add( $product['id'], $product['sku'], $product['name'], $qty, $product['price'], $options );
     }
 
     /**
