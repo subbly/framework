@@ -160,10 +160,14 @@ class OrderService extends Service
 
                 foreach( $cart as $item )
                 {
+                    // TODO: add product sku, name and description in current locale.
+                    // work as cache if product is not available later
                     $product = [
                         'order_id'   => $order->id
                       , 'product_id' => $item['id']
                       , 'price'      => $item['price']
+                      , 'name'       => $item['name']
+                      , 'sku'        => $item['sku']
                       , 'sale_price' => 0
                       , 'quantity'   => $item['qty']
                       , 'options'    => json_encode( $item['options'] )
@@ -175,7 +179,7 @@ class OrderService extends Service
 
             $this->fireEvent('created', array($order));
 
-            $order = $this->find($order->id);
+            // $order = $this->find($order->id);
 
             return $order;
         }

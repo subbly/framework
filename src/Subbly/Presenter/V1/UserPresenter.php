@@ -33,7 +33,7 @@ class UserPresenter extends Presenter
             ->field('email')
             ->field('firstname')
             ->field('lastname')
-            ->composite('displayName', 'firstname', 'lastname')
+            ->compositeField('displayName', 'firstname', 'lastname')
 
             ->relationshipField('addresses', 'Subbly\\Presenter\\V1\\UserAddressPresenter')
             ->relationshipField('orders', 'Subbly\\Presenter\\V1\\OrderPresenter')
@@ -71,7 +71,7 @@ class UserPresenter extends Presenter
                 ->field('email')
                 ->field('firstname')
                 ->field('lastname')
-                ->composite('displayName', 'firstname', 'lastname')
+                ->compositeField('displayName', 'firstname', 'lastname')
 
                 ->relationshipField('addresses', 'Subbly\\Presenter\\V1\\UserAddressPresenter')
                 ->relationshipField('orders', 'Subbly\\Presenter\\V1\\OrderPresenter')

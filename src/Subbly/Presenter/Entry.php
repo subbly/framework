@@ -38,13 +38,24 @@ class Entry
         return $this;
     }
 
+    /**
+     *
+     *
+     * @return \Subbly\Presenter\Entry
+     */
+    public function value($fieldName, $value)
+    {
+        $this->addFieldData($fieldName, $value);
+
+        return $this;
+    }
 
     /**
      *
      *
      * @return \Subbly\Presenter\Entry
      */
-    public function composite()
+    public function compositeField()
     {
         $args = func_get_args();
 

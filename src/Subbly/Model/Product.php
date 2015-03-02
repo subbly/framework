@@ -55,6 +55,11 @@ class Product extends Model  implements ModelInterface
         return 'saveWithTranslation';
     }
 
+    public function defaultImage()
+    {
+        return $this->images->first();
+    }
+
     /**
      * Relashionship
      */

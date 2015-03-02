@@ -9,7 +9,7 @@ class OrderProductService extends Service
 {
     protected $modelClass = 'Subbly\\Model\\OrderProduct';
 
-    protected $includableRelationships = [];
+    protected $includableRelationships = ['product'];
 
     /**
      * Return an empty model

@@ -11,8 +11,8 @@ class OrderProduct extends Model implements ModelInterface
     /**
      * Fields
      */
-    protected $visible = array('id', 'order_id', 'product_id', 'price', 'sale_price', 'quantity', 'options');
-    protected $fillable = array('order_id', 'product_id', 'price', 'sale_price', 'quantity', 'options');
+    protected $visible = array('id', 'order_id', 'product_id', 'sku', 'name', 'description', 'price', 'sale_price', 'quantity', 'options', 'product');
+    protected $fillable = array('order_id', 'product_id', 'sku', 'name', 'description', 'price', 'sale_price', 'quantity', 'options');
 
     /**
      * The database table used by the model.
