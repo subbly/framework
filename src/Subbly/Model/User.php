@@ -57,7 +57,12 @@ class User extends Model implements ModelInterface//, UserInterface, RemindableI
      */
     public function orders()
     {
-        return $this->hasMany('Subbly\\Model\\Order');
+        return $this->hasMany('Subbly\\Model\\Order')->orderBy('id', 'desc');
+    }
+
+    public function countOrders()
+    {
+        return $this->hasMany('Subbly\\Model\\Order', 'user_id')->selectRaw('count(*) as count')->count();
     }
 
     public function addresses()
