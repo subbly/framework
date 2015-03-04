@@ -55,6 +55,30 @@ class Entry
      *
      * @return \Subbly\Presenter\Entry
      */
+    public function integer($fieldName, $value)
+    {
+        $this->value($fieldName, (int) $value);
+
+        return $this;
+    }
+
+    /**
+     *
+     *
+     * @return \Subbly\Presenter\Entry
+     */
+    public function decimal($fieldName, $value)
+    {
+        $this->value($fieldName, (float) $value);
+
+        return $this;
+    }
+
+    /**
+     *
+     *
+     * @return \Subbly\Presenter\Entry
+     */
     public function compositeField()
     {
         $args = func_get_args();

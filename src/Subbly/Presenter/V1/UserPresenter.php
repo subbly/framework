@@ -36,6 +36,7 @@ class UserPresenter extends Presenter
             ->compositeField('displayName', 'firstname', 'lastname')
 
             ->relationshipField('addresses', 'Subbly\\Presenter\\V1\\UserAddressPresenter')
+            ->integer('orders_total', $user->countOrders())
             ->relationshipField('orders', 'Subbly\\Presenter\\V1\\OrderPresenter')
             ->relationshipField('groups', 'Subbly\\Presenter\\V1\\GroupPresenter')
 
@@ -74,6 +75,7 @@ class UserPresenter extends Presenter
                 ->compositeField('displayName', 'firstname', 'lastname')
 
                 ->relationshipField('addresses', 'Subbly\\Presenter\\V1\\UserAddressPresenter')
+                ->integer('orders_total', $user->countOrders())
                 ->relationshipField('orders', 'Subbly\\Presenter\\V1\\OrderPresenter')
                 ->relationshipField('groups', 'Subbly\\Presenter\\V1\\GroupPresenter')
 

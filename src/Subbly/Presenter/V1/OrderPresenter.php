@@ -32,7 +32,9 @@ class OrderPresenter extends Presenter
             ->field('uid')
             ->field('status')
             ->field('gateway')
-            ->field('total_price')
+            ->decimal('total_price', $order->total_price )
+            ->integer('total_items', $order->total_items )
+            ->decimal('shipping_cost', $order->shipping_cost )
 
             ->relationshipField('user', 'Subbly\\Presenter\\V1\\UserPresenter')
             ->relationshipField('billing_address', 'Subbly\\Presenter\\V1\\OrderAddressPresenter')
@@ -68,7 +70,9 @@ class OrderPresenter extends Presenter
 
                 ->field('uid')
                 ->field('status')
-                ->field('total_price')
+                ->decimal('total_price', (float) $order->total_price )
+                ->integer('total_items', (int) $order->total_items )
+                ->decimal('shipping_cost', (float) $order->shipping_cost )
 
                 ->relationshipField('user', 'Subbly\\Presenter\\V1\\UserPresenter')
                 ->relationshipField('billing_address', 'Subbly\\Presenter\\V1\\OrderAddressPresenter')
