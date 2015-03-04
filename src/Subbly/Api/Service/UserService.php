@@ -64,7 +64,6 @@ class UserService extends Service
         return Sentry::check();
     }
 
-
     /**
      * logs the user out and destroys all 
      * Sentry sessions / cookies for the user.
@@ -208,8 +207,6 @@ class UserService extends Service
      */
     public function create($user)
     {
-
-
         if (is_array($user)) {
             $user = new User($user);
         }
@@ -312,6 +309,23 @@ class UserService extends Service
             $user->delete($this);
 
             $this->fireEvent('deleted', array($user));
+        }
+    }
+
+    /**
+     * Count user's orders
+     *
+     * @param User|string  $user The user_uid or the user model
+     *
+     * @return User
+     *
+     * @pi
+     */
+    public function countOrders($user)
+    {
+        if ($user instanceof User)
+        {
+            return $user->countOrders();
         }
     }
 
