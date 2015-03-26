@@ -16,7 +16,7 @@ class Stats extends Model implements ModelInterface
     protected $table = 'statistics';
 
     protected $primaryKey = 'service';
-    
+
     protected $visible = array('service', 'period', 'type', 'value');
     protected $fillable = array('service', 'period', 'type');
     protected $defaultValues = array();

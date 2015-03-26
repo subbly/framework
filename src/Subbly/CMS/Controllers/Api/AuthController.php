@@ -15,7 +15,7 @@ class AuthController extends BaseController
     }
 
     /**
-     * Test user credentials
+     * Test user credentials.
      *
      * @route GET /api/v1/auth/test-credentials
      * @authentication false

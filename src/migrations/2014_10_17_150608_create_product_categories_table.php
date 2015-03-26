@@ -3,17 +3,14 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateProductCategoriesTable extends Migration {
-
+class CreateProductCategoriesTable extends Migration
+{
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up()
     {
-        Schema::create('product_categories', function(Blueprint $table)
-        {
+        Schema::create('product_categories', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('product_id')->unsigned();
             $table->integer('parent_id')->unsigned()->nullable();
@@ -29,19 +26,16 @@ class CreateProductCategoriesTable extends Migration {
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down()
     {
-        Schema::table('products', function(Blueprint $table) {
+        Schema::table('products', function (Blueprint $table) {
             $table->dropForeign('product_categories_product_id_foreign');
         });
-        Schema::table('product_categories', function(Blueprint $table) {
+        Schema::table('product_categories', function (Blueprint $table) {
             $table->dropForeign('product_categories_product_categories_id_foreign');
         });
 
         Schema::drop('product_categories');
     }
-
 }

@@ -16,7 +16,7 @@ class ProductOption extends Model implements ModelInterface
     protected $table = 'product_options';
 
     /**
-     * Validations
+     * Validations.
      */
     protected $rules = array(
         'product_id' => 'required|exists:products,id',
@@ -25,7 +25,7 @@ class ProductOption extends Model implements ModelInterface
     protected $defaultValues = array();
 
     /**
-     * Relashionship
+     * Relashionship.
      */
     public function product()
     {

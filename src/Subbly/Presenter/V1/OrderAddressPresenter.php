@@ -2,9 +2,7 @@
 
 namespace Subbly\Presenter\V1;
 
-use Illuminate\Support\Collection as ArrayCollection;
 use Illuminate\Database\Eloquent\Collection;
-
 use Subbly\Model\OrderAddress;
 use Subbly\Presenter\Presenter;
 use Subbly\Presenter\Entries;
@@ -14,9 +12,9 @@ use Subbly\Subbly;
 class OrderAddressPresenter extends Presenter
 {
     /**
-     * Get formated datas for a single entry
+     * Get formated datas for a single entry.
      *
-     * @param \Subbly\Model\Order  $order
+     * @param \Subbly\Model\Order $order
      *
      * @return array
      */
@@ -37,24 +35,22 @@ class OrderAddressPresenter extends Presenter
             ->field('phone_home')
             ->field('phone_mobile')
             ->field('other_informations');
-        ;
 
         return $entry->toArray();
     }
 
     /**
-     * Get formated datas for a collection
+     * Get formated datas for a collection.
      *
-     * @param \Subbly\Model\Collection  $collection
+     * @param \Subbly\Model\Collection $collection
      *
      * @return \Illuminate\Support\Collection
      */
     public function collection(Collection $collection)
     {
-        $entries = new Entries;
+        $entries = new Entries();
 
-        foreach ($collection as $order)
-        {
+        foreach ($collection as $order) {
             $entry = new Entry($order);
 
             $entry

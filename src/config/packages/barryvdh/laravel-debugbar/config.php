@@ -27,7 +27,7 @@ return array(
      */
     'storage' => array(
         'enabled' => true,
-        'path' => storage_path() . '/debugbar',
+        'path' => storage_path().'/debugbar',
     ),
 
     /*
@@ -119,16 +119,16 @@ return array(
             'backtrace'         => false,  // EXPERIMENTAL: Use a backtrace to find the origin of the query in your files.
         ),
         'mail' => array(
-            'full_log' => false
+            'full_log' => false,
         ),
         'views' => array(
             'data' => false,    //Note: Can slow down the application, because the data can be quite large..
         ),
         'route' => array(
-            'label' => true  // show complete route on bar
+            'label' => true,  // show complete route on bar
         ),
         'logs' => array(
-            'file' => null
+            'file' => null,
         ),
     ),
 

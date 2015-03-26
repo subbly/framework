@@ -11,14 +11,14 @@ class OrderToken extends Model  implements ModelInterface
     protected $table = 'order_tokens';
 
     /**
-     * Fields
+     * Fields.
      */
     protected $visible = array('token', 'order_id', 'created_at', 'updated_at');
 
     protected $fillable = array('token', 'order_id');
 
     /**
-     * Validation rules
+     * Validation rules.
      */
     protected $rules = array(
         'token'    => 'required',
@@ -26,7 +26,7 @@ class OrderToken extends Model  implements ModelInterface
     );
 
     /**
-     * Relashionship
+     * Relashionship.
      */
     public function order()
     {

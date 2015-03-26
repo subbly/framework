@@ -6,25 +6,24 @@ use Subbly\Api\Service\Service;
 
 interface ModelInterface
 {
-
     /**
-     * Is model valid
+     * Is model valid.
      *
      * @return boolean
      */
     public function isValid();
 
     /**
-     * Get the error messages
+     * Get the error messages.
      *
      * @return array
      */
     public function errorMessages();
 
     /**
-     * Set the caller Service
+     * Set the caller Service.
      *
-     * @param Subbly\api\Service\Service  $service The caller Service
+     * @param Subbly\api\Service\Service $service The caller Service
      */
     public function setCaller(Service $service);
 }

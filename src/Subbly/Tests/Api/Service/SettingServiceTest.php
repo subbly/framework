@@ -56,8 +56,7 @@ class SettingServiceTest extends TestCase
             array(1, 2, 3, 4),
         );
 
-        foreach ($tests as $value)
-        {
+        foreach ($tests as $value) {
             $this->getService()->update('test.subbly.untyped_setting', $value);
             $this->assertSame($this->getService()->get('test.subbly.untyped_setting'), $value);
         }
@@ -69,8 +68,7 @@ class SettingServiceTest extends TestCase
             $this->assertSame($this->getService()->get('subbly.string_setting'), $value);
 
             $this->fail('\Subbly\Api\Service\Exception has not be raised.');
-        }
-        catch (\Subbly\Api\Service\Exception $e) {
+        } catch (\Subbly\Api\Service\Exception $e) {
             $this->assertTrue(true);
         }
     }

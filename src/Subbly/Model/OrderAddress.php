@@ -10,7 +10,7 @@ class OrderAddress extends Model implements ModelInterface
     use Concerns\Address;
 
     /**
-     * Fields
+     * Fields.
      */
     protected $visible = array('id', 'firstname', 'lastname', 'address1', 'address2', 'zipcode', 'city', 'country', 'phone_work', 'phone_home', 'phone_mobile', 'other_informations');
     protected $fillable = array('firstname', 'lastname', 'address1', 'address2', 'zipcode', 'city', 'country', 'phone_work', 'phone_home', 'phone_mobile', 'other_informations');
@@ -33,9 +33,9 @@ class OrderAddress extends Model implements ModelInterface
 
         parent::performInsert($query, $options);
     }
-    
+
     /**
-     * Relashionship
+     * Relashionship.
      */
     public function order()
     {

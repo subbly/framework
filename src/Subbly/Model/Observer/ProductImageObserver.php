@@ -3,14 +3,13 @@
 namespace Subbly\Model\Observer;
 
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-
 use Subbly\Model\ProductImage;
 use Subbly\Subbly;
 
 class ProductImageObserver
 {
     /**
-     * 
+     *
      */
     public function created(ProductImage $model)
     {
@@ -18,7 +17,7 @@ class ProductImageObserver
     }
 
     /**
-     * 
+     *
      */
     public function updated(ProductImage $model)
     {
@@ -26,7 +25,7 @@ class ProductImageObserver
     }
 
     /**
-     * 
+     *
      */
     private function uploadImage(ProductImage $model)
     {

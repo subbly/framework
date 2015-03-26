@@ -2,8 +2,6 @@
 
 namespace Subbly\Api\Service;
 
-use Sentry;
-
 use Subbly\Model\Collection;
 use Subbly\Model\ProductCategory;
 use Subbly\Model\Product;
@@ -15,7 +13,7 @@ class ProductCategoryService extends Service
     protected $includableRelationships = array('product');
 
     /**
-     * Return an empty model
+     * Return an empty model.
      *
      * @return \Subbly\Model\ProductCategory
      *
@@ -27,13 +25,13 @@ class ProductCategoryService extends Service
     }
 
     /**
-     * Find a ProductCategory by $uid
+     * Find a ProductCategory by $uid.
      *
      * @example
      *     $productCategory = Subbly::api('subbly.product_category')->find($uid);
      *
-     * @param string  $uid
-     * @param array   $options
+     * @param string $uid
+     * @param array  $options
      *
      * @return \Subbly\Model\ProductCategory
      *
@@ -48,13 +46,13 @@ class ProductCategoryService extends Service
     }
 
     /**
-     * Find a ProductCategory by Product
+     * Find a ProductCategory by Product.
      *
      * @example
      *     $productCategory = Subbly::api('subbly.product_category')->findByProduct($product);
      *
-     * @param string|\Subbly\Model\Product  $product The Product model or the Product uid
-     * @param array                         $options Some options
+     * @param string|\Subbly\Model\Product $product The Product model or the Product uid
+     * @param array                        $options Some options
      *
      * @return \Subbly\Model\Collection
      *
@@ -67,7 +65,7 @@ class ProductCategoryService extends Service
         }
 
         $query = $this->newCollectionQuery($options);
-        $query->with(array('product' => function($query) use ($product) {
+        $query->with(array('product' => function ($query) use ($product) {
             $query->where('uid', '=', $product->uid);
         }));
 
@@ -75,7 +73,7 @@ class ProductCategoryService extends Service
     }
 
     /**
-     * Create a new ProductCategory
+     * Create a new ProductCategory.
      *
      * @example
      *     $product = Subbly\Model\ProductCategory;
@@ -86,8 +84,8 @@ class ProductCategoryService extends Service
      *         'lastname'  => 'Snow',
      *     ));
      *
-     * @param \Subbly\Model\ProductCategory|array  $productCategory
-     * @param \Subbly\Model\Product|null           $product
+     * @param \Subbly\Model\ProductCategory|array $productCategory
+     * @param \Subbly\Model\Product|null          $product
      *
      * @return \Subbly\Model\ProductCategory
      *
@@ -106,12 +104,13 @@ class ProductCategoryService extends Service
         // }
 
         // if ($productCategory instanceof ProductCategory)
-        if ($product instanceof Product)
-        {
-            if ($this->fireEvent('creating', array($productCategory, $product)) === false) return false;
+        if ($product instanceof Product) {
+            if ($this->fireEvent('creating', array($productCategory, $product)) === false) {
+                return false;
+            }
 
             // $productCategory->product()->associate($product);
-            $product->categories()->sync( $productCategory );
+            $product->categories()->sync($productCategory);
 
             // $productCategory->setCaller($this);
             // $productCategory->save();
@@ -130,7 +129,7 @@ class ProductCategoryService extends Service
     }
 
     /**
-     * Update a ProductCategory
+     * Update a ProductCategory.
      *
      * @example
      *     $productCategory = [Subbly\Model\ProductCategory instance];
@@ -152,16 +151,15 @@ class ProductCategoryService extends Service
 
         if (count($args) == 1 && $args[0] instanceof ProductCategory) {
             $productCategory = $args[0];
-        }
-        else if (count($args) == 2 && !empty($args[0]) && is_array($args[1]))
-        {
+        } elseif (count($args) == 2 && !empty($args[0]) && is_array($args[1])) {
             $productCategory = $this->find($args[0]);
             $productCategory->fill($args[1]);
         }
 
-        if ($productCategory instanceof ProductCategory)
-        {
-            if ($this->fireEvent('updating', array($productCategory)) === false) return false;
+        if ($productCategory instanceof ProductCategory) {
+            if ($this->fireEvent('updating', array($productCategory)) === false) {
+                return false;
+            }
 
             $productCategory->setCaller($this);
             $productCategory->save();
@@ -178,9 +176,9 @@ class ProductCategoryService extends Service
     }
 
     /**
-     * Delete a ProductCategory
+     * Delete a ProductCategory.
      *
-     * @param \Subbly\Model\ProductCategory|string  $productCategory The productCategory_uid or the ProductCategory model
+     * @param \Subbly\Model\ProductCategory|string $productCategory The productCategory_uid or the ProductCategory model
      *
      * @return \Subbly\Model\ProductCategory
      *
@@ -192,9 +190,10 @@ class ProductCategoryService extends Service
             $productCategory = $this->find($productCategory);
         }
 
-        if ($productCategory instanceof ProductCategory)
-        {
-            if ($this->fireEvent('deleting', array($productCategory)) === false) return false;
+        if ($productCategory instanceof ProductCategory) {
+            if ($this->fireEvent('deleting', array($productCategory)) === false) {
+                return false;
+            }
 
             $productCategory->delete($this);
 
@@ -203,7 +202,7 @@ class ProductCategoryService extends Service
     }
 
     /**
-     * Service name
+     * Service name.
      */
     public function name()
     {

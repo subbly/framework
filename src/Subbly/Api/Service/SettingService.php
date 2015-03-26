@@ -3,13 +3,10 @@
 namespace Subbly\Api\Service;
 
 use Carbon\Carbon;
-
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Collection;
-
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Yaml\Exception\ParseException;
-
 use Subbly\Model\Setting;
 
 class SettingService extends Service
@@ -28,9 +25,9 @@ class SettingService extends Service
     }
 
     /**
-     * Register a new default settings file
+     * Register a new default settings file.
      *
-     * @param string  $filename Name of the file
+     * @param string $filename Name of the file
      *
      * @throws Subbly\Api\Service\Exception
      * @throws Subbly\Api\Service\Exception
@@ -47,8 +44,7 @@ class SettingService extends Service
 
         try {
             $yaml = Yaml::parse(file_get_contents($filename));
-        }
-        catch (ParseException $e) {
+        } catch (ParseException $e) {
             throw new Exception(sprintf('Unable to parse the YAML string: %s', $e->getMessage()));
         }
 
@@ -65,7 +61,7 @@ class SettingService extends Service
     }
 
     /**
-     * Get all Setting
+     * Get all Setting.
      *
      * @return \Illuminate\Support\Collection
      *
@@ -77,9 +73,9 @@ class SettingService extends Service
     }
 
     /**
-     * Get a Setting value
+     * Get a Setting value.
      *
-     * @param string  $key  The setting key
+     * @param string $key The setting key
      *
      * @return mixed
      *
@@ -97,9 +93,9 @@ class SettingService extends Service
     }
 
     /**
-     * Ask if a setting key exists or not
+     * Ask if a setting key exists or not.
      *
-     * @param string  $key  The setting key
+     * @param string $key The setting key
      *
      * @return boolean
      *
@@ -111,9 +107,9 @@ class SettingService extends Service
     }
 
     /**
-     * Update many settings
+     * Update many settings.
      *
-     * @param array  $settings Settings collection to update
+     * @param array $settings Settings collection to update
      *
      * @return boolean
      *
@@ -125,8 +121,7 @@ class SettingService extends Service
     public function updateMany(array $settings)
     {
         // TODO Use DB::beginTransaction(), DB::rollback(), DB::commit() ?
-        foreach ($settings as $k=>$v)
-        {
+        foreach ($settings as $k => $v) {
             if ($this->update($k, $v) === false) {
                 return false;
             }
@@ -136,10 +131,10 @@ class SettingService extends Service
     }
 
     /**
-     * Update a setting value
+     * Update a setting value.
      *
-     * @param string  $key   The setting key
-     * @param mixed   $value The setting value
+     * @param string $key   The setting key
+     * @param mixed  $value The setting value
      *
      * @return boolean
      *
@@ -150,7 +145,9 @@ class SettingService extends Service
      */
     public function update($key, $value)
     {
-        if ($this->fireEvent('updating', array($key, $value)) === false) return false;
+        if ($this->fireEvent('updating', array($key, $value)) === false) {
+            return false;
+        }
 
         if (!is_string($key) || !$this->has($key)) {
             throw new Exception(sprintf(Exception::SETTING_KEY_NOT_EXISTS, $key));
@@ -189,9 +186,9 @@ class SettingService extends Service
     }
 
     /**
-     * Get defaults settings
+     * Get defaults settings.
      *
-     * @param string|null  $key A setting key (optional)
+     * @param string|null $key A setting key (optional)
      *
      * @return array
      *
@@ -201,8 +198,7 @@ class SettingService extends Service
      */
     public function defaults($key = null)
     {
-        if (is_string($key))
-        {
+        if (is_string($key)) {
             if (!$this->has($key)) {
                 throw new Exception(sprintf(Exception::SETTING_KEY_NOT_EXISTS, $key));
             }
@@ -214,9 +210,9 @@ class SettingService extends Service
     }
 
     /**
-     * Refresh the settings
+     * Refresh the settings.
      *
-     * @param boolean  $force Force the refresh
+     * @param boolean $force Force the refresh
      *
      * @api
      */
@@ -226,14 +222,13 @@ class SettingService extends Service
     }
 
     /**
-     * Get the cached settings data
+     * Get the cached settings data.
      *
      * @return \Illuminate\Support\Collection
      */
     private function getCachedSettings()
     {
-        if (!Cache::has(self::CACHE_NAME))
-        {
+        if (!Cache::has(self::CACHE_NAME)) {
             $this->initCachedSettings();
         }
 
@@ -243,9 +238,9 @@ class SettingService extends Service
     }
 
     /**
-     * Set new settings data to cache
+     * Set new settings data to cache.
      *
-     * @param \Illuminate\Support\Collection  $settings
+     * @param \Illuminate\Support\Collection $settings
      */
     private function setCachedSettings(Collection $settings)
     {
@@ -258,17 +253,14 @@ class SettingService extends Service
     }
 
     /**
-     *
-     *
      * @return \Illuminate\Support\Collection
      */
     private function initCachedSettings()
     {
-        $settings = new Collection;
+        $settings = new Collection();
 
         // Defaults settings
-        foreach ($this->defaults as $k=>$v)
-        {
+        foreach ($this->defaults as $k => $v) {
             if (isset($v['value'])) {
                 $settings->offsetSet($k, $v['value']);
             }
@@ -285,7 +277,7 @@ class SettingService extends Service
     }
 
     /**
-     * Service name
+     * Service name.
      */
     public function name()
     {

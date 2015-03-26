@@ -2,9 +2,7 @@
 
 namespace Subbly\Presenter\V1;
 
-use Illuminate\Support\Collection as ArrayCollection;
 use Illuminate\Database\Eloquent\Collection;
-
 use Subbly\Model\ProductCategory;
 use Subbly\Presenter\Presenter;
 use Subbly\Presenter\Entries;
@@ -14,9 +12,9 @@ use Subbly\Subbly;
 class ProductCategoryPresenter extends Presenter
 {
     /**
-     * Get formated datas for a single entry
+     * Get formated datas for a single entry.
      *
-     * @param \Subbly\Model\ProductCategory  $productCategory
+     * @param \Subbly\Model\ProductCategory $productCategory
      *
      * @return array
      */
@@ -25,7 +23,7 @@ class ProductCategoryPresenter extends Presenter
         $entry = new Entry($productCategory);
 
         $entry
-            ->conditionalField('id', function() {
+            ->conditionalField('id', function () {
                 return Subbly::api('subbly.user')->hasAccess('subbly.backend.auth');
             })
 
@@ -43,22 +41,21 @@ class ProductCategoryPresenter extends Presenter
     }
 
     /**
-     * Get formated datas for a collection
+     * Get formated datas for a collection.
      *
-     * @param \Subbly\Model\Collection  $collection
+     * @param \Subbly\Model\Collection $collection
      *
      * @return \Illuminate\Support\Collection
      */
     public function collection(Collection $collection)
     {
-        $entries = new Entries;
+        $entries = new Entries();
 
-        foreach ($collection as $productCategory)
-        {
+        foreach ($collection as $productCategory) {
             $entry = new Entry($productCategory);
 
             $entry
-                ->conditionalField('id', function() {
+                ->conditionalField('id', function () {
                     return Subbly::api('subbly.user')->hasAccess('subbly.backend.auth');
                 })
 

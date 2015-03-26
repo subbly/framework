@@ -3,7 +3,6 @@
 namespace Subbly\Tests\Resources\database\seeds;
 
 use Illuminate\Database\Seeder;
-
 use Subbly\Model\UserAddress;
 use Subbly\Tests\Support\TestCase;
 
@@ -13,8 +12,7 @@ class UserAddressTableSeeder extends Seeder
     {
         $faker = TestCase::faker();
 
-        for ($i=1; $i <= 10; $i++)
-        {
+        for ($i = 1; $i <= 10; $i++) {
             $userAddress = UserAddress::create(array(
                 'user_id'   => TestCase::getFixture('users.jon_snow')->id,
                 'name'      => $faker->name,
@@ -29,7 +27,7 @@ class UserAddressTableSeeder extends Seeder
                 'phone_home'   => rand(0, 1) === 0 ? null : $faker->phoneNumber,
                 'phone_mobile' => rand(0, 1) === 0 ? null : $faker->phoneNumber,
             ));
-            TestCase::addFixture('user_addresses.user_address_' . $i, $userAddress);
+            TestCase::addFixture('user_addresses.user_address_'.$i, $userAddress);
         }
     }
 }

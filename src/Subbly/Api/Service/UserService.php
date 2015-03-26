@@ -3,7 +3,6 @@
 namespace Subbly\Api\Service;
 
 use Sentry;
-
 use Subbly\Model\Collection;
 use Subbly\Model\User;
 
@@ -14,7 +13,7 @@ class UserService extends Service
     protected $includableRelationships = array('addresses', 'orders', 'groups');
 
     /**
-     * Return an empty model
+     * Return an empty model.
      *
      * @return \Subbly\Model\User
      *
@@ -29,8 +28,8 @@ class UserService extends Service
      * Attempts to authenticate the given user
      * according to the passed credentials.
      *
-     * @param  array  $credentials
-     * @param  bool   $remember
+     * @param array $credentials
+     * @param bool  $remember
      *
      * @return \Cartalyst\Sentry\Users\UserInterface
      *
@@ -65,7 +64,7 @@ class UserService extends Service
     }
 
     /**
-     * logs the user out and destroys all 
+     * logs the user out and destroys all
      * Sentry sessions / cookies for the user.
      *
      * @return bool
@@ -80,8 +79,8 @@ class UserService extends Service
     /**
      * Check to see if a user has the access.
      *
-     * @param string|array        $accessKey One or array of permission keys
-     * @param \Subbly\Model\User  $user      The User scope (if null, current user is used)
+     * @param string|array       $accessKey One or array of permission keys
+     * @param \Subbly\Model\User $user      The User scope (if null, current user is used)
      *
      * @return bool
      *
@@ -95,8 +94,7 @@ class UserService extends Service
 
         if (is_array($accessKey)) {
             return $user->hasAnyAccess($accessKey);
-        }
-        else {
+        } else {
             return $user->hasAccess($accessKey);
         }
     }
@@ -114,7 +112,7 @@ class UserService extends Service
     }
 
     /**
-     * Get all User
+     * Get all User.
      *
      * @param array $options
      *
@@ -130,13 +128,13 @@ class UserService extends Service
     }
 
     /**
-     * Find a User by $uid
+     * Find a User by $uid.
      *
      * @example
      *     $user = Subbly::api('subbly.user')->find($uid);
      *
-     * @param string  $uid
-     * @param array   $options
+     * @param string $uid
+     * @param array  $options
      *
      * @return User
      *
@@ -155,7 +153,7 @@ class UserService extends Service
     }
 
     /**
-     * Search a User by options
+     * Search a User by options.
      *
      * @example
      *     $users = Subbly::api('subbly.user')->searchBy(array(
@@ -165,9 +163,9 @@ class UserService extends Service
      *     // OR
      *     $users = Subbly::api('subbly.user')->searchBy('some words');
      *
-     * @param array|string  $searchQuery    Search params
-     * @param array         $options        Query options
-     * @param string        $statementsType Type of statement null|or|and (default is null)
+     * @param array|string $searchQuery    Search params
+     * @param array        $options        Query options
+     * @param string       $statementsType Type of statement null|or|and (default is null)
      *
      * @return \Subbly\Model\Collection
      *
@@ -186,7 +184,7 @@ class UserService extends Service
     }
 
     /**
-     * Create a new User
+     * Create a new User.
      *
      * @example
      *     $user = Subbly\Model\User;
@@ -211,19 +209,17 @@ class UserService extends Service
             $user = new User($user);
         }
 
-        if ($user instanceof User)
-        {
-            if ($this->fireEvent('creating', array($user)) === false) return false;
+        if ($user instanceof User) {
+            if ($this->fireEvent('creating', array($user)) === false) {
+                return false;
+            }
 
             $user->setCaller($this);
-            
-            try
-            {
+
+            try {
                 $user->save();
-            }
-            catch (\Exception $e)
-            {
-                throw new Exception( $e->getMessage() );
+            } catch (\Exception $e) {
+                throw new Exception($e->getMessage());
             }
 
             $this->fireEvent('created', array($user));
@@ -240,7 +236,7 @@ class UserService extends Service
     }
 
     /**
-     * Update a User
+     * Update a User.
      *
      * @example
      *     $user = [Subbly\Model\User instance];
@@ -262,16 +258,15 @@ class UserService extends Service
 
         if (count($args) == 1 && $args[0] instanceof User) {
             $user = $args[0];
-        }
-        else if (count($args) == 2 && !empty($args[0]) && is_array($args[1]))
-        {
+        } elseif (count($args) == 2 && !empty($args[0]) && is_array($args[1])) {
             $user = $this->find($args[0]);
             $user->fill($args[1]);
         }
 
-        if ($user instanceof User)
-        {
-            if ($this->fireEvent('updating', array($user)) === false) return false;
+        if ($user instanceof User) {
+            if ($this->fireEvent('updating', array($user)) === false) {
+                return false;
+            }
 
             $user->setCaller($this);
             $user->save();
@@ -288,9 +283,9 @@ class UserService extends Service
     }
 
     /**
-     * Delete a User
+     * Delete a User.
      *
-     * @param User|string  $user The user_uid or the user model
+     * @param User|string $user The user_uid or the user model
      *
      * @return User
      *
@@ -302,9 +297,10 @@ class UserService extends Service
             $user = $this->find($user);
         }
 
-        if ($user instanceof User)
-        {
-            if ($this->fireEvent('deleting', array($user)) === false) return false;
+        if ($user instanceof User) {
+            if ($this->fireEvent('deleting', array($user)) === false) {
+                return false;
+            }
 
             $user->delete($this);
 
@@ -313,9 +309,9 @@ class UserService extends Service
     }
 
     /**
-     * Count user's orders
+     * Count user's orders.
      *
-     * @param User|string  $user The user_uid or the user model
+     * @param User|string $user The user_uid or the user model
      *
      * @return User
      *
@@ -323,31 +319,30 @@ class UserService extends Service
      */
     public function countOrders($user)
     {
-        if ($user instanceof User)
-        {
+        if ($user instanceof User) {
             return $user->countOrders();
         }
     }
 
     /**
-     * Statistics
+     * Statistics.
      */
-    public function statisticsGetTotalBetweenTwoDates( $from, $to ) 
+    public function statisticsGetTotalBetweenTwoDates($from, $to)
     {
         // dd( $from, $to);
-        return \DB::table( 'users' )->whereBetween( 'created_at', array( $from->toDateTimeString(), $to->toDateTimeString() ) )->count();
+        return \DB::table('users')->whereBetween('created_at', array( $from->toDateTimeString(), $to->toDateTimeString() ))->count();
     }
 
-    public function statisticsGetAvgBetweenTwoDates( $from, $to ) 
+    public function statisticsGetAvgBetweenTwoDates($from, $to)
     {
-        $totalDays = $from->diffInDays( $to ); 
-        $totalUsers = $this->statisticsGetTotalBetweenTwoDates( $from, $to );
+        $totalDays = $from->diffInDays($to);
+        $totalUsers = $this->statisticsGetTotalBetweenTwoDates($from, $to);
 
-        return ( $totalUsers / $totalDays );
+        return ($totalUsers / $totalDays);
     }
 
     /**
-     * Service name
+     * Service name.
      */
     public function name()
     {

@@ -2,9 +2,7 @@
 
 namespace Subbly\Presenter\V1;
 
-use Illuminate\Support\Collection as ArrayCollection;
 use Illuminate\Database\Eloquent\Collection;
-
 use Subbly\Presenter\Presenter;
 use Subbly\Presenter\Entries;
 use Subbly\Presenter\Entry;
@@ -13,9 +11,9 @@ use Subbly\Subbly;
 class GroupPresenter extends Presenter
 {
     /**
-     * Get formated datas for a single entry
+     * Get formated datas for a single entry.
      *
-     * @param object  $group
+     * @param object $group
      *
      * @return array
      */
@@ -24,7 +22,7 @@ class GroupPresenter extends Presenter
         $entry = new Entry($group);
 
         $entry
-            ->conditionalField('id', function() {
+            ->conditionalField('id', function () {
                 return Subbly::api('subbly.user')->hasAccess('subbly.backend.auth');
             })
 
@@ -39,22 +37,21 @@ class GroupPresenter extends Presenter
     }
 
     /**
-     * Get formated datas for a collection
+     * Get formated datas for a collection.
      *
-     * @param \Subbly\Model\Collection  $collection
+     * @param \Subbly\Model\Collection $collection
      *
      * @return \Illuminate\Support\Collection
      */
     public function collection(Collection $collection)
     {
-        $entries = new Entries;
+        $entries = new Entries();
 
-        foreach ($collection as $group)
-        {
+        foreach ($collection as $group) {
             $entry = new Entry($group);
 
             $entry
-                ->conditionalField('id', function() {
+                ->conditionalField('id', function () {
                     return Subbly::api('subbly.user')->hasAccess('subbly.backend.auth');
                 })
 

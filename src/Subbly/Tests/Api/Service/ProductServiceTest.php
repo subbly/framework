@@ -28,9 +28,8 @@ class ProductServiceTest extends TestCase
     }
 
     /**
-     * TODO test creation with valid and unvalid price format and check model validation
+     * TODO test creation with valid and unvalid price format and check model validation.
      */
-
     public function testName()
     {
         $this->assertEquals($this->getService()->name(), 'subbly.product');

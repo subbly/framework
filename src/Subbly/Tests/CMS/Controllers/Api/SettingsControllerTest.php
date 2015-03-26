@@ -23,7 +23,7 @@ class SettingsControllerTest extends TestCase
         $settingValue = reset($setting);
         $settingKey   = key($setting);
 
-        /**
+        /*
          * NOT OK
          */
         // "setting" not defined
@@ -35,7 +35,7 @@ class SettingsControllerTest extends TestCase
         $json = $this->getJSONContent();
         $this->assertObjectHasAttribute('error', $json->response);
 
-        /**
+        /*
          * OK
          */
         $settingKey = 'test.subbly.string_setting';

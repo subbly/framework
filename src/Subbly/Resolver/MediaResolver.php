@@ -3,9 +3,7 @@
 namespace Subbly\Resolver;
 
 use Doctrine\Common\Util\Inflector;
-
 use Symfony\Component\PropertyAccess\PropertyAccess;
-
 use Subbly\Framework\Container;
 
 class MediaResolver
@@ -18,45 +16,45 @@ class MediaResolver
     public function __construct(Container $container)
     {
         $this->basePath         = app_upload();
-        $this->baseSource       = app_upload() . '/uploads';
+        $this->baseSource       = app_upload().'/uploads';
         $this->propertyAccessor = PropertyAccess::getPropertyAccessor();
         $this->basedirs         = array();
     }
 
     /**
-    * {@inheritDoc}
-    */
+     * {@inheritDoc}
+     */
     public function supports($model, array $options)
     {
         return null !== $this->getBasename($model, $options);
     }
 
     /**
-    * {@inheritDoc}
-    */
+     * {@inheritDoc}
+     */
     public function getPath($model, array $options)
     {
         $basename = $this->getBasename($model, $options);
 
         if (null == $basename) {
-            return null;
+            return;
         }
 
-        return $this->basePath . '/' . $basename;
+        return $this->basePath.'/'.$basename;
     }
 
     /**
-    * {@inheritDoc}
-    */
+     * {@inheritDoc}
+     */
     public function getSource($model, array $options)
     {
         $basename = $this->getBasename($model, $options);
 
         if (null == $basename) {
-            return null;
+            return;
         }
 
-        return $this->baseSource . '/' . $basename;
+        return $this->baseSource.'/'.$basename;
     }
 
     public function getDirname($model)
@@ -65,9 +63,7 @@ class MediaResolver
 
         if (isset($this->basedirs[$className])) {
             $basedir = $this->basedirs[$className];
-        }
-        else
-        {
+        } else {
             $reflection = new \ReflectionClass($className);
             $basedir = $this->basedirs[$className] = Inflector::tableize($reflection->getShortName());
         }
@@ -95,15 +91,14 @@ class MediaResolver
 
         if (isset($options['filename'])) {
             $basename = $options['filename'];
-        }
-        else {
+        } else {
             $basename = $this->propertyAccessor->getValue($model, $options['field']);
         }
 
         if (!$basename) {
-            return null;
+            return;
         }
 
-        return $basedir . '/' . $basename;
+        return $basedir.'/'.$basename;
     }
 }

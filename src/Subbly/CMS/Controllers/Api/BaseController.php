@@ -3,16 +3,13 @@
 namespace Subbly\CMS\Controllers\Api;
 
 use Sentry;
-
 use Carbon\Carbon;
-
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Input;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Response;
-
 use Subbly\Subbly;
 use Subbly\Model\Collection;
 use Subbly\Model\User;
@@ -36,9 +33,9 @@ class BaseController extends Controller
     }
 
     /**
-     * Get the offset and limit to apply
+     * Get the offset and limit to apply.
      *
-     * @param array  $options The parameters (optional)
+     * @param array $options The parameters (optional)
      *
      * @return array Return offset and limit
      */
@@ -50,8 +47,7 @@ class BaseController extends Controller
 
         $offset = null;
 
-        if (isset($options['offset']))
-        {
+        if (isset($options['offset'])) {
             $offset = (int) $options['offset'];
             $offset = $offset < 0 ? 0 : $offset;
         }
@@ -62,13 +58,11 @@ class BaseController extends Controller
         ;
         if ($limit < self::LIMIT_MIN) {
             $limit = self::LIMIT_DEFAULT;
-        }
-        else if ($limit > self::LIMIT_MAX) {
+        } elseif ($limit > self::LIMIT_MAX) {
             $limit = self::LIMIT_MAX;
         }
 
-        if ($offset === null && isset($options['page']))
-        {
+        if ($offset === null && isset($options['page'])) {
             $offset = ((int) $options['page'] - 1) * $limit;
             $offset = $offset < 0 ? 0 : $offset;
         }
@@ -79,15 +73,14 @@ class BaseController extends Controller
     }
 
     /**
-     * Get parameters
+     * Get parameters.
      *
      * @return array
      */
     protected function getParams()
     {
         $keys = array();
-        foreach (func_get_args() as $k)
-        {
+        foreach (func_get_args() as $k) {
             if (is_string($k)) {
                 $keys[] = $k;
             }
@@ -103,15 +96,13 @@ class BaseController extends Controller
             $params['includes'] = (array) Input::get('includes');
         }
 
-        /**
+        /*
          * Clean
          */
-        if (!empty($key) && !empty($params))
-        {
+        if (!empty($key) && !empty($params)) {
             $returnedParams = array();
 
-            foreach ($params as $key=>$value)
-            {
+            foreach ($params as $key => $value) {
                 if (in_array($key, $keys)) {
                     $returnedParams[$key] = $value;
                 }
@@ -122,9 +113,9 @@ class BaseController extends Controller
     }
 
     /**
-     * Load the presenter
+     * Load the presenter.
      *
-     * @param string  $presenterClassName
+     * @param string $presenterClassName
      */
     public function loadPresenter($presenterClassName)
     {
@@ -143,15 +134,14 @@ class BaseController extends Controller
     /**
      * Controller filter to process to the authentication.
      *
-     * @param mixed    $route
-     * @param Request  $request
+     * @param mixed   $route
+     * @param Request $request
      *
      * @return void|Response
      */
     public function processAuthentication($route, $request)
     {
-        if (\App::isDownForMaintenance())
-        {
+        if (\App::isDownForMaintenance()) {
             return $this->jsonErrorResponse("We're currently down for maintenance.", 503);
         }
 
@@ -164,17 +154,14 @@ class BaseController extends Controller
             );
 
             $user = Subbly::api('subbly.user')->authenticate($credentials, false);
-        }
-        catch (\Exception $e)
-        {
+        } catch (\Exception $e) {
             if (in_array(get_class($e), array(
                 'Cartalyst\\Sentry\\Users\\UserNotActivatedException',
                 'Cartalyst\\Sentry\\Users\\UserSuspendedException',
                 'Cartalyst\\Sentry\\Users\\UserBannedException',
             ))) {
                 return $this->jsonErrorResponse($e->getMessage());
-            }
-            else if (in_array(get_class($e), array(
+            } elseif (in_array(get_class($e), array(
                 'Cartalyst\\Sentry\\Users\\LoginRequiredException',
                 'Cartalyst\\Sentry\\Users\\PasswordRequiredException',
                 'Cartalyst\\Sentry\\Users\\WrongPasswordException',
@@ -200,8 +187,8 @@ class BaseController extends Controller
     /**
      * Execute an action on the controller.
      *
-     * @param  string  $method
-     * @param  array   $parameters
+     * @param string $method
+     * @param array  $parameters
      *
      * @return \Symfony\Component\HttpFoundation\Response
      */
@@ -211,8 +198,7 @@ class BaseController extends Controller
 
         try {
             $response = $parentResponse = parent::callAction($method, $parameters);
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             $notFoundExceptions = array(
                 'Illuminate\\Database\\Eloquent\\ModelNotFoundException',
                 'Symfony\\Component\\HttpKernel\\Exception\\NotFoundHttpException',
@@ -223,11 +209,9 @@ class BaseController extends Controller
 
             if (in_array(get_class($e), $notFoundExceptions)) {
                 return $this->jsonNotFoundResponse($e->getMessage());
-            }
-            else if (in_array(get_class($e), $errorExceptions)) {
+            } elseif (in_array(get_class($e), $errorExceptions)) {
                 return $this->jsonErrorResponse($e->getMessage());
-            }
-            else if ($e instanceof \Subbly\Model\Exception\UnvalidModelException) {
+            } elseif ($e instanceof \Subbly\Model\Exception\UnvalidModelException) {
                 return $this->jsonErrorResponse($e->firstErrorMessage());
             }
 
@@ -235,18 +219,18 @@ class BaseController extends Controller
         }
 
         if (App::environment('local', 'testing')) {
-            return $parentResponse ?: parent::callAction($method, $parameters);;
+            return $parentResponse ?: parent::callAction($method, $parameters);
         }
 
         return $response;
     }
 
     /**
-     * Format a json Response
+     * Format a json Response.
      *
-     * @param mixed  $data        The data to format into JSON
-     * @param array  $headers     Headers to set into the JSON output
-     * @param array  $httpHeaders Http headers to insert into the Response
+     * @param mixed $data        The data to format into JSON
+     * @param array $headers     Headers to set into the JSON output
+     * @param array $httpHeaders Http headers to insert into the Response
      *
      * @return Response
      */
@@ -273,7 +257,7 @@ class BaseController extends Controller
         $response = Response::make(json_encode($data), $headers['status']['code']);
 
         // HTTP headers
-        foreach ($httpHeaders as $k=>$v) {
+        foreach ($httpHeaders as $k => $v) {
             $response->header($k, $v);
         }
         $response
@@ -285,11 +269,11 @@ class BaseController extends Controller
     }
 
     /**
-     * Format a json collection Response
+     * Format a json collection Response.
      *
-     * @param string                    $key        JSON key for the collection
-     * @param \Subbly\Model\Collection  $collection The entries collection
-     * @param array                     $extras     Extras values
+     * @param string                   $key        JSON key for the collection
+     * @param \Subbly\Model\Collection $collection The entries collection
+     * @param array                    $extras     Extras values
      *
      * @return Response
      */
@@ -312,15 +296,15 @@ class BaseController extends Controller
         )));
     }
 
-     /**
-      * Format a json error Response
-      *
-      * @param string $errorMessage  The error message to send
-      * @param int    $statusCode    The HTTP status code
-      * @param array  $httpHeaders   Http headers to insert into the Response
-      *
-      * @return Response
-      */
+    /**
+     * Format a json error Response.
+     *
+     * @param string $errorMessage The error message to send
+     * @param int    $statusCode   The HTTP status code
+     * @param array  $httpHeaders  Http headers to insert into the Response
+     *
+     * @return Response
+     */
     protected function jsonErrorResponse($errorMessage, $statusCode = 400, array $httpHeaders = array())
     {
         $statusTexts = \Symfony\Component\HttpFoundation\Response::$statusTexts;
@@ -335,13 +319,13 @@ class BaseController extends Controller
         ), $httpHeaders);
     }
 
-     /**
-      * Format a json Not Found Response
-      *
-      * @param string $message  The error message to send
-      *
-      * @return Response
-      */
+    /**
+     * Format a json Not Found Response.
+     *
+     * @param string $message The error message to send
+     *
+     * @return Response
+     */
     protected function jsonNotFoundResponse($message = 'Not Found')
     {
         return $this->jsonResponse(array(
@@ -355,7 +339,7 @@ class BaseController extends Controller
     }
 
     /**
-     * Get the debug datas
+     * Get the debug datas.
      *
      * @return array
      */
@@ -367,7 +351,7 @@ class BaseController extends Controller
                 'path'    => \Request::path(),
                 'inputs'  => \Input::all(),
                 'headers' => \Request::header(),
-            )
+            ),
         );
     }
 }

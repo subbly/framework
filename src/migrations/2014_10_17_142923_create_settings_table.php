@@ -3,17 +3,14 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSettingsTable extends Migration {
-
+class CreateSettingsTable extends Migration
+{
     /**
      * Run the migrations.
-     *
-     * @return void
      */
     public function up()
     {
-        Schema::create('settings', function(Blueprint $table)
-        {
+        Schema::create('settings', function (Blueprint $table) {
             $table->string('identifier')->unique();
             $table->string('plugin_identifier');
             $table->string('type')->nullable();
@@ -28,12 +25,9 @@ class CreateSettingsTable extends Migration {
 
     /**
      * Reverse the migrations.
-     *
-     * @return void
      */
     public function down()
     {
         Schema::drop('settings');
     }
-
 }

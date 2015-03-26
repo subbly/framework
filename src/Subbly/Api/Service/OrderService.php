@@ -12,7 +12,7 @@ class OrderService extends Service
     protected $includableRelationships = array('user', 'shipping_address', 'billing_address', 'products');
 
     /**
-     * Return an empty model
+     * Return an empty model.
      *
      * @return \Subbly\Model\Order
      *
@@ -24,7 +24,7 @@ class OrderService extends Service
     }
 
     /**
-     * Get all Order
+     * Get all Order.
      *
      * @param array $options
      *
@@ -40,32 +40,32 @@ class OrderService extends Service
     }
 
     /**
-     * Find a Order by $id
+     * Find a Order by $id.
      *
      * @example
      *     $order = Subbly::api('subbly.order')->find($id);
      *
-     * @param string  $id
-     * @param array   $options
+     * @param string $id
+     * @param array  $options
      *
      * @return \Subbly\Model\Order
      *
      * @api
      */
-    public function find($id, array $options = array(), $field = 'uid' )
+    public function find($id, array $options = array(), $field = 'uid')
     {
         $options = array_replace(array(
             'includes' => array('user'),
         ), $options);
 
         $query = $this->newQuery($options);
-        $query->where( $field, '=', $id);
+        $query->where($field, '=', $id);
 
         return $query->firstOrFail();
     }
 
     /**
-     * Search a Order by options
+     * Search a Order by options.
      *
      * @example
      *     $orders = Subbly::api('subbly.order')->searchBy(array(
@@ -74,9 +74,9 @@ class OrderService extends Service
      *     // OR
      *     $orders = Subbly::api('subbly.order')->searchBy('some words');
      *
-     * @param array|string  $searchQuery    Search params
-     * @param array         $options        Query options
-     * @param string        $statementsType Type of statement null|or|and (default is null)
+     * @param array|string $searchQuery    Search params
+     * @param array        $options        Query options
+     * @param string       $statementsType Type of statement null|or|and (default is null)
      *
      * @return \Subbly\Model\Collection
      *
@@ -84,7 +84,6 @@ class OrderService extends Service
      */
     public function searchBy($searchQuery, array $options = array(), $statementsType = null)
     {
-
         $query = $this->newSearchQuery($searchQuery, array(
             'status',
             'total_price',
@@ -92,8 +91,7 @@ class OrderService extends Service
             'updated_at',
         ), $statementsType, $options);
 
-        if (is_array($searchQuery))
-        {
+        if (is_array($searchQuery)) {
             if (
                 array_key_exists('user_uid', $searchQuery)
                 || array_key_exists('user_id', $searchQuery)
@@ -114,7 +112,7 @@ class OrderService extends Service
     }
 
     /**
-     * Create a new Order
+     * Create a new Order.
      *
      * @example
      *     $order = Subbly\Model\Order;
@@ -131,49 +129,40 @@ class OrderService extends Service
      *
      * @api
      */
-    public function create( $order, $cart, $shipping, $billing = null )
+    public function create($order, $cart, $shipping, $billing = null)
     {
         if (is_array($order)) {
             $order = new Order($order);
         }
 
-        if ($order instanceof Order)
-        {
-            if ($this->fireEvent('creating', array($order)) === false) return false;
+        if ($order instanceof Order) {
+            if ($this->fireEvent('creating', array($order)) === false) {
+                return false;
+            }
 
             $order->setCaller($this);
 
-            \DB::transaction( function() use( $order, $cart, $shipping, $billing )
-            {
-                $shipping = \Subbly\Subbly::api('subbly.orderaddress')->create( $shipping );
+            \DB::transaction(function () use ($order, $cart, $shipping, $billing) {
+                $shipping = \Subbly\Subbly::api('subbly.orderaddress')->create($shipping);
 
                 $order->shipping_address_id = $shipping->id;
 
-                if( $billing )
-                {
-                    $billing = \Subbly\Subbly::api('subbly.orderaddress')->create( $billing );
+                if ($billing) {
+                    $billing = \Subbly\Subbly::api('subbly.orderaddress')->create($billing);
 
                     $order->billing_address_id = $billing->id;
                 }
 
                 $order->save();
 
-                foreach( $cart as $item )
-                {
+                foreach ($cart as $item) {
                     // TODO: add product sku, name and description in current locale.
                     // work as cache if product is not available later
                     $product = [
-                        'order_id'   => $order->id
-                      , 'product_id' => $item['id']
-                      , 'price'      => $item['price']
-                      , 'name'       => $item['name']
-                      , 'sku'        => $item['sku']
-                      , 'sale_price' => 0
-                      , 'quantity'   => $item['qty']
-                      , 'options'    => json_encode( $item['options'] )
+                        'order_id'   => $order->id, 'product_id' => $item['id'], 'price'      => $item['price'], 'name'       => $item['name'], 'sku'        => $item['sku'], 'sale_price' => 0, 'quantity'   => $item['qty'], 'options'    => json_encode($item['options']),
                     ];
 
-                    $ret = \Subbly\Subbly::api('subbly.orderproduct')->create( $product );
+                    $ret = \Subbly\Subbly::api('subbly.orderproduct')->create($product);
                 }
             });
 
@@ -191,7 +180,7 @@ class OrderService extends Service
     }
 
     /**
-     * Update a Order
+     * Update a Order.
      *
      * @example
      *     $order = [Subbly\Model\Order instance];
@@ -213,16 +202,15 @@ class OrderService extends Service
 
         if (count($args) == 1 && $args[0] instanceof Order) {
             $order = $args[0];
-        }
-        else if (count($args) == 2 && !empty($args[0]) && is_array($args[1]))
-        {
+        } elseif (count($args) == 2 && !empty($args[0]) && is_array($args[1])) {
             $order = $this->find($args[0]);
             $order->fill($args[1]);
         }
 
-        if ($order instanceof Order)
-        {
-            if ($this->fireEvent('updating', array($order)) === false) return false;
+        if ($order instanceof Order) {
+            if ($this->fireEvent('updating', array($order)) === false) {
+                return false;
+            }
 
             $order->setCaller($this);
             $order->save();
@@ -249,7 +237,7 @@ class OrderService extends Service
     }
 
     /**
-     * Service name
+     * Service name.
      */
     public function name()
     {

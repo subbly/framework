@@ -12,14 +12,14 @@ class UserAddress extends Model implements ModelInterface
     protected $table = 'user_addresses';
 
     /**
-     * Fields
+     * Fields.
      */
     protected $visible = array('id', 'uid', 'name', 'firstname', 'lastname', 'address1', 'address2', 'zipcode', 'city', 'country', 'phone_work', 'phone_home', 'phone_mobile', 'other_informations', 'created_at', 'updated_at');
 
     protected $fillable = array('name', 'firstname', 'lastname', 'address1', 'address2', 'zipcode', 'city', 'country', 'phone_work', 'phone_home', 'phone_mobile', 'other_informations');
 
     /**
-     * Validations
+     * Validations.
      */
     protected $rules = array(
         'user_id'   => 'required|exists:users,id',
@@ -46,7 +46,7 @@ class UserAddress extends Model implements ModelInterface
     }
 
     /**
-     * Relationships
+     * Relationships.
      */
     public function user()
     {

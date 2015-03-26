@@ -13,7 +13,7 @@ class Category extends Model implements ModelInterface
     protected $table = 'categories';
 
     /**
-     * Fields
+     * Fields.
      */
     protected $visible = array('id', 'label', 'slug', 'position', 'parent', 'locale');
 
@@ -26,11 +26,11 @@ class Category extends Model implements ModelInterface
     protected $defaultValues = array();
 
     /**
-     * Validations
+     * Validations.
      */
     protected $rules = array(
         'label' => 'required'
-      , 'slug'  => 'required'
+      , 'slug'  => 'required',
     );
 
     /**
@@ -57,7 +57,7 @@ class Category extends Model implements ModelInterface
     // }
 
     /**
-     * Relashionship
+     * Relashionship.
      */
     public function products()
     {
@@ -65,7 +65,7 @@ class Category extends Model implements ModelInterface
     }
 
     /**
-     * Get visible fields
+     * Get visible fields.
      *
      * @return array
      */

@@ -12,7 +12,7 @@ class UnvalidModelException extends \Exception
     /**
      * The constructor.
      *
-     * @param ModelInterface  $model The model
+     * @param ModelInterface $model The model
      */
     public function __construct(ModelInterface $model)
     {
@@ -25,7 +25,7 @@ class UnvalidModelException extends \Exception
     }
 
     /**
-     * Get the model
+     * Get the model.
      *
      * @return ModelInterface
      */
@@ -35,7 +35,7 @@ class UnvalidModelException extends \Exception
     }
 
     /**
-     * Return the first unvalid error messages
+     * Return the first unvalid error messages.
      *
      * @return string
      */

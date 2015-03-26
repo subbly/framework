@@ -2,9 +2,7 @@
 
 namespace Subbly\Presenter\V1;
 
-use Illuminate\Support\Collection as ArrayCollection;
 use Illuminate\Database\Eloquent\Collection;
-
 use Subbly\Model\UserAddress;
 use Subbly\Presenter\Presenter;
 use Subbly\Presenter\Entries;
@@ -14,9 +12,9 @@ use Subbly\Subbly;
 class UserAddressPresenter extends Presenter
 {
     /**
-     * Get formated datas for a single entry
+     * Get formated datas for a single entry.
      *
-     * @param \Subbly\Model\UserAddress  $userAddress
+     * @param \Subbly\Model\UserAddress $userAddress
      *
      * @return array
      */
@@ -25,7 +23,7 @@ class UserAddressPresenter extends Presenter
         $entry = new Entry($userAddress);
 
         $entry
-            ->conditionalField('id', function() {
+            ->conditionalField('id', function () {
                 return Subbly::api('subbly.user')->hasAccess('subbly.backend.auth');
             })
 
@@ -52,22 +50,21 @@ class UserAddressPresenter extends Presenter
     }
 
     /**
-     * Get formated datas for a collection
+     * Get formated datas for a collection.
      *
-     * @param \Subbly\Model\Collection  $collection
+     * @param \Subbly\Model\Collection $collection
      *
      * @return \Illuminate\Support\Collection
      */
     public function collection(Collection $collection)
     {
-        $entries = new Entries;
+        $entries = new Entries();
 
-        foreach ($collection as $userAddress)
-        {
+        foreach ($collection as $userAddress) {
             $entry = new Entry($userAddress);
 
             $entry
-                ->conditionalField('id', function() {
+                ->conditionalField('id', function () {
                     return Subbly::api('subbly.user')->hasAccess('subbly.backend.auth');
                 })
 

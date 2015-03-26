@@ -3,7 +3,6 @@
 namespace Subbly\CMS\Controllers\Api;
 
 use Illuminate\Support\Facades\Input;
-
 use Subbly\Subbly;
 
 class UserAddressesController extends BaseController
@@ -18,9 +17,8 @@ class UserAddressesController extends BaseController
         $this->beforeFilter('@processAuthentication');
     }
 
-
     /**
-     * Get list of UserAddress for a User
+     * Get list of UserAddress for a User.
      *
      * @route GET /api/v1/users/:user_uid/addresses
      * @authentication required
@@ -37,7 +35,7 @@ class UserAddressesController extends BaseController
     }
 
     /**
-     * Create a new UserAddress
+     * Create a new UserAddress.
      *
      * @route POST /api/v1/users/:user_uid/addresses
      * @authentication required
@@ -64,7 +62,7 @@ class UserAddressesController extends BaseController
     }
 
     /**
-     * Update a UserAddress
+     * Update a UserAddress.
      *
      * @route PUT|PATCH /api/v1/users/:user_uid/addresses/:uid
      * @authentication required
@@ -91,10 +89,10 @@ class UserAddressesController extends BaseController
     }
 
     /**
-      * Delete a UserAddress
-      *
-      * @route DELETE /api/v1/users/:user_uid/addresses/:uid
-      * @authentication required
+     * Delete a UserAddress.
+     *
+     * @route DELETE /api/v1/users/:user_uid/addresses/:uid
+     * @authentication required
      */
     public function delete($user_uid, $uid)
     {

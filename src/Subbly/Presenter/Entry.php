@@ -2,11 +2,8 @@
 
 namespace Subbly\Presenter;
 
-use Carbon\Carbon;
-
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection as ArrayCollection;
-
 use Subbly\Model\Collection;
 
 class Entry
@@ -23,12 +20,10 @@ class Entry
     public function __construct(Model $model)
     {
         $this->model = $model;
-        $this->data  = new ArrayCollection;
+        $this->data  = new ArrayCollection();
     }
 
     /**
-     *
-     *
      * @return \Subbly\Presenter\Entry
      */
     public function field($fieldName)
@@ -39,8 +34,6 @@ class Entry
     }
 
     /**
-     *
-     *
      * @return \Subbly\Presenter\Entry
      */
     public function value($fieldName, $value)
@@ -51,8 +44,6 @@ class Entry
     }
 
     /**
-     *
-     *
      * @return \Subbly\Presenter\Entry
      */
     public function integer($fieldName, $value)
@@ -63,8 +54,6 @@ class Entry
     }
 
     /**
-     *
-     *
      * @return \Subbly\Presenter\Entry
      */
     public function decimal($fieldName, $value)
@@ -75,8 +64,6 @@ class Entry
     }
 
     /**
-     *
-     *
      * @return \Subbly\Presenter\Entry
      */
     public function compositeField()
@@ -84,15 +71,15 @@ class Entry
         $args = func_get_args();
 
         $fieldName = $args[0];
-        $argsTotal = count( $args );
+        $argsTotal = count($args);
         $composite = '';
 
-        for( $i = 1; $i < $argsTotal; ++$i )
-        {
-            if( $i != 1 )
+        for ($i = 1; $i < $argsTotal; ++$i) {
+            if ($i != 1) {
                 $composite .= ' ';
-            
-            $composite .= $this->model->getAttribute( $args[ $i ] );
+            }
+
+            $composite .= $this->model->getAttribute($args[ $i ]);
         }
 
         $this->addFieldData($fieldName, $composite);
@@ -101,8 +88,6 @@ class Entry
     }
 
     /**
-     *
-     *
      * @return \Subbly\Presenter\Entry
      */
     public function conditionalField($fielName, \Closure $closure)
@@ -115,14 +100,11 @@ class Entry
     }
 
     /**
-     *
-     *
      * @return \Subbly\Presenter\Entry
      */
     public function relationshipField($fieldName, $presenterClassName = null)
     {
-        if (in_array($fieldName, array_keys($this->model->relationsToArray())))
-        {
+        if (in_array($fieldName, array_keys($this->model->relationsToArray()))) {
             $items = $this->model->getAttribute($fieldName);
 
             if (
@@ -134,8 +116,7 @@ class Entry
 
                 if ($items instanceof ArrayCollection) {
                     $items = $presenter->collection($items);
-                }
-                else if ($items instanceof Model) {
+                } elseif ($items instanceof Model) {
                     $items = $presenter->single($items);
                 }
             }
@@ -147,23 +128,20 @@ class Entry
     }
 
     /**
-     *
-     *
      * @return \Subbly\Presenter\Entry
      */
     public function dateField($fieldName)
     {
         $date = $this->model->getAttribute($fieldName);
-    
-        if( !is_null( $date ) )
+
+        if (!is_null($date)) {
             $this->addFieldData($fieldName, $date->format(\DateTime::ISO8601));
+        }
 
         return $this;
     }
 
     /**
-     *
-     *
      * @return array
      */
     public function toArray()

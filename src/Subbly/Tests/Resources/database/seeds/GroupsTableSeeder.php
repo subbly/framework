@@ -3,10 +3,7 @@
 namespace Subbly\Tests\Resources\database\seeds;
 
 use Sentry;
-
 use Illuminate\Database\Seeder;
-
-use Subbly\Model\User;
 use Subbly\Tests\Support\TestCase;
 
 class GroupsTableSeeder extends Seeder
@@ -31,14 +28,12 @@ class GroupsTableSeeder extends Seeder
             ),
         );
 
-        foreach ($groups as $group)
-        {
-            try
-            {
+        foreach ($groups as $group) {
+            try {
                 $group = Sentry::createGroup($group);
-                TestCase::addFixture('groups.group_' . snake_case($group['name']), $group);
+                TestCase::addFixture('groups.group_'.snake_case($group['name']), $group);
+            } catch (\Exception $e) {
             }
-            catch (\Exception $e) {}
         }
     }
 }

@@ -3,14 +3,14 @@
 namespace Subbly\Model\Concerns;
 
 /**
- * Class SortableTrait
+ * Class SortableTrait.
+ *
  * @traitUses \Eloquent
  */
 trait Sortable
 {
-
     /**
-     * Adds position to model on creating event
+     * Adds position to model on creating event.
      */
     public static function bootSortable()
     {
@@ -24,6 +24,7 @@ trait Sortable
 
     /**
      * @param \Illuminate\Database\Query\Builder $query
+     *
      * @return mixed
      */
     public function scopeSorted($query)
@@ -32,17 +33,16 @@ trait Sortable
     }
 
     /**
-     * moves $this model after $entity model (and rearrange all entities)
+     * moves $this model after $entity model (and rearrange all entities).
      *
      * @param \Eloquent $entity
      */
     public function moveAfter($entity)
     {
-        /** @var \Eloquent $this */
+        /* @var \Eloquent $this */
         $this->getConnection()->beginTransaction();
 
         if ($this->position > $entity->position) {
-
             $this->getConnection()->table($this->getTable())
                 ->where('position', '>', $entity->position)
                 ->where('position', '<', $this->position)
@@ -51,7 +51,6 @@ trait Sortable
             $this->position = $entity->position + 1;
         } else {
             if ($this->position < $entity->position) {
-
                 $this->getConnection()->table($this->getTable())
                     ->where('position', '<=', $entity->position)
                     ->where('position', '>', $this->position)
@@ -68,13 +67,13 @@ trait Sortable
     }
 
     /**
-     * moves $this model before $entity model (and rearrange all entities)
+     * moves $this model before $entity model (and rearrange all entities).
      *
      * @param \Eloquent $entity
      */
     public function moveBefore($entity)
     {
-        /** @var \Eloquent $this */
+        /* @var \Eloquent $this */
         $this->getConnection()->beginTransaction();
 
         if ($this->position > $entity->position) {

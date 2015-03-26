@@ -22,7 +22,6 @@ class UserAddressesControllerTest extends TestCase
         'updated_at'   => 'datetime',
     );
 
-
     public function testIndex()
     {
         $user = TestCase::getFixture('users.jon_snow');
@@ -44,7 +43,7 @@ class UserAddressesControllerTest extends TestCase
         $faker = TestCase::faker();
         $user  = TestCase::getFixture('users.jon_snow');
 
-        /**
+        /*
          * NOT OK
          */
         // "user_address" not defined
@@ -74,7 +73,7 @@ class UserAddressesControllerTest extends TestCase
         $json = $this->getJSONContent();
         $this->assertObjectHasAttribute('error', $json->response);
 
-        /**
+        /*
          * OK
          */
         $data = array(

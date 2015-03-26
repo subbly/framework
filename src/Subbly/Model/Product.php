@@ -13,7 +13,7 @@ class Product extends Model  implements ModelInterface
     protected $table = 'products';
 
     /**
-     * Fields
+     * Fields.
      */
     protected $visible = array('id', 'position', 'status', 'sku', 'slug', 'name', 'description', 'price', 'sale_price', 'quantity', 'images', 'options', 'categories', 'created_at', 'updated_at');
 
@@ -26,7 +26,7 @@ class Product extends Model  implements ModelInterface
     public $translatedAttributes = array( 'name', 'slug', 'description', 'locale' );
 
     /**
-     * Validation rules
+     * Validation rules.
      */
     protected $rules = array(
         'status' => 'required',
@@ -46,7 +46,7 @@ class Product extends Model  implements ModelInterface
     const STATUS_COMINGSOON = 'coming_soon';
 
     /**
-     * Get visible fields
+     * Get visible fields.
      *
      * @return array
      */
@@ -61,7 +61,7 @@ class Product extends Model  implements ModelInterface
     }
 
     /**
-     * Relashionship
+     * Relashionship.
      */
     public function images()
     {

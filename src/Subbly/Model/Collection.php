@@ -13,7 +13,7 @@ class Collection extends BaseCollection
     /**
      * The constructor.
      *
-     * @param \Illuminate\Database\Eloquent\Builder  $query The Eloquent query
+     * @param \Illuminate\Database\Eloquent\Builder $query The Eloquent query
      */
     public function __construct(QueryBuilder $query)
     {
@@ -22,11 +22,11 @@ class Collection extends BaseCollection
     }
 
     /**
-     * Hydrate the datas
+     * Hydrate the datas.
      */
     private function hydrate()
     {
-        /**
+        /*
          * count
          */
         $query = clone $this->query;
@@ -37,7 +37,7 @@ class Collection extends BaseCollection
 
         $this->total = $query->count();
 
-        /**
+        /*
          * entries
          */
         $query = clone $this->query;
@@ -47,7 +47,7 @@ class Collection extends BaseCollection
     }
 
     /**
-     * Get the total query entries without limit and offset
+     * Get the total query entries without limit and offset.
      *
      * @return int
      */
@@ -57,7 +57,7 @@ class Collection extends BaseCollection
     }
 
     /**
-     * Get the offset used for the query
+     * Get the offset used for the query.
      *
      * @return int
      */
@@ -67,7 +67,7 @@ class Collection extends BaseCollection
     }
 
     /**
-     * Get the limit used for the query
+     * Get the limit used for the query.
      *
      * @return int
      */

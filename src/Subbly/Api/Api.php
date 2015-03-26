@@ -16,7 +16,7 @@ class Api
     /**
      * The constructor.
      *
-     * @param Container  $container          The container
+     * @param Container $container The container
      */
     public function __construct(Container $container)
     {
@@ -27,7 +27,7 @@ class Api
     /**
      * Get a service.
      *
-     * @param string  $name The name of the service
+     * @param string $name The name of the service
      *
      * @return \Subbly\Api\Service\Service
      *
@@ -47,7 +47,7 @@ class Api
     /**
      * Process to the services registration.
      *
-     * @param array  $servicesToRegister The list of the services must be registred
+     * @param array $servicesToRegister The list of the services must be registred
      */
     public function registerServices(array $servicesToRegister)
     {
@@ -59,7 +59,7 @@ class Api
     /**
      * Process the registration of one service.
      *
-     * @param string  $className The class name of the service
+     * @param string $className The class name of the service
      *
      * @throws \Subbly\Api\Exception If class name does not exists
      * @throws \Subbly\Api\Exception If the class does not implement \Subbly\Api\Service\Service

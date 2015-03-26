@@ -28,7 +28,7 @@ class OrdersControllerTest extends TestCase
 
     public function testSearch()
     {
-        /**
+        /*
          * NOT OK
          */
         $response = $this->callJSON('GET', '/api/v1/orders/search');
@@ -36,7 +36,7 @@ class OrdersControllerTest extends TestCase
         $this->assertResponseStatus(400);
         $this->assertResponseJSONValid();
 
-        /**
+        /*
          * OK
          */
         $searchQuery = TestCase::faker()->word;

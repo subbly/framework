@@ -2,8 +2,6 @@
 
 namespace Subbly\Api\Service;
 
-use Sentry;
-
 use Subbly\Model\Collection;
 use Subbly\Model\ProductCategory;
 use Subbly\Model\Category;
@@ -15,7 +13,7 @@ class CategoryService extends Service
     protected $includableRelationships = array('translations');
 
     /**
-     * Return an empty model
+     * Return an empty model.
      *
      * @return \Subbly\Model\Category
      *
@@ -27,7 +25,7 @@ class CategoryService extends Service
     }
 
     /**
-     * Get all Category
+     * Get all Category.
      *
      * @param array $options
      *
@@ -43,7 +41,7 @@ class CategoryService extends Service
     }
 
     /**
-     * Find a Category by $id
+     * Find a Category by $id.
      *
      * @example
      *     $category = Subbly::api('subbly.category')->find($id);
@@ -64,7 +62,7 @@ class CategoryService extends Service
     }
 
     /**
-     * Create a new Category
+     * Create a new Category.
      *
      * @example
      *     $category = Subbly\Model\Category;
@@ -75,7 +73,7 @@ class CategoryService extends Service
      *         'parent' => 1,
      *     ), 'en');
      *
-     * @param array                           $category
+     * @param array $category
      * @param \Subbly\Model\Category|null     $
      *
      * @return \Subbly\Model\ProductCategory
@@ -91,14 +89,14 @@ class CategoryService extends Service
         }
 
         // set locale
-        if( !is_null( $locale ) )
-        {
-            $category->setFrontLocale( $locale );
+        if (!is_null($locale)) {
+            $category->setFrontLocale($locale);
         }
 
-        if ($category instanceof Category)
-        {
-            if ($this->fireEvent('creating', array($category)) === false) return false;
+        if ($category instanceof Category) {
+            if ($this->fireEvent('creating', array($category)) === false) {
+                return false;
+            }
 
             $category->setCaller($this);
             $category->saveWithTranslation();
@@ -117,7 +115,7 @@ class CategoryService extends Service
     }
 
     /**
-     * Update a Category
+     * Update a Category.
      *
      * @example
      *     $category = [Subbly\Model\Category instance];
@@ -139,22 +137,19 @@ class CategoryService extends Service
 
         if (count($args) == 1 && $args[0] instanceof Category) {
             $category = $args[0];
-        }
-        else if (count($args) == 2 && !empty($args[0]) && is_array($args[1]))
-        {
+        } elseif (count($args) == 2 && !empty($args[0]) && is_array($args[1])) {
             $category = $this->find($args[0]);
             $category->fill($args[1]);
-        }
-        else if (count($args) == 3 && !empty($args[0]) && is_array($args[1]) && !empty($args[2]))
-        {
+        } elseif (count($args) == 3 && !empty($args[0]) && is_array($args[1]) && !empty($args[2])) {
             $category = $this->find($args[0]);
-            $category->setFrontLocale( $args[2] );
+            $category->setFrontLocale($args[2]);
             $category->fill($args[1]);
         }
 
-        if ($category instanceof category)
-        {
-            if ($this->fireEvent('updating', array($category)) === false) return false;
+        if ($category instanceof category) {
+            if ($this->fireEvent('updating', array($category)) === false) {
+                return false;
+            }
 
             $category->setCaller($this);
             $category->saveWithTranslation();
@@ -171,9 +166,9 @@ class CategoryService extends Service
     }
 
     /**
-     * Delete a Category
+     * Delete a Category.
      *
-     * @param \Subbly\Model\Category|string  $category The category_id or the category model
+     * @param \Subbly\Model\Category|string $category The category_id or the category model
      *
      * @return \Subbly\Model\Category
      *
@@ -184,10 +179,11 @@ class CategoryService extends Service
         if (!is_object($category)) {
             $category = $this->find($category);
         }
-        
-        if ($category instanceof category)
-        {
-            if ($this->fireEvent('deleting', array($category)) === false) return false;
+
+        if ($category instanceof category) {
+            if ($this->fireEvent('deleting', array($category)) === false) {
+                return false;
+            }
 
             $category->setCaller($this);
             $category->delete($this);
@@ -199,26 +195,28 @@ class CategoryService extends Service
     /**
      * Set the model position in the database.
      *
-     * @param  array  $attributes
+     * @param array $attributes
+     *
      * @return \Subbly\Model\Category
      */
     final public function sort(array $attributes = array())
     {
-        $category       = $this->find( $attributes['movingId']  );
-        $positionEntity = $this->find( $attributes['movedId'] );
+        $category       = $this->find($attributes['movingId']);
+        $positionEntity = $this->find($attributes['movedId']);
 
-        if ($category instanceof Category)
-        {
-            if ($this->fireEvent('sorting', array($category)) === false) return false;
-            
+        if ($category instanceof Category) {
+            if ($this->fireEvent('sorting', array($category)) === false) {
+                return false;
+            }
+
             $category->setCaller($this);
-            $category->{$attributes['type']}( $positionEntity );
+            $category->{$attributes['type']}($positionEntity);
 
             $this->fireEvent('sorted', array($category));
 
             return $category;
         }
-        
+
         throw new Exception(sprintf(Exception::CANT_UPDATE_MODEL,
             'Subbly\\Model\\Category',
             $this->name()
@@ -226,7 +224,7 @@ class CategoryService extends Service
     }
 
     /**
-     * Service name
+     * Service name.
      */
     public function name()
     {

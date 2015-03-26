@@ -14,9 +14,8 @@ class UpdatesController extends BaseController
         $this->beforeFilter('@processAuthentication');
     }
 
-
     /**
-     * Return global stats
+     * Return global stats.
      *
      * @route GET /api/v1/updates
      * @authentication required

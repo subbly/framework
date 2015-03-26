@@ -12,9 +12,11 @@
  *
  * @package    Sentry
  * @version    2.0.0
+ *
  * @author     Cartalyst LLC
  * @license    BSD License (3-clause)
  * @copyright  (c) 2011 - 2013, Cartalyst LLC
+ *
  * @link       http://cartalyst.com
  */
 

@@ -2,9 +2,7 @@
 
 namespace Subbly\Presenter\V1;
 
-use Illuminate\Support\Collection as ArrayCollection;
 use Illuminate\Database\Eloquent\Collection;
-
 use Subbly\Model\Order;
 use Subbly\Presenter\Presenter;
 use Subbly\Presenter\Entries;
@@ -14,9 +12,9 @@ use Subbly\Subbly;
 class OrderPresenter extends Presenter
 {
     /**
-     * Get formated datas for a single entry
+     * Get formated datas for a single entry.
      *
-     * @param \Subbly\Model\Order  $order
+     * @param \Subbly\Model\Order $order
      *
      * @return array
      */
@@ -25,16 +23,16 @@ class OrderPresenter extends Presenter
         $entry = new Entry($order);
 
         $entry
-            ->conditionalField('id', function() {
+            ->conditionalField('id', function () {
                 return Subbly::api('subbly.user')->hasAccess('subbly.backend.auth');
             })
 
             ->field('uid')
             ->field('status')
             ->field('gateway')
-            ->decimal('total_price', $order->total_price )
-            ->integer('total_items', $order->total_items )
-            ->decimal('shipping_cost', $order->shipping_cost )
+            ->decimal('total_price', $order->total_price)
+            ->integer('total_items', $order->total_items)
+            ->decimal('shipping_cost', $order->shipping_cost)
 
             ->relationshipField('user', 'Subbly\\Presenter\\V1\\UserPresenter')
             ->relationshipField('billing_address', 'Subbly\\Presenter\\V1\\OrderAddressPresenter')
@@ -49,30 +47,29 @@ class OrderPresenter extends Presenter
     }
 
     /**
-     * Get formated datas for a collection
+     * Get formated datas for a collection.
      *
-     * @param \Subbly\Model\Collection  $collection
+     * @param \Subbly\Model\Collection $collection
      *
      * @return \Illuminate\Support\Collection
      */
     public function collection(Collection $collection)
     {
-        $entries = new Entries;
+        $entries = new Entries();
 
-        foreach ($collection as $order)
-        {
+        foreach ($collection as $order) {
             $entry = new Entry($order);
 
             $entry
-                ->conditionalField('id', function() {
+                ->conditionalField('id', function () {
                     return Subbly::api('subbly.user')->hasAccess('subbly.backend.auth');
                 })
 
                 ->field('uid')
                 ->field('status')
-                ->decimal('total_price', (float) $order->total_price )
-                ->integer('total_items', (int) $order->total_items )
-                ->decimal('shipping_cost', (float) $order->shipping_cost )
+                ->decimal('total_price', (float) $order->total_price)
+                ->integer('total_items', (int) $order->total_items)
+                ->decimal('shipping_cost', (float) $order->shipping_cost)
 
                 ->relationshipField('user', 'Subbly\\Presenter\\V1\\UserPresenter')
                 ->relationshipField('billing_address', 'Subbly\\Presenter\\V1\\OrderAddressPresenter')

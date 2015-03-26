@@ -5,11 +5,10 @@ namespace Subbly\Command;
 use Illuminate\Console\Command;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Input\InputArgument;
-
 use Subbly\Subbly;
 
-class CreateAdminUserCommand extends Command {
-
+class CreateAdminUserCommand extends Command
+{
     protected $name = 'subbly:create-admin-user';
 
     protected $description = 'Create a admin user by cli.';

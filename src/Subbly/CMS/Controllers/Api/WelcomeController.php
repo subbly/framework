@@ -14,9 +14,8 @@ class WelcomeController extends BaseController
         $this->beforeFilter('@processAuthentication');
     }
 
-
     /**
-     * Return stats for the dashboard
+     * Return stats for the dashboard.
      *
      * @route GET /api/v1/welcome
      * @authentication required

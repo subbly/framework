@@ -2,7 +2,6 @@
 
 namespace Subbly\Api\Service;
 
-use Subbly\Model\Collection;
 use Subbly\Model\OrderAddress;
 
 class OrderAddressService extends Service
@@ -12,7 +11,7 @@ class OrderAddressService extends Service
     protected $includableRelationships = [];
 
     /**
-     * Return an empty model
+     * Return an empty model.
      *
      * @return \Subbly\Model\OrderAddress
      *
@@ -24,13 +23,13 @@ class OrderAddressService extends Service
     }
 
     /**
-     * Find a Order by $id
+     * Find a Order by $id.
      *
      * @example
      *     $order = Subbly::api('subbly.order')->find($id);
      *
-     * @param string  $id
-     * @param array   $options
+     * @param string $id
+     * @param array  $options
      *
      * @return \Subbly\Model\Order
      *
@@ -45,12 +44,11 @@ class OrderAddressService extends Service
     }
 
     /**
-     * Create a new OrderAdress
+     * Create a new OrderAdress.
      *
      * @example
      *     $order = Subbly\Model\OrderAddress;
      *     Subbly::api('subbly.orderadress')->create($order, $address);
-     *
      *
      * @param \Subbly\Model\OrderAdress|array $orderAddress
      *
@@ -64,9 +62,10 @@ class OrderAddressService extends Service
             $address = new OrderAddress($address);
         }
 
-        if ($address instanceof OrderAddress)
-        {
-            if ($this->fireEvent('creating', array($address)) === false) return false;
+        if ($address instanceof OrderAddress) {
+            if ($this->fireEvent('creating', array($address)) === false) {
+                return false;
+            }
 
             $address->setCaller($this);
             $address->save();
@@ -85,7 +84,7 @@ class OrderAddressService extends Service
     }
 
     /**
-     * Update a Order
+     * Update a Order.
      *
      * @example
      *     $order = [Subbly\Model\Order instance];
@@ -107,16 +106,15 @@ class OrderAddressService extends Service
 
         if (count($args) == 1 && $args[0] instanceof Order) {
             $order = $args[0];
-        }
-        else if (count($args) == 2 && !empty($args[0]) && is_array($args[1]))
-        {
+        } elseif (count($args) == 2 && !empty($args[0]) && is_array($args[1])) {
             $order = $this->find($args[0]);
             $order->fill($args[1]);
         }
 
-        if ($order instanceof Order)
-        {
-            if ($this->fireEvent('updating', array($order)) === false) return false;
+        if ($order instanceof Order) {
+            if ($this->fireEvent('updating', array($order)) === false) {
+                return false;
+            }
 
             $order->setCaller($this);
             $order->save();
@@ -143,7 +141,7 @@ class OrderAddressService extends Service
     }
 
     /**
-     * Service name
+     * Service name.
      */
     public function name()
     {

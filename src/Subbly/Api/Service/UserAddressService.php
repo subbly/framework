@@ -2,8 +2,6 @@
 
 namespace Subbly\Api\Service;
 
-use Sentry;
-
 use Subbly\Model\Collection;
 use Subbly\Model\UserAddress;
 use Subbly\Model\User;
@@ -15,7 +13,7 @@ class UserAddressService extends Service
     protected $includableRelationships = array('user');
 
     /**
-     * Return an empty model
+     * Return an empty model.
      *
      * @return \Subbly\Model\UserAddress
      *
@@ -27,13 +25,13 @@ class UserAddressService extends Service
     }
 
     /**
-     * Find a UserAddress by $id
+     * Find a UserAddress by $id.
      *
      * @example
      *     $userAddress = Subbly::api('subbly.user_address')->find($id);
      *
-     * @param string  $id
-     * @param array   $options
+     * @param string $id
+     * @param array  $options
      *
      * @return \Subbly\Model\UserAddress
      *
@@ -48,13 +46,13 @@ class UserAddressService extends Service
     }
 
     /**
-     * Find a UserAddress by User
+     * Find a UserAddress by User.
      *
      * @example
      *     $userAddress = Subbly::api('subbly.user_address')->findByUser($user);
      *
-     * @param string|\Subbly\Model\User  $user    The User model or the User uid
-     * @param array                      $options Some options
+     * @param string|\Subbly\Model\User $user    The User model or the User uid
+     * @param array                     $options Some options
      *
      * @return \Subbly\Model\Collection
      *
@@ -67,7 +65,7 @@ class UserAddressService extends Service
         }
 
         $query = $this->newCollectionQuery($options);
-        $query->with(array('user' => function($query) use ($user) {
+        $query->with(array('user' => function ($query) use ($user) {
             $query->where('uid', '=', $user->uid);
         }));
 
@@ -75,7 +73,7 @@ class UserAddressService extends Service
     }
 
     /**
-     * Create a new UserAddress
+     * Create a new UserAddress.
      *
      * @example
      *     $user = Subbly\Model\UserAddress;
@@ -86,8 +84,8 @@ class UserAddressService extends Service
      *         'lastname'  => 'Snow',
      *     ));
      *
-     * @param \Subbly\Model\UserAddress|array  $userAddress
-     * @param \Subbly\Model\User|null          $user
+     * @param \Subbly\Model\UserAddress|array $userAddress
+     * @param \Subbly\Model\User|null         $user
      *
      * @return \Subbly\Model\UserAddress
      *
@@ -105,9 +103,10 @@ class UserAddressService extends Service
             $userAddress = new UserAddress($userAddress);
         }
 
-        if ($userAddress instanceof UserAddress)
-        {
-            if ($this->fireEvent('creating', array($userAddress)) === false) return false;
+        if ($userAddress instanceof UserAddress) {
+            if ($this->fireEvent('creating', array($userAddress)) === false) {
+                return false;
+            }
 
             $userAddress->user()->associate($user);
 
@@ -128,7 +127,7 @@ class UserAddressService extends Service
     }
 
     /**
-     * Update a UserAddress
+     * Update a UserAddress.
      *
      * @example
      *     $userAddress = [Subbly\Model\UserAddress instance];
@@ -150,16 +149,15 @@ class UserAddressService extends Service
 
         if (count($args) == 1 && $args[0] instanceof UserAddress) {
             $userAddress = $args[0];
-        }
-        else if (count($args) == 2 && !empty($args[0]) && is_array($args[1]))
-        {
+        } elseif (count($args) == 2 && !empty($args[0]) && is_array($args[1])) {
             $userAddress = $this->find($args[0]);
             $userAddress->fill($args[1]);
         }
 
-        if ($userAddress instanceof UserAddress)
-        {
-            if ($this->fireEvent('updating', array($userAddress)) === false) return false;
+        if ($userAddress instanceof UserAddress) {
+            if ($this->fireEvent('updating', array($userAddress)) === false) {
+                return false;
+            }
 
             $userAddress->setCaller($this);
             $userAddress->save();
@@ -176,9 +174,9 @@ class UserAddressService extends Service
     }
 
     /**
-     * Delete a UserAddress
+     * Delete a UserAddress.
      *
-     * @param \Subbly\Model\UserAddress|string  $userAddress The userAddress_uid or the UserAddress model
+     * @param \Subbly\Model\UserAddress|string $userAddress The userAddress_uid or the UserAddress model
      *
      * @return \Subbly\Model\UserAddress
      *
@@ -190,9 +188,10 @@ class UserAddressService extends Service
             $userAddress = $this->find($userAddress);
         }
 
-        if ($userAddress instanceof UserAddress)
-        {
-            if ($this->fireEvent('deleting', array($userAddress)) === false) return false;
+        if ($userAddress instanceof UserAddress) {
+            if ($this->fireEvent('deleting', array($userAddress)) === false) {
+                return false;
+            }
 
             $userAddress->delete($this);
 
@@ -201,7 +200,7 @@ class UserAddressService extends Service
     }
 
     /**
-     * Service name
+     * Service name.
      */
     public function name()
     {

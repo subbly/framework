@@ -10,10 +10,10 @@ trait FixturesTrait
     private static $fixtures;
 
     /**
-     * Add a new fixture
+     * Add a new fixture.
      *
-     * @param string                        $name  The name of the fixture
-     * @param \Subbly\Model\ModelInterface  $model The model to add in the fixtures
+     * @param string                       $name  The name of the fixture
+     * @param \Subbly\Model\ModelInterface $model The model to add in the fixtures
      */
     public static function addFixture($name, ModelInterface $model)
     {
@@ -21,9 +21,9 @@ trait FixturesTrait
     }
 
     /**
-     * Get a fixture by his name
+     * Get a fixture by his name.
      *
-     * @param string  $name  The name of the fixture
+     * @param string $name The name of the fixture
      *
      * @return \Subbly\Model\ModelInterface
      */
@@ -33,14 +33,14 @@ trait FixturesTrait
     }
 
     /**
-     * Get fixtures storage
+     * Get fixtures storage.
      *
      * @return \ArrayObject
      */
     private static function fixtures()
     {
         if (!isset(self::$fixtures)) {
-            self::$fixtures = new \ArrayObject;
+            self::$fixtures = new \ArrayObject();
         }
 
         return self::$fixtures;

@@ -3,7 +3,6 @@
 namespace Subbly\Api\Service;
 
 use Subbly\Api\Api;
-use Subbly\Model\ModelInterface;
 use Subbly\Subbly;
 
 abstract class Service
@@ -23,7 +22,7 @@ abstract class Service
     /**
      * The constructor.
      *
-     * @param Subbly\Api\Api  $api The Api class
+     * @param Subbly\Api\Api $api The Api class
      *
      * @throws Subbly\Api\Service\Exception If name() method does not return a string
      */
@@ -37,7 +36,7 @@ abstract class Service
 
         $this->api = $api;
 
-        /**
+        /*
          * Initialization
          */
         $this->fireEvent('initializing', array($this));
@@ -49,7 +48,7 @@ abstract class Service
 
     /**
      * Name of the service
-     * Must be unique
+     * Must be unique.
      *
      * Example of value: 'subbly.user'
      *
@@ -58,17 +57,19 @@ abstract class Service
     abstract public function name();
 
     /**
-     * Service initialization
+     * Service initialization.
      *
      * @api
      */
-    protected function init() {}
+    protected function init()
+    {
+    }
 
     /**
-     * Get new query instance
+     * Get new query instance.
      *
-     * @param array        $options
-     * @param string|null  $modelClass
+     * @param array       $options
+     * @param string|null $modelClass
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
@@ -84,30 +85,26 @@ abstract class Service
         if (!is_string($modelClass)) {
             $modelClass = $this->modelClass;
         }
-        $query = call_user_func(array(new $modelClass, 'newQuery'));
+        $query = call_user_func(array(new $modelClass(), 'newQuery'));
 
-        /**
+        /*
          * Includes
          */
-        if (is_array($options['includes']))
-        {
+        if (is_array($options['includes'])) {
             $includes = array_values($options['includes']);
 
-            foreach ($includes as $include)
-            {
+            foreach ($includes as $include) {
                 if (in_array($include, $this->includableRelationships)) {
                     $query->with($include);
                 }
             }
         }
 
-        /**
+        /*
          * Where
          */
-        if (is_array($options['where']))
-        {
-            foreach ($options['where'] as $condition)
-            {
+        if (is_array($options['where'])) {
+            foreach ($options['where'] as $condition) {
                 if (
                     is_array($condition)
                     && count($condition) == 3
@@ -117,28 +114,22 @@ abstract class Service
             }
         }
 
-        /**
+        /*
          * Has
          */
-        if (is_array($options['has']))
-        {
-            foreach ($options['has'] as $relation=>$conditions)
-            {
+        if (is_array($options['has'])) {
+            foreach ($options['has'] as $relation => $conditions) {
                 if (
                     is_string($relation)
                     && is_array($conditions)
                 ) {
-
-                    $query->whereHas( $relation, function( $q ) use ( $conditions )
-                    {
+                    $query->whereHas($relation, function ($q) use ($conditions) {
                         $i = 0;
-                        foreach( $conditions as $condition)
-                        {
-                            if( 
+                        foreach ($conditions as $condition) {
+                            if (
                                 is_array($condition)
                                 && count($condition) == 2
-                            )
-                            {
+                            ) {
                                 // TODO: our goal is to reduce the subcondition, e.g.:
                                 // select * from `categories` where (select count(*) from `category_translations` where `category_translations`.`category_id` = `categories`.`id` and (`slug` = "men" or `slug` = "shoes")) >= 1
                                 // current implementation is missing the "()" between the `slug` condition, like this:
@@ -161,17 +152,14 @@ abstract class Service
             }
         }
 
-        /**
+        /*
         * orders
         */
-        if (is_string($options['order_by']))
-        {
-            $options['order_by'] = json_decode( $options['order_by'], true );
+        if (is_string($options['order_by'])) {
+            $options['order_by'] = json_decode($options['order_by'], true);
         }
-        if (is_array($options['order_by']))
-        {
-            foreach ($options['order_by'] as $field=>$direction)
-            {
+        if (is_array($options['order_by'])) {
+            foreach ($options['order_by'] as $field => $direction) {
                 $direction = strtoupper($direction);
 
                 // TODO implement orderableFields
@@ -189,10 +177,10 @@ abstract class Service
     }
 
     /**
-     * Get new collection query instance
+     * Get new collection query instance.
      *
-     * @param array        $options
-     * @param string|null  $modelClass
+     * @param array       $options
+     * @param string|null $modelClass
      *
      * @return \Illuminate\Database\Eloquent\Builder
      */
@@ -205,7 +193,7 @@ abstract class Service
 
         $query = $this->newQuery($options, $modelClass);
 
-        /**
+        /*
          * Offset & limit
          */
         if (is_numeric($options['limit'])) {
@@ -225,13 +213,13 @@ abstract class Service
     }
 
     /**
-     * Get new search query instance
+     * Get new search query instance.
      *
-     * @param string|array  $searchQuery      The search query
-     * @param array         $searchableFields The searchable fields (default: all visible fields in the model)
-     * @param string|null   $statmentsType
-     * @param array         $options          The query options
-     * @param string|null   $modelClass
+     * @param string|array $searchQuery      The search query
+     * @param array        $searchableFields The searchable fields (default: all visible fields in the model)
+     * @param string|null  $statmentsType
+     * @param array        $options          The query options
+     * @param string|null  $modelClass
      *
      * @return \Illuminate\Database\Eloquent\Builder
      *
@@ -243,15 +231,14 @@ abstract class Service
         if (!is_string($modelClass)) {
             $modelClass = $this->modelClass;
         }
-        $q = call_user_func(array(new $modelClass, 'newQueryWithoutScopes'));
+        $q = call_user_func(array(new $modelClass(), 'newQueryWithoutScopes'));
 
         if ($searchableFields === null || empty($searchableFields)) {
             $searchableFields = $instance->getVisible();
         }
 
         // If search query is a string
-        if (is_string($searchQuery))
-        {
+        if (is_string($searchQuery)) {
             $st = strtoupper($statementsType) === 'AND'
                 ? 'where'
                 : 'orWhere'
@@ -262,21 +249,18 @@ abstract class Service
             }
         }
         // If search query is an array
-        else if (is_array($searchQuery))
-        {
+        elseif (is_array($searchQuery)) {
             $st = strtoupper($statementsType) === 'OR'
                 ? 'orWhere'
                 : 'where'
             ;
 
-            foreach ($searchableFields as $field)
-            {
+            foreach ($searchableFields as $field) {
                 if (isset($searchQuery[$field])) {
                     $q->{$st}($field, 'LIKE', "%{$searchQuery[$field]}%");
                 }
             }
-        }
-        else {
+        } else {
             throw new \ErrorException(sprintf('%s::%s() expects parameter 1 to be string or array, %s given',
                 __CLASS__,
                 __METHOD__,
@@ -290,11 +274,11 @@ abstract class Service
     }
 
     /**
-     * Fire an event
+     * Fire an event.
      *
-     * @param string   $eventName Name of the event
-     * @param array    $vars      Event vars
-     * @param boolean  $halt
+     * @param string  $eventName Name of the event
+     * @param array   $vars      Event vars
+     * @param boolean $halt
      *
      * @return array|null
      *
@@ -318,9 +302,9 @@ abstract class Service
     }
 
     /**
-     * Access to the Subbly Api
+     * Access to the Subbly Api.
      *
-     * @param null|string  $serviceName The name of the service (optional)
+     * @param null|string $serviceName The name of the service (optional)
      *
      * @return \Subbly\Api\Api|\Subbly\Api\Service\Service
      *

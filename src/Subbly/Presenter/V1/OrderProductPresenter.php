@@ -2,10 +2,7 @@
 
 namespace Subbly\Presenter\V1;
 
-use Illuminate\Support\Collection as ArrayCollection;
 use Illuminate\Database\Eloquent\Collection;
-
-use Subbly\Model\OrderProduct;
 use Subbly\Presenter\Presenter;
 use Subbly\Presenter\Entries;
 use Subbly\Presenter\Entry;
@@ -14,9 +11,9 @@ use Subbly\Subbly;
 class OrderProductPresenter extends Presenter
 {
     /**
-     * Get formated datas for a single entry
+     * Get formated datas for a single entry.
      *
-     * @param \Subbly\Model\Product  $product
+     * @param \Subbly\Model\Product $product
      *
      * @return array
      */
@@ -41,19 +38,17 @@ class OrderProductPresenter extends Presenter
     }
 
     /**
-     * Get formated datas for a collection
+     * Get formated datas for a collection.
      *
-     * @param \Subbly\Model\Collection  $collection
+     * @param \Subbly\Model\Collection $collection
      *
      * @return \Illuminate\Support\Collection
      */
     public function collection(Collection $collection)
     {
+        $entries = new Entries();
 
-        $entries = new Entries;
-
-        foreach ($collection as $product)
-        {
+        foreach ($collection as $product) {
             $entry = new Entry($product);
 
             $entry
@@ -65,8 +60,8 @@ class OrderProductPresenter extends Presenter
                 ->field('price')
                 ->field('sale_price')
                 ->field('quantity')
-                
-                ->value('image', $product->product->defaultImage() )
+
+                ->value('image', $product->product->defaultImage())
                 // ->relationshipField('product', 'Subbly\\Presenter\\V1\\ProductPresenter')
 
                 ->dateField('created_at')

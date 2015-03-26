@@ -3,13 +3,10 @@
 namespace Subbly\Api\Service;
 
 use Carbon\Carbon;
-
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Collection;
-
 use Symfony\Component\Yaml\Yaml;
 use Symfony\Component\Yaml\Exception\ParseException;
-
 use Subbly\Api\Exception;
 use Subbly\Model\Stats;
 
@@ -29,9 +26,9 @@ class StatsService extends Service
     }
 
     /**
-     * Register a new default stats file
+     * Register a new default stats file.
      *
-     * @param string  $filename Name of the file
+     * @param string $filename Name of the file
      *
      * @throws Subbly\Api\Service\Exception
      * @throws Subbly\Api\Service\Exception
@@ -48,8 +45,7 @@ class StatsService extends Service
 
         try {
             $yaml = Yaml::parse(file_get_contents($filename));
-        }
-        catch (ParseException $e) {
+        } catch (ParseException $e) {
             throw new Exception(sprintf('Unable to parse the YAML string: %s', $e->getMessage()));
         }
 
@@ -66,23 +62,22 @@ class StatsService extends Service
     }
 
     /**
-     * Set a period
+     * Set a period.
      *
-     * @param string  $period
-     * @param array   $options $from $to
+     * @param string $period
+     * @param array  $options $from $to
      *
      * @return Obj
      *
      * @api
      */
-    private function setPeriod( $period, $options )
+    private function setPeriod($period, $options)
     {
         $format  = 'Y-m-d 00:00:00';
-        $obj     = new \stdClass;
+        $obj     = new \stdClass();
         $obj->to = Carbon::now();
 
-        switch ( $period )
-        {
+        switch ($period) {
             case 'lastweek':
                 $obj->from = new Carbon('last week');
                 break;
@@ -102,13 +97,13 @@ class StatsService extends Service
                 break;
         }
 
-        $obj->formated = $obj->from->format( $format ) . '::' . $obj->to->format( $format );
+        $obj->formated = $obj->from->format($format).'::'.$obj->to->format($format);
 
         return $obj;
     }
 
     /**
-     * Get all Setting
+     * Get all Setting.
      *
      * @return \Illuminate\Support\Collection
      *
@@ -119,14 +114,13 @@ class StatsService extends Service
         return $this->getCachedStats();
     }
 
-
     /**
-     * Find a Stats by $service/$type/$period
+     * Find a Stats by $service/$type/$period.
      *
      * @example
      *     $user = Subbly::api('subbly.stats')->find($service);
      *
-     * @param string  $service
+     * @param string $service
      *
      * @return Stats
      *
@@ -134,19 +128,18 @@ class StatsService extends Service
      */
     public function find($service, array $options = array())
     {
-        $key = $this->get( $service. '.total.lastmonth' );
-dd( $key );
+        $key = $this->get($service.'.total.lastmonth');
+        dd($key);
         $query = $this->newQuery($options);
         $query->where('uid', '=', $uid);
 
         return $query->firstOrFail();
     }
 
-
     /**
-     * Get a Setting value
+     * Get a Setting value.
      *
-     * @param string  $key  The setting key
+     * @param string $key The setting key
      *
      * @return mixed
      *
@@ -164,9 +157,9 @@ dd( $key );
     }
 
     /**
-     * Ask if a setting key exists or not
+     * Ask if a setting key exists or not.
      *
-     * @param string  $key  The setting key
+     * @param string $key The setting key
      *
      * @return boolean
      *
@@ -178,9 +171,9 @@ dd( $key );
     }
 
     /**
-     * Update many stats
+     * Update many stats.
      *
-     * @param array  $stats Stats collection to update
+     * @param array $stats Stats collection to update
      *
      * @return boolean
      *
@@ -192,8 +185,7 @@ dd( $key );
     public function updateMany(array $stats)
     {
         // TODO Use DB::beginTransaction(), DB::rollback(), DB::commit() ?
-        foreach ($stats as $k=>$v)
-        {
+        foreach ($stats as $k => $v) {
             if ($this->update($k, $v) === false) {
                 return false;
             }
@@ -203,10 +195,10 @@ dd( $key );
     }
 
     /**
-     * Update a setting value
+     * Update a setting value.
      *
-     * @param string  $key   The setting key
-     * @param mixed   $value The setting value
+     * @param string $key   The setting key
+     * @param mixed  $value The setting value
      *
      * @return boolean
      *
@@ -217,7 +209,9 @@ dd( $key );
      */
     public function update($key, $value)
     {
-        if ($this->fireEvent('updating', array($key, $value)) === false) return false;
+        if ($this->fireEvent('updating', array($key, $value)) === false) {
+            return false;
+        }
 
         if (!is_string($key) || !$this->has($key)) {
             throw new Exception(sprintf(Exception::STATS_KEY_NOT_EXISTS, $key));
@@ -256,9 +250,9 @@ dd( $key );
     }
 
     /**
-     * Get defaults stats
+     * Get defaults stats.
      *
-     * @param string|null  $key A setting key (optional)
+     * @param string|null $key A setting key (optional)
      *
      * @return array
      *
@@ -268,8 +262,7 @@ dd( $key );
      */
     public function defaults($key = null)
     {
-        if (is_string($key))
-        {
+        if (is_string($key)) {
             if (!$this->has($key)) {
                 throw new Exception(sprintf(Exception::STATS_KEY_NOT_EXISTS, $key));
             }
@@ -281,9 +274,9 @@ dd( $key );
     }
 
     /**
-     * Refresh the stats
+     * Refresh the stats.
      *
-     * @param boolean  $force Force the refresh
+     * @param boolean $force Force the refresh
      *
      * @api
      */
@@ -293,14 +286,13 @@ dd( $key );
     }
 
     /**
-     * Get the cached stats data
+     * Get the cached stats data.
      *
      * @return \Illuminate\Support\Collection
      */
     private function getCachedStats()
     {
-        if (!Cache::has(self::CACHE_NAME))
-        {
+        if (!Cache::has(self::CACHE_NAME)) {
             $this->initCachedStats();
         }
 
@@ -310,9 +302,9 @@ dd( $key );
     }
 
     /**
-     * Set new stats data to cache
+     * Set new stats data to cache.
      *
-     * @param \Illuminate\Support\Collection  $stats
+     * @param \Illuminate\Support\Collection $stats
      */
     private function setCachedStats(Collection $stats)
     {
@@ -325,23 +317,19 @@ dd( $key );
     }
 
     /**
-     *
-     *
      * @return \Illuminate\Support\Collection
      */
     private function initCachedStats()
     {
-        $stats = new Collection;
+        $stats = new Collection();
 
         // Defaults stats
-        foreach ( $this->defaults as $k => $v )
-        {
-            $stats->offsetSet( $k, $v['value'] );
+        foreach ($this->defaults as $k => $v) {
+            $stats->offsetSet($k, $v['value']);
         }
 
         // Database stats
-        foreach ( Stats::all() as $s ) 
-        {
+        foreach (Stats::all() as $s) {
             $stats->offsetSet($s->service, $s);
         }
 
@@ -351,7 +339,7 @@ dd( $key );
     }
 
     /**
-     * Service name
+     * Service name.
      */
     public function name()
     {

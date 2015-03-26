@@ -25,8 +25,7 @@ class SubblyTest extends TestCase
             Subbly::api('subbly.a_very_wrong_service');
 
             $this->fail('Subbly\Api\Exception has not be raised.');
-        }
-        catch (\Subbly\Api\Exception $e) {
+        } catch (\Subbly\Api\Exception $e) {
             $this->assertTrue(true);
         }
     }

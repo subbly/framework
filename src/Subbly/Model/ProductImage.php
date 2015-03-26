@@ -3,8 +3,6 @@
 namespace Subbly\Model;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Facades\DB;
-
 // use Symfony\Component\HttpFoundation\File\UploadedFile;
 // use Symfony\Component\Filesystem\Filesystem;
 // use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
@@ -24,8 +22,8 @@ class ProductImage extends Model implements ModelInterface
     protected $table = 'product_images';
 
     /**
-    * Fields
-    */
+     * Fields.
+     */
     protected $visible = array('filename', 'product', 'position', 'created_at', 'updated_at');
 
     protected $fillable = array('filename');
@@ -37,7 +35,7 @@ class ProductImage extends Model implements ModelInterface
     );
 
     /**
-     * Validations
+     * Validations.
      */
     protected $rules = array(
         'product_id' => 'required|exists:products,id',
@@ -59,7 +57,7 @@ class ProductImage extends Model implements ModelInterface
     /**
      *
      */
-    protected function performInsert( \Illuminate\Database\Eloquent\Builder $query, array $options = array() )
+    protected function performInsert(\Illuminate\Database\Eloquent\Builder $query, array $options = array())
     {
         $this->attributes['uid'] = md5(uniqid(mt_rand(), true));
 
@@ -67,15 +65,15 @@ class ProductImage extends Model implements ModelInterface
     }
 
     /**
-     * Relashionship
+     * Relashionship.
      */
     public function product()
     {
         return $this->belongsTo('Subbly\\Model\\Product', 'product_id');
     }
-    
+
     public function getFilenameAttribute()
     {
-        return public_upload( 'product_image/' . $this->attributes['filename'] );
+        return public_upload('product_image/'.$this->attributes['filename']);
     }
 }

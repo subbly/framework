@@ -36,7 +36,7 @@ class ProductsControllerTest extends TestCase
 
     public function testSearch()
     {
-        /**
+        /*
          * NOT OK
          */
         $response = $this->callJSON('GET', '/api/v1/products/search');
@@ -44,7 +44,7 @@ class ProductsControllerTest extends TestCase
         $this->assertResponseStatus(400);
         $this->assertResponseJSONValid();
 
-        /**
+        /*
          * OK
          */
         $searchQuery = TestCase::faker()->word;
@@ -78,7 +78,7 @@ class ProductsControllerTest extends TestCase
     public function testStore()
     {
         $faker = TestCase::faker();
-        /**
+        /*
          * NOT OK
          */
         // "product" not defined
@@ -99,7 +99,7 @@ class ProductsControllerTest extends TestCase
         $json = $this->getJSONContent();
         $this->assertObjectHasAttribute('error', $json->response);
 
-        /**
+        /*
          * OK
          */
         $data = array(
@@ -125,7 +125,7 @@ class ProductsControllerTest extends TestCase
         $faker   = TestCase::faker();
         $product = TestCase::getFixture('products.product_8');
 
-        /**
+        /*
          * NOT OK
          */
         // "product" not defined
@@ -137,7 +137,7 @@ class ProductsControllerTest extends TestCase
         $json = $this->getJSONContent();
         $this->assertObjectHasAttribute('error', $json->response);
 
-        /**
+        /*
          * OK
          */
         // "product" defined but empty

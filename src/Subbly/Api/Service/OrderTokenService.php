@@ -2,7 +2,6 @@
 
 namespace Subbly\Api\Service;
 
-use Subbly\Model\Collection;
 use Subbly\Model\OrderToken;
 
 class OrderTokenService extends Service
@@ -12,23 +11,23 @@ class OrderTokenService extends Service
     protected $includableRelationships = array('order');
 
     /**
-     * Access to the payment gateway
+     * Access to the payment gateway.
      */
     public function access()
     {
-        $gate = new OrderToken;
+        $gate = new OrderToken();
 
         return $gate;
     }
 
     /**
-     * Find a Order by $id
+     * Find a Order by $id.
      *
      * @example
      *     $order = Subbly::api('subbly.order')->find($id);
      *
-     * @param string  $id
-     * @param array   $options
+     * @param string $id
+     * @param array  $options
      *
      * @return \Subbly\Model\Order
      *
@@ -47,7 +46,7 @@ class OrderTokenService extends Service
     }
 
     /**
-     * Create a new Product
+     * Create a new Product.
      *
      * @example
      *     $product = Subbly\Model\Product;
@@ -70,9 +69,10 @@ class OrderTokenService extends Service
             $orderToken = new OrderToken($orderToken);
         }
 
-        if ($orderToken instanceof OrderToken)
-        {
-            if ($this->fireEvent('creating', array($orderToken)) === false) return false;
+        if ($orderToken instanceof OrderToken) {
+            if ($this->fireEvent('creating', array($orderToken)) === false) {
+                return false;
+            }
 
             $orderToken->setCaller($this);
             $orderToken->save();
@@ -91,23 +91,21 @@ class OrderTokenService extends Service
     }
 
     /**
-     * Create a new gateway
+     * Create a new gateway.
      *
-     * @return void
      *
      * @api
      */
-    public function setProvider( $provider )
+    public function setProvider($provider)
     {
-        return Omnipay::create( $provider );
+        return Omnipay::create($provider);
     }
 
     /**
-     * Service name
+     * Service name.
      */
     public function name()
     {
         return 'subbly.ordertoken';
     }
-
 }

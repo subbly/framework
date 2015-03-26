@@ -3,7 +3,6 @@
 namespace Subbly\CMS\Controllers\Api;
 
 use Illuminate\Support\Facades\Input;
-
 use Subbly\Subbly;
 
 class ProductsController extends BaseController
@@ -20,9 +19,8 @@ class ProductsController extends BaseController
         $this->loadPresenter('Subbly\\Presenter\\V1\\ProductPresenter');
     }
 
-
     /**
-     * Get Product list
+     * Get Product list.
      *
      * @route GET /api/v1/products
      * @authentication required
@@ -37,7 +35,7 @@ class ProductsController extends BaseController
     }
 
     /**
-     * Search one or many Product
+     * Search one or many Product.
      *
      * @route GET /api/v1/products/search/?q=
      * @authentication required
@@ -58,7 +56,7 @@ class ProductsController extends BaseController
     }
 
     /**
-     * Get Product datas
+     * Get Product datas.
      *
      * @route GET /api/v1/products/:id
      * @authentication required
@@ -75,7 +73,7 @@ class ProductsController extends BaseController
     }
 
     /**
-     * Create a new Product
+     * Create a new Product.
      *
      * @route POST /api/v1/products/
      * @authentication required
@@ -86,7 +84,7 @@ class ProductsController extends BaseController
             return $this->jsonErrorResponse('"product" is required.');
         }
 
-        $product = Subbly::api('subbly.product')->create( Input::get('product'), Input::get('locale', null ) );
+        $product = Subbly::api('subbly.product')->create(Input::get('product'), Input::get('locale', null));
 
         return $this->jsonResponse(array(
             'product' => $this->presenter->single($product),
@@ -100,7 +98,7 @@ class ProductsController extends BaseController
     }
 
     /**
-     * Update a Product
+     * Update a Product.
      *
      * @route PUT|PATCH /api/v1/products/:sku
      * @authentication required
@@ -111,7 +109,7 @@ class ProductsController extends BaseController
             return $this->jsonErrorResponse('"product" is required.');
         }
 
-        $product = Subbly::api('subbly.product')->update($sku, Input::get('product'), Input::get('locale', null ));
+        $product = Subbly::api('subbly.product')->update($sku, Input::get('product'), Input::get('locale', null));
 
         return $this->jsonResponse(array(
             'product' => $this->presenter->single($product),
@@ -122,7 +120,7 @@ class ProductsController extends BaseController
     }
 
     /**
-     * Set Product order
+     * Set Product order.
      *
      * @route POST /api/v1/products/sort
      * @authentication required
@@ -132,8 +130,8 @@ class ProductsController extends BaseController
         if (!Input::has('sortable')) {
             return $this->jsonErrorResponse('"sortable" is required.');
         }
-        
-        $product = Subbly::api('subbly.product')->sort( Input::get('sortable') );
+
+        $product = Subbly::api('subbly.product')->sort(Input::get('sortable'));
 
         return $this->jsonResponse(array(),
         array(

@@ -17,14 +17,12 @@ class SubblyFrameworkServiceProvider extends ServiceProvider
 
     /**
      * Bootstrap the application events.
-     *
-     * @return void
      */
     public function boot()
     {
         $this->package('subbly/framework');
 
-        include_once __DIR__ . '/../../routes.php';
+        include_once __DIR__.'/../../routes.php';
 
         // TODO
         // Container::boot();
@@ -32,8 +30,6 @@ class SubblyFrameworkServiceProvider extends ServiceProvider
 
     /**
      * Register the service provider.
-     *
-     * @return void
      */
     public function register()
     {
@@ -44,9 +40,8 @@ class SubblyFrameworkServiceProvider extends ServiceProvider
 
     private function registerMyCommand()
     {
-        $this->app['create-admin-user'] = $this->app->share(function($app)
-        {
-            return new CreateAdminUserCommand;
+        $this->app['create-admin-user'] = $this->app->share(function ($app) {
+            return new CreateAdminUserCommand();
         });
     }
 
@@ -68,5 +63,4 @@ class SubblyFrameworkServiceProvider extends ServiceProvider
 
         return $providers;
     }
-
 }

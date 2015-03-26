@@ -27,8 +27,7 @@ require __DIR__.'/../../../autoload.php';
 |
 */
 
-if (file_exists($compiled = __DIR__.'/compiled.php'))
-{
+if (file_exists($compiled = __DIR__.'/compiled.php')) {
     require $compiled;
 }
 

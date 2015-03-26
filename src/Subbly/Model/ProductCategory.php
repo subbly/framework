@@ -11,7 +11,7 @@ class ProductCategory extends Model implements ModelInterface
     protected $table = 'category_product';
 
     /**
-     * Fields
+     * Fields.
      */
     // protected $visible = array('name', 'position', 'created_at', 'updated_at');
 
@@ -22,7 +22,7 @@ class ProductCategory extends Model implements ModelInterface
     // );
 
     /**
-     * Validations
+     * Validations.
      */
     protected $rules = array(
         'product_id'  => 'required|exists:products,id',
@@ -42,7 +42,7 @@ class ProductCategory extends Model implements ModelInterface
     }
 
     /**
-     * Relashionship
+     * Relashionship.
      */
     public function parent()
     {

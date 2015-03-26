@@ -5,9 +5,7 @@ namespace Subbly\Model\Concerns;
 trait DefaultValues
 {
     /**
-     * Override Eloquent method
-     *
-     * @return void
+     * Override Eloquent method.
      */
     public function bootIfNotBooted()
     {

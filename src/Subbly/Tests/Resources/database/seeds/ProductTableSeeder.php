@@ -3,7 +3,6 @@
 namespace Subbly\Tests\Resources\database\seeds;
 
 use Illuminate\Database\Seeder;
-
 use Subbly\Model\Product;
 use Subbly\Tests\Support\TestCase;
 
@@ -13,8 +12,7 @@ class ProductTableSeeder extends Seeder
     {
         $faker = TestCase::faker();
 
-        for ($i=1; $i <= 10; $i++)
-        {
+        for ($i = 1; $i <= 10; $i++) {
             $price      = round($faker->randomFloat(2, 0, 99999999.99), 2);
             $sale_price = round($price - ($price * (rand(5, 25) / 100)), 2);
 
@@ -26,7 +24,7 @@ class ProductTableSeeder extends Seeder
                 'sale_price'  => (double) ($i % 2) === 0 ? null : $sale_price,
                 'quantity'    => $faker->randomNumber(4),
             ));
-            TestCase::addFixture('products.product_' . $i, $product);
+            TestCase::addFixture('products.product_'.$i, $product);
         }
     }
 }

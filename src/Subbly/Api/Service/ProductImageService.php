@@ -13,7 +13,7 @@ class ProductImageService extends Service
     protected $includableRelationships = array('product');
 
     /**
-     * Return an empty model
+     * Return an empty model.
      *
      * @return \Subbly\Model\ProductImage
      *
@@ -25,13 +25,13 @@ class ProductImageService extends Service
     }
 
     /**
-     * Find a ProductImage by $uid
+     * Find a ProductImage by $uid.
      *
      * @example
      *     $productImage = Subbly::api('subbly.product_category')->find($uid);
      *
-     * @param string  $uid
-     * @param array   $options
+     * @param string $uid
+     * @param array  $options
      *
      * @return \Subbly\Model\ProductImage
      *
@@ -46,13 +46,13 @@ class ProductImageService extends Service
     }
 
     /**
-     * Find a ProductImage by Product
+     * Find a ProductImage by Product.
      *
      * @example
      *     $productImage = Subbly::api('subbly.product_category')->findByProduct($product);
      *
-     * @param string|\Subbly\Model\Product  $product The Product model or the Product uid
-     * @param array                         $options Some options
+     * @param string|\Subbly\Model\Product $product The Product model or the Product uid
+     * @param array                        $options Some options
      *
      * @return \Subbly\Model\Collection
      *
@@ -65,7 +65,7 @@ class ProductImageService extends Service
         }
 
         $query = $this->newCollectionQuery($options);
-        $query->with(array('product' => function($query) use ($product) {
+        $query->with(array('product' => function ($query) use ($product) {
             $query->where('id', '=', $product->id);
         }));
 
@@ -73,7 +73,7 @@ class ProductImageService extends Service
     }
 
     /**
-     * Create a new ProductImage
+     * Create a new ProductImage.
      *
      * @example
      *     $product = Subbly\Model\ProductImage;
@@ -84,8 +84,8 @@ class ProductImageService extends Service
      *         'lastname'  => 'Snow',
      *     ));
      *
-     * @param \Subbly\Model\ProductImage|array  $productImage
-     * @param \Subbly\Model\Product|null           $product
+     * @param \Subbly\Model\ProductImage|array $productImage
+     * @param \Subbly\Model\Product|null       $product
      *
      * @return \Subbly\Model\ProductImage
      *
@@ -103,9 +103,10 @@ class ProductImageService extends Service
             $productImage = new ProductImage($productImage);
         }
 
-        if ($productImage instanceof ProductImage)
-        {
-            if ($this->fireEvent('creating', array($productImage)) === false) return false;
+        if ($productImage instanceof ProductImage) {
+            if ($this->fireEvent('creating', array($productImage)) === false) {
+                return false;
+            }
 
             $productImage->product()->associate($product);
 
@@ -126,7 +127,7 @@ class ProductImageService extends Service
     }
 
     /**
-     * Update a ProductImage
+     * Update a ProductImage.
      *
      * @example
      *     $productImage = [Subbly\Model\ProductImage instance];
@@ -148,16 +149,15 @@ class ProductImageService extends Service
 
         if (count($args) == 1 && $args[0] instanceof ProductImage) {
             $productImage = $args[0];
-        }
-        else if (count($args) == 2 && !empty($args[0]) && is_array($args[1]))
-        {
+        } elseif (count($args) == 2 && !empty($args[0]) && is_array($args[1])) {
             $productImage = $this->find($args[0]);
             $productImage->fill($args[1]);
         }
 
-        if ($productImage instanceof ProductImage)
-        {
-            if ($this->fireEvent('updating', array($productImage)) === false) return false;
+        if ($productImage instanceof ProductImage) {
+            if ($this->fireEvent('updating', array($productImage)) === false) {
+                return false;
+            }
 
             $productImage->setCaller($this);
             $productImage->save();
@@ -174,9 +174,9 @@ class ProductImageService extends Service
     }
 
     /**
-     * Delete a ProductImage
+     * Delete a ProductImage.
      *
-     * @param \Subbly\Model\ProductImage|string  $productImage The productImage_uid or the ProductImage model
+     * @param \Subbly\Model\ProductImage|string $productImage The productImage_uid or the ProductImage model
      *
      * @return \Subbly\Model\ProductImage
      *
@@ -188,9 +188,10 @@ class ProductImageService extends Service
             $productImage = $this->find($productImage);
         }
 
-        if ($productImage instanceof ProductImage)
-        {
-            if ($this->fireEvent('deleting', array($productImage)) === false) return false;
+        if ($productImage instanceof ProductImage) {
+            if ($this->fireEvent('deleting', array($productImage)) === false) {
+                return false;
+            }
 
             $productImage->delete($this);
 
@@ -198,30 +199,31 @@ class ProductImageService extends Service
         }
     }
 
-
     /**
      * Set the model position in the database.
      *
-     * @param  array  $attributes
+     * @param array $attributes
+     *
      * @return \Subbly\Model\Product
      */
-    final public function sort( array $attributes = array())
+    final public function sort(array $attributes = array())
     {
-        $productImage   = $this->find( $attributes['movingId']  );
-        $positionEntity = $this->find( $attributes['movedId'] );
+        $productImage   = $this->find($attributes['movingId']);
+        $positionEntity = $this->find($attributes['movedId']);
 
-        if ($productImage instanceof ProductImage)
-        {
-            if ($this->fireEvent('sorting', array($productImage)) === false) return false;
-            
+        if ($productImage instanceof ProductImage) {
+            if ($this->fireEvent('sorting', array($productImage)) === false) {
+                return false;
+            }
+
             $productImage->setCaller($this);
-            $productImage->{$attributes['type']}( $positionEntity );
+            $productImage->{$attributes['type']}($positionEntity);
 
             $this->fireEvent('sorted', array($productImage));
 
             return $productImage;
         }
-        
+
         throw new Exception(sprintf(Exception::CANT_UPDATE_MODEL,
             'Subbly\\Model\\Product',
             $this->name()
@@ -229,7 +231,7 @@ class ProductImageService extends Service
     }
 
     /**
-     * Service name
+     * Service name.
      */
     public function name()
     {

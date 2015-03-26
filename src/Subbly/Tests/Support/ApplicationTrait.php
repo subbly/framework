@@ -5,7 +5,7 @@ namespace Subbly\Tests\Support;
 trait ApplicationTrait
 {
     /**
-     * Get the faker generator
+     * Get the faker generator.
      *
      * @return \Faker\Generator
      */
@@ -20,9 +20,9 @@ trait ApplicationTrait
     }
 
     /**
-     * Get the decode JSON content response
+     * Get the decode JSON content response.
      *
-     * @param boolean  $assoc When TRUE, returned objects will be converted into associative arrays.
+     * @param boolean $assoc When TRUE, returned objects will be converted into associative arrays.
      *
      * @return mixed
      */
@@ -36,11 +36,11 @@ trait ApplicationTrait
     /**
      * Call the given URI with JSON format and return the JSON Response.
      *
-     * @param string  $method
-     * @param string  $uri
-     * @param array   $params
-     * @param array   $headers
-     * @param array   $files
+     * @param string $method
+     * @param string $uri
+     * @param array  $params
+     * @param array  $headers
+     * @param array  $files
      *
      * @return \Illuminate\Http\Response
      */
@@ -51,30 +51,30 @@ trait ApplicationTrait
             'Accept'       => 'application/json',
         ), $headers);
 
-        foreach ($headers as $k=>$v) {
-            $headers['HTTP_' . $k] = $v;
+        foreach ($headers as $k => $v) {
+            $headers['HTTP_'.$k] = $v;
         }
 
         // if (in_array(strtoupper($method), array('POST', 'PUT', 'PATCH'))) {
         if (in_array(strtoupper($method), array('PUT', 'PATCH'))) {
             return $this->call($method, $uri, array(), $files, $headers, json_encode($params));
-        }
-        else {
+        } else {
             return $this->call($method, $uri, $params, $files, $headers);
         }
     }
 
     /**
-     * Is the string date has a give format
+     * Is the string date has a give format.
      *
-     * @param string  $date   The date into a string format
-     * @param string  $format The date format to check
+     * @param string $date   The date into a string format
+     * @param string $format The date format to check
      *
      * @return boolean
      */
     public function isDateTimeString($date, $format)
     {
         $d = \DateTime::createFromFormat($format, $date);
+
         return $d->format($format) === $date;
     }
 }

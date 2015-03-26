@@ -23,7 +23,6 @@ trait JSONAssertionsTrait
         'callable',
     );
 
-
     /**
      * Assert that the client content-type response is an application/json.
      */
@@ -32,9 +31,9 @@ trait JSONAssertionsTrait
         $response = $this->client->getResponse();
 
         $actual = $response->headers->get('content-type');
-        $this->assertEquals('application/json', $actual, 'Expected content-type header application/json, got ' . $actual);
+        $this->assertEquals('application/json', $actual, 'Expected content-type header application/json, got '.$actual);
 
-        /**
+        /*
          * Test JSON content
          */
         $json = $this->getJSONContent(true);
@@ -50,8 +49,6 @@ trait JSONAssertionsTrait
     }
 
     /**
-     *
-     *
      * @param string
      */
     public function assertJSONCollectionResponse($collectionKey)
@@ -73,8 +70,6 @@ trait JSONAssertionsTrait
     }
 
     /**
-     *
-     *
      * @param string
      * @param mixed
      */
@@ -84,8 +79,7 @@ trait JSONAssertionsTrait
         $json     = $this->getJSONContent(true);
         $content  = $accessor->getValue($json['response'], "[$key]");
 
-        foreach ($content as $k=>$v)
-        {
+        foreach ($content as $k => $v) {
             $k = is_array($data)
                 ? "[$k]"
                 : $k
@@ -101,11 +95,9 @@ trait JSONAssertionsTrait
             // \Illuminate\Support\Contracts\ArrayableInterface; ====> ->toArray();
             if ($dataValue instanceof \IteratorAggregate || $dataValue instanceof \ArrayAccess) {
                 $dataValue = (array) $dataValue;
-            }
-            else if (is_object($dataValue) && method_exists($dataValue, '__toString')) {
+            } elseif (is_object($dataValue) && method_exists($dataValue, '__toString')) {
                 $dataValue = (string) $dataValue;
-            }
-            else if ($dataValue instanceof \Illuminate\Database\Eloquent\Relations\Relation) {
+            } elseif ($dataValue instanceof \Illuminate\Database\Eloquent\Relations\Relation) {
                 $dataValue = $dataValue->getResults()->toArray();
             }
 
@@ -125,19 +117,16 @@ trait JSONAssertionsTrait
             'field_types' => array(),
         );
 
-        if (count($args) === 1 && is_array($args[0]))
-        {
+        if (count($args) === 1 && is_array($args[0])) {
             $params['field_types'] = $args[0];
-        }
-        else if (
+        } elseif (
             count($args) === 2
             && (is_string($args[0]) || is_null($args[0]))
             && is_array($args[1])
         ) {
             $params['key']         = $args[0];
             $params['field_types'] = $args[1];
-        }
-        else {
+        } else {
             // TODO
             throw new \Exception('');
         }
@@ -151,10 +140,8 @@ trait JSONAssertionsTrait
         }
 
         // Check assertions
-        foreach ($params['field_types'] as $fieldName=>$formats)
-        {
-            if (!property_exists($content, $fieldName))
-            {
+        foreach ($params['field_types'] as $fieldName => $formats) {
+            if (!property_exists($content, $fieldName)) {
                 // If optional field
                 if (starts_with($fieldName, '(') && ends_with($fieldName, ')')) {
                     continue;
@@ -166,21 +153,16 @@ trait JSONAssertionsTrait
                 ));
             }
 
-            if (is_array($formats) && $this->isKeyValueArray($formats))
-            {
+            if (is_array($formats) && $this->isKeyValueArray($formats)) {
                 // TODO nested func
                 // $this->assertJSONTypes($fieldName, $formats, $value)
-            }
-            else
-            {
+            } else {
                 $value = $accessor->getValue($content, $fieldName);
 
                 $asserts = array();
 
-                foreach ((array) $formats as $format)
-                {
-                    if (in_array($format, self::$formats))
-                    {
+                foreach ((array) $formats as $format) {
+                    if (in_array($format, self::$formats)) {
                         // TEMPORARY FIX
                         // TODO remove it when possible (see phpunit)
                         if ($format === 'double') {
@@ -190,15 +172,12 @@ trait JSONAssertionsTrait
                         // $this->assertInternalType($format, $value);
                         $constraint = new \PHPUnit_Framework_Constraint_IsType($format);
                         array_push($asserts, $constraint->evaluate($value, '', true));
-                    }
-                    else if ($format === 'datetime') {
+                    } elseif ($format === 'datetime') {
                         array_push($asserts, $this->isDateTimeString($value, \DateTime::ISO8601));
-                    }
-                    else if (class_exists($format)) {
+                    } elseif (class_exists($format)) {
                         // $this->assertInstanceOf($format, $value);
                         array_push($asserts, ($value instanceof $format));
-                    }
-                    else {
+                    } else {
                         throw new \Exception(sprintf('The type or class "%s" does not exist.', $format));
                     }
                 }
@@ -215,10 +194,10 @@ trait JSONAssertionsTrait
     }
 
     /**
-     * Access to an array value from a string path
+     * Access to an array value from a string path.
      *
-     * @param string  $path  Path to search into the array
-     * @param string  $array The array
+     * @param string $path  Path to search into the array
+     * @param string $array The array
      *
      * @return mixed
      */
@@ -229,27 +208,28 @@ trait JSONAssertionsTrait
         }
 
         if (strpos($path, '.') === false) {
-            if ($array instanceof \StdClass) return $array->{$path};
-            if (is_array($array))            return $array[$path];
+            if ($array instanceof \StdClass) {
+                return $array->{$path};
+            }
+            if (is_array($array)) {
+                return $array[$path];
+            }
 
             // TODO throw an exception?
-            return null;
+            return;
         }
 
         $pieces = explode('.', $path);
         $result = $array;
 
-        foreach ($pieces as $piece)
-        {
+        foreach ($pieces as $piece) {
             if (is_array($result) && array_key_exists($piece, $result)) {
                 $result = $result[$piece];
-            }
-            else if ($result instanceof \StdClass && property_exists($result, $piece)) {
+            } elseif ($result instanceof \StdClass && property_exists($result, $piece)) {
                 $result = $result->{$piece};
-            }
-            else {
+            } else {
                 // TODO throw an exception?
-                return null;
+                return;
             }
         }
 
@@ -259,7 +239,7 @@ trait JSONAssertionsTrait
     /**
      * Check if an array is associative array or simple array.
      *
-     * @param mixed  $array The array to check
+     * @param mixed $array The array to check
      *
      * @return boolean
      */

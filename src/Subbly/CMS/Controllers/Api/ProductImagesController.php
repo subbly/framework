@@ -3,7 +3,6 @@
 namespace Subbly\CMS\Controllers\Api;
 
 use Illuminate\Support\Facades\Input;
-
 use Subbly\Subbly;
 
 class ProductImagesController extends BaseController
@@ -18,9 +17,8 @@ class ProductImagesController extends BaseController
         $this->beforeFilter('@processAuthentication');
     }
 
-
     /**
-     * Get list of ProductImage for a Product
+     * Get list of ProductImage for a Product.
      *
      * @route GET /api/v1/products/:product_sku/images
      * @authentication required
@@ -37,7 +35,7 @@ class ProductImagesController extends BaseController
     }
 
     /**
-     * Create a new ProductImage
+     * Create a new ProductImage.
      *
      * @route POST /api/v1/products/:product_sku/images
      * @authentication required
@@ -66,7 +64,7 @@ class ProductImagesController extends BaseController
     }
 
     /**
-     * Update a ProductImage
+     * Update a ProductImage.
      *
      * @route PUT|PATCH /api/v1/products/:product_sku/images/:uid
      * @authentication required
@@ -95,10 +93,10 @@ class ProductImagesController extends BaseController
     }
 
     /**
-      * Delete a ProductImage
-      *
-      * @route DELETE /api/v1/products/:product_sku/images/:uid
-      * @authentication required
+     * Delete a ProductImage.
+     *
+     * @route DELETE /api/v1/products/:product_sku/images/:uid
+     * @authentication required
      */
     public function delete($product_sku, $uid)
     {
@@ -118,18 +116,18 @@ class ProductImagesController extends BaseController
     }
 
     /**
-     * Set Product order
+     * Set Product order.
      *
      * @route POST /api/v1/products/{sku}/images/sort
      * @authentication required
      */
-    public function sort( $product_sku )
+    public function sort($product_sku)
     {
         if (!Input::has('sortable')) {
             return $this->jsonErrorResponse('"sortable" is required.');
         }
-        
-        $images = Subbly::api('subbly.product_image')->sort( Input::get('sortable') );
+
+        $images = Subbly::api('subbly.product_image')->sort(Input::get('sortable'));
 
         return $this->jsonResponse(array(),
         array(

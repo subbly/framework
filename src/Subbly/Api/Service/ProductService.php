@@ -12,7 +12,7 @@ class ProductService extends Service
     protected $includableRelationships = array('images', 'options', 'categories', 'translations');
 
     /**
-     * Return an empty model
+     * Return an empty model.
      *
      * @return \Subbly\Model\Product
      *
@@ -24,7 +24,7 @@ class ProductService extends Service
     }
 
     /**
-     * Get all Product
+     * Get all Product.
      *
      * @param array $options
      *
@@ -40,13 +40,13 @@ class ProductService extends Service
     }
 
     /**
-     * Find a Product by $id
+     * Find a Product by $id.
      *
      * @example
      *     $product = Subbly::api('subbly.product')->find('sku');
      *
      * @param string  product's 'identifier
-     * @param array   $options
+     * @param array $options
      * @param string  field to match again
      *
      * @return \Subbly\Model\Product
@@ -66,7 +66,7 @@ class ProductService extends Service
     }
 
     /**
-     * Search a Product by options
+     * Search a Product by options.
      *
      * @example
      *     $products = Subbly::api('subbly.product')->searchBy(array(
@@ -76,9 +76,9 @@ class ProductService extends Service
      *     // OR
      *     $products = Subbly::api('subbly.product')->searchBy('some words');
      *
-     * @param array|string  $searchQuery    Search params
-     * @param array         $options        Query options
-     * @param string        $statementsType Type of statement null|or|and (default is null)
+     * @param array|string $searchQuery    Search params
+     * @param array        $options        Query options
+     * @param string       $statementsType Type of statement null|or|and (default is null)
      *
      * @return \Subbly\Model\Collection
      *
@@ -98,7 +98,7 @@ class ProductService extends Service
     }
 
     /**
-     * Create a new Product
+     * Create a new Product.
      *
      * @example
      *     $product = Subbly\Model\Product;
@@ -122,14 +122,14 @@ class ProductService extends Service
         }
 
         // set locale
-        if( !is_null( $locale ) )
-        {
-            $product->setFrontLocale( $locale );
+        if (!is_null($locale)) {
+            $product->setFrontLocale($locale);
         }
 
-        if ($product instanceof Product)
-        {
-            if ($this->fireEvent('creating', array($product)) === false) return false;
+        if ($product instanceof Product) {
+            if ($this->fireEvent('creating', array($product)) === false) {
+                return false;
+            }
 
             $product->setCaller($this);
             $product->saveWithTranslation();
@@ -148,7 +148,7 @@ class ProductService extends Service
     }
 
     /**
-     * Update a Product
+     * Update a Product.
      *
      * @example
      *     $product = [Subbly\Model\Product instance];
@@ -170,23 +170,21 @@ class ProductService extends Service
 
         if (count($args) == 1 && $args[0] instanceof Product) {
             $product = $args[0];
-        }
-        else if (count($args) >= 2 && !empty($args[0]) && is_array($args[1]))
-        {
+        } elseif (count($args) >= 2 && !empty($args[0]) && is_array($args[1])) {
             $product = $this->find($args[0]);
 
             // set locale
-            if( isset( $args[2] ) && is_string( $args[2] ) )
-            {
-                $product->setFrontLocale( $args[2] );
+            if (isset($args[2]) && is_string($args[2])) {
+                $product->setFrontLocale($args[2]);
             }
-            
+
             $product->fill($args[1]);
         }
 
-        if ($product instanceof Product)
-        {
-            if ($this->fireEvent('updating', array($product)) === false) return false;
+        if ($product instanceof Product) {
+            if ($this->fireEvent('updating', array($product)) === false) {
+                return false;
+            }
 
             $product->setCaller($this);
             $product->saveWithTranslation();
@@ -205,26 +203,28 @@ class ProductService extends Service
     /**
      * Set the model position in the database.
      *
-     * @param  array  $attributes
+     * @param array $attributes
+     *
      * @return \Subbly\Model\Product
      */
     final public function sort(array $attributes = array())
     {
-        $product        = $this->find( $attributes['movingId']  );
-        $positionEntity = $this->find( $attributes['movedId'] );
+        $product        = $this->find($attributes['movingId']);
+        $positionEntity = $this->find($attributes['movedId']);
 
-        if ($product instanceof Product)
-        {
-            if ($this->fireEvent('sorting', array($product)) === false) return false;
-            
+        if ($product instanceof Product) {
+            if ($this->fireEvent('sorting', array($product)) === false) {
+                return false;
+            }
+
             $product->setCaller($this);
-            $product->{$attributes['type']}( $positionEntity );
+            $product->{$attributes['type']}($positionEntity);
 
             $this->fireEvent('sorted', array($product));
 
             return $product;
         }
-        
+
         throw new Exception(sprintf(Exception::CANT_UPDATE_MODEL,
             'Subbly\\Model\\Product',
             $this->name()
@@ -232,7 +232,7 @@ class ProductService extends Service
     }
 
     /**
-     * Service name
+     * Service name.
      */
     public function name()
     {

@@ -3,7 +3,6 @@
 namespace Subbly\CMS\Controllers\Api;
 
 use Illuminate\Support\Facades\Input;
-
 use Subbly\Subbly;
 
 class CategoriesController extends BaseController
@@ -20,9 +19,8 @@ class CategoriesController extends BaseController
         $this->loadPresenter('Subbly\\Presenter\\V1\\CategoryPresenter');
     }
 
-
     /**
-     * Get Categories list
+     * Get Categories list.
      *
      * @route GET /api/v1/categories
      * @authentication required
@@ -34,7 +32,7 @@ class CategoriesController extends BaseController
         $categories = Subbly::api('subbly.category')->all();
 
         return $this->jsonResponse(array(
-            'categories' => $this->presenter->collection($categories)
+            'categories' => $this->presenter->collection($categories),
         ));
         // return $this->jsonCollectionResponse(array(
         //     'categories' => $this->presenter->collection($categories)
@@ -42,7 +40,7 @@ class CategoriesController extends BaseController
     }
 
     /**
-     * Get Category datas
+     * Get Category datas.
      *
      * @route GET /api/v1/categories/:id
      * @authentication required
@@ -59,7 +57,7 @@ class CategoriesController extends BaseController
     }
 
     /**
-     * Create a new Category
+     * Create a new Category.
      *
      * @route POST /api/v1/categories/
      * @authentication required
@@ -70,7 +68,7 @@ class CategoriesController extends BaseController
             return $this->jsonErrorResponse('"category" is required.');
         }
 
-        $category = Subbly::api('subbly.category')->create( Input::get('category'), Input::get('locale', null ) );
+        $category = Subbly::api('subbly.category')->create(Input::get('category'), Input::get('locale', null));
 
         return $this->jsonResponse(array(
             'category' => $this->presenter->single($category),
@@ -84,7 +82,7 @@ class CategoriesController extends BaseController
     }
 
     /**
-     * Update a Category
+     * Update a Category.
      *
      * @route PUT|PATCH /api/v1/categories/:sku
      * @authentication required
@@ -95,7 +93,7 @@ class CategoriesController extends BaseController
             return $this->jsonErrorResponse('"category" is required.');
         }
 
-        $category = Subbly::api('subbly.category')->update($sku, Input::get('category'), Input::get('locale', null ));
+        $category = Subbly::api('subbly.category')->update($sku, Input::get('category'), Input::get('locale', null));
 
         return $this->jsonResponse(array(
             'category' => $this->presenter->single($category),
@@ -106,7 +104,7 @@ class CategoriesController extends BaseController
     }
 
     /**
-     * Set Category order
+     * Set Category order.
      *
      * @route POST /api/v1/categories/sort
      * @authentication required
@@ -116,8 +114,8 @@ class CategoriesController extends BaseController
         if (!Input::has('sortable')) {
             return $this->jsonErrorResponse('"sortable" is required.');
         }
-        
-        $category = Subbly::api('subbly.category')->sort( Input::get('sortable') );
+
+        $category = Subbly::api('subbly.category')->sort(Input::get('sortable'));
 
         return $this->jsonResponse(array(),
         array(
@@ -125,12 +123,11 @@ class CategoriesController extends BaseController
         ));
     }
 
-
     /**
-      * Delete a Category
-      *
-      * @route DELETE /api/v1/categories/:id
-      * @authentication required
+     * Delete a Category.
+     *
+     * @route DELETE /api/v1/categories/:id
+     * @authentication required
      */
     public function destroy($id)
     {

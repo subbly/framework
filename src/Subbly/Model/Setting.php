@@ -18,9 +18,9 @@ class Setting extends Model implements ModelInterface
     protected $primaryKey = 'identifier';
 
     protected $fillable = array('identifier', 'plugin_identifier', 'value');
-    
+
     protected $defaultValues = array();
-    
+
     /**
      *
      */
@@ -28,8 +28,7 @@ class Setting extends Model implements ModelInterface
     {
         $this->attributes['type']  = gettype($value);
 
-        switch ($this->attributes['type'])
-        {
+        switch ($this->attributes['type']) {
             case 'array':
                 $this->attributes['value'] = json_encode($value);
                 break;
@@ -50,8 +49,7 @@ class Setting extends Model implements ModelInterface
      */
     public function getValueAttribute()
     {
-        switch ($this->attributes['type'])
-        {
+        switch ($this->attributes['type']) {
             case 'string':
                 return (string) $this->attributes['value'];
 
@@ -68,7 +66,7 @@ class Setting extends Model implements ModelInterface
                 return json_decode($this->attributes['value'], true);
 
             case 'NULL':
-                return NULL;
+                return;
 
             default:
                 return;

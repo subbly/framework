@@ -17,7 +17,6 @@ class UsersControllerTest extends TestCase
         '(groups)'    => array('array', 'null'),
     );
 
-
     public function testIndex()
     {
         $response = $this->callJSON('GET', '/api/v1/users');
@@ -34,7 +33,7 @@ class UsersControllerTest extends TestCase
 
     public function testSearch()
     {
-        /**
+        /*
          * NOT OK
          */
         $response = $this->callJSON('GET', '/api/v1/users/search');
@@ -42,7 +41,7 @@ class UsersControllerTest extends TestCase
         $this->assertResponseStatus(400);
         $this->assertResponseJSONValid();
 
-        /**
+        /*
          * OK
          */
         $searchQuery = 'jo';
@@ -77,7 +76,7 @@ class UsersControllerTest extends TestCase
     {
         $faker = TestCase::faker();
 
-        /**
+        /*
          * NOT OK
          */
         // "user" not defined
@@ -98,7 +97,7 @@ class UsersControllerTest extends TestCase
         $json = $this->getJSONContent();
         $this->assertObjectHasAttribute('error', $json->response);
 
-        /**
+        /*
          * OK
          */
         $data = array(
@@ -121,7 +120,7 @@ class UsersControllerTest extends TestCase
     {
         $user = TestCase::getFixture('users.user_8');
 
-        /**
+        /*
          * NOT OK
          */
         // "user" not defined
@@ -133,7 +132,7 @@ class UsersControllerTest extends TestCase
         $json = $this->getJSONContent();
         $this->assertObjectHasAttribute('error', $json->response);
 
-        /**
+        /*
          * OK
          */
         // "user" defined but empty

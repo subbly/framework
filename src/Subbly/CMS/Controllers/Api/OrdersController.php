@@ -3,7 +3,6 @@
 namespace Subbly\CMS\Controllers\Api;
 
 use Illuminate\Support\Facades\Input;
-
 use Subbly\Presenter\V1\OrderPresenter;
 use Subbly\Subbly;
 
@@ -21,9 +20,8 @@ class OrdersController extends BaseController
         $this->loadPresenter('Subbly\\Presenter\\V1\\OrderPresenter');
     }
 
-
     /**
-     * Get Order list
+     * Get Order list.
      *
      * @route GET /api/v1/orders
      * @authentication required
@@ -38,7 +36,7 @@ class OrdersController extends BaseController
     }
 
     /**
-     * Search one or many Order
+     * Search one or many Order.
      *
      * @route GET /api/v1/orders/search/?q=
      * @authentication required
@@ -59,7 +57,7 @@ class OrdersController extends BaseController
     }
 
     /**
-     * Get Order datas
+     * Get Order datas.
      *
      * @route GET /api/v1/orders/:id
      * @authentication required
@@ -76,7 +74,7 @@ class OrdersController extends BaseController
     }
 
     /**
-     * Create a new Order
+     * Create a new Order.
      *
      * @route POST /api/v1/orders/
      * @authentication required
@@ -101,7 +99,7 @@ class OrdersController extends BaseController
     }
 
     /**
-     * Update a Order
+     * Update a Order.
      *
      * @route PUT|PATCH /api/v1/orders/:id
      * @authentication required

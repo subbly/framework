@@ -2,24 +2,23 @@
 
 namespace Subbly\Api\Service;
 
-use Subbly\Model\Collection;
 use Cart;
 
 class CartService extends Service
 {
     /**
-     * Access to the cart
+     * Access to the cart.
      */
     public function access()
     {
-        $cart = new Cart;
+        $cart = new Cart();
         // Session::get('cart.cart');
 
         return $cart;
     }
 
     /**
-     * Add a row to the cart
+     * Add a row to the cart.
      *
      * @param string|Array $id      Unique ID of the item|Item formated as array|Array of items
      * @param string       $name    Name of the item
@@ -27,47 +26,50 @@ class CartService extends Service
      * @param float        $price   Price of one item
      * @param Array        $options Array of additional options, such as 'size' or 'color'
      */
-    public function add( $product, $qty, $price, $options = array() )
+    public function add($product, $qty, $price, $options = array())
     {
-        return Cart::add( $product['id'], $product['sku'], $product['name'], $qty, $product['price'], $options );
+        return Cart::add($product['id'], $product['sku'], $product['name'], $qty, $product['price'], $options);
     }
 
     /**
-     * Update the quantity of one row of the cart
+     * Update the quantity of one row of the cart.
      *
-     * @param  string        $rowId       The rowid of the item you want to update
-     * @param  integer|Array $attribute   New quantity of the item|Array of attributes to update
+     * @param string        $rowId     The rowid of the item you want to update
+     * @param integer|Array $attribute New quantity of the item|Array of attributes to update
+     *
      * @return boolean
      */
-    public function update( $rowId, $qty )
+    public function update($rowId, $qty)
     {
-        return Cart::update( $rowId, $qty );
+        return Cart::update($rowId, $qty);
     }
 
     /**
-     * Remove a row from the cart
+     * Remove a row from the cart.
      *
-     * @param  string  $rowId The rowid of the item
+     * @param string $rowId The rowid of the item
+     *
      * @return boolean
      */
-    public function remove( $rowId )
+    public function remove($rowId)
     {
-        return Cart::remove( $rowId );
+        return Cart::remove($rowId);
     }
 
     /**
-     * Get a row of the cart by its ID
+     * Get a row of the cart by its ID.
      *
-     * @param  string $rowId The ID of the row to fetch
+     * @param string $rowId The ID of the row to fetch
+     *
      * @return \Gloudemans\Shoppingcart\CartRowCollection
      */
-    public function get( $rowId )
+    public function get($rowId)
     {
-        return Cart::get( $rowId );
+        return Cart::get($rowId);
     }
 
     /**
-     * Empty the cart
+     * Empty the cart.
      *
      * @return boolean
      */
@@ -77,7 +79,7 @@ class CartService extends Service
     }
 
     /**
-     * Get the price total
+     * Get the price total.
      *
      * @return float
      */
@@ -87,18 +89,19 @@ class CartService extends Service
     }
 
     /**
-     * Get the number of items in the cart
+     * Get the number of items in the cart.
      *
-     * @param  boolean $totalItems Get all the items (when false, will return the number of rows)
+     * @param boolean $totalItems Get all the items (when false, will return the number of rows)
+     *
      * @return int
      */
-    public function count( $totalItems = false )
+    public function count($totalItems = false)
     {
-        return Cart::count( $totalItems );
+        return Cart::count($totalItems);
     }
 
     /**
-     * Get the cart content
+     * Get the cart content.
      *
      * @return \Gloudemans\Shoppingcart\CartCollection
      *
@@ -110,11 +113,10 @@ class CartService extends Service
     }
 
     /**
-     * Service name
+     * Service name.
      */
     public function name()
     {
         return 'subbly.cart';
     }
-
 }

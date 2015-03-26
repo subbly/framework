@@ -3,7 +3,6 @@
 namespace Subbly\Model\Concerns;
 
 use Illuminate\Support\Facades\App;
-
 use Subbly\Api\Service\Service;
 use Subbly\Model\Exception\UnvalidModelException;
 
@@ -16,9 +15,9 @@ trait SubblyModel
     private static $callerServiceForNext;
 
     // protected $defaultValues = array();
-    
+
     /**
-     * Get visible fields
+     * Get visible fields.
      *
      * @return array
      */
@@ -28,7 +27,7 @@ trait SubblyModel
     }
 
     /**
-     * Get visible fields
+     * Get visible fields.
      *
      * @return array
      */
@@ -40,7 +39,8 @@ trait SubblyModel
     /**
      * Save the model to the database.
      *
-     * @param  array  $options
+     * @param array $options
+     *
      * @return bool
      */
     final public function save(array $options = array())
@@ -55,7 +55,8 @@ trait SubblyModel
     /**
      * Update the model in the database.
      *
-     * @param  array  $attributes
+     * @param array $attributes
+     *
      * @return bool|int
      */
     final public function update(array $attributes = array())
@@ -71,6 +72,7 @@ trait SubblyModel
      * Delete the model from the database.
      *
      * @return bool|null
+     *
      * @throws \Exception
      */
     final public function delete()
@@ -109,7 +111,7 @@ trait SubblyModel
     }
 
     /**
-     * Protect the model methods
+     * Protect the model methods.
      *
      * @throws \Exception
      */
@@ -127,7 +129,7 @@ trait SubblyModel
     }
 
     /**
-     * Process the validation
+     * Process the validation.
      *
      * @throws \Subbly\Model\Exception\UnvalidModelException
      */

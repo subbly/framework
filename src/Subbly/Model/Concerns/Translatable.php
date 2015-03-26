@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace Subbly\Model\Concerns;
 
@@ -6,18 +6,17 @@ use App;
 use Illuminate\Database\Eloquent\MassAssignmentException;
 use Illuminate\Database\Eloquent\Model;
 
-trait Translatable {
-
+trait Translatable
+{
     /** @var string  entry locale */
     protected $frontendLocale = null;
 
     /*
      * Define current locale
      */
-    public function setFrontLocale( $key = null )
+    public function setFrontLocale($key = null)
     {
-        if( $this->isKeyALocale( $key ) )
-        {
+        if ($this->isKeyALocale($key)) {
             $this->frontendLocale = $key;
         }
     }
@@ -27,8 +26,7 @@ trait Translatable {
      */
     public function getFrontLocale()
     {
-        if( is_null( $this->frontendLocale ) )
-        {
+        if (is_null($this->frontendLocale)) {
             return App::make('config')->get('subbly.frontendFallbackLocale');
         }
 
@@ -53,22 +51,17 @@ trait Translatable {
 
     public function getTranslation($locale = null, $fallback = false)
     {
-        $locale = ( !is_null( $locale ) ) ? $locale : $this->getFrontLocale();
+        $locale = (!is_null($locale)) ? $locale : $this->getFrontLocale();
         $fallback = isset($this->useTranslationFallback) ? $this->useTranslationFallback : $fallback;
 
-        if ($this->getTranslationByLocaleKey($locale))
-        {
+        if ($this->getTranslationByLocaleKey($locale)) {
             $translation = $this->getTranslationByLocaleKey($locale);
-        }
-        elseif ($fallback
+        } elseif ($fallback
             && App::make('config')->has('subbly.frontendLocales')
             && $this->getTranslationByLocaleKey(App::make('config')->get('subbly.frontendLocales'))
-        )
-        {
+        ) {
             $translation = $this->getTranslationByLocaleKey(App::make('config')->get('subbly.frontendLocales'));
-        }
-        else
-        {
+        } else {
             $translation = $this->getNewTranslationInstance($locale);
             $this->translations->add($translation);
         }
@@ -80,10 +73,8 @@ trait Translatable {
     {
         $locale = $locale ?: App::getLocale();
 
-        foreach ($this->translations as $translation)
-        {
-            if ($translation->getAttribute($this->getLocaleKey()) == $locale)
-            {
+        foreach ($this->translations as $translation) {
+            if ($translation->getAttribute($this->getLocaleKey()) == $locale) {
                 return true;
             }
         }
@@ -99,7 +90,8 @@ trait Translatable {
     public function getTranslationModelNameDefault()
     {
         $config = App::make('config');
-        return get_class($this) . $config->get('app.translatable_suffix', 'Translation');
+
+        return get_class($this).$config->get('app.translatable_suffix', 'Translation');
     }
 
     public function getRelationKey()
@@ -119,51 +111,43 @@ trait Translatable {
 
     public function getAttribute($key)
     {
-        if ($this->isKeyReturningTranslationText($key))
-        {
+        if ($this->isKeyReturningTranslationText($key)) {
             return $this->getTranslation()->$key;
         }
-       return parent::getAttribute($key);
+
+        return parent::getAttribute($key);
     }
 
     public function setAttribute($key, $value)
     {
-        if (in_array($key, $this->translatedAttributes))
-        {
+        if (in_array($key, $this->translatedAttributes)) {
             $this->getTranslation()->$key = $value;
-        }
-        else
-        {
+        } else {
             parent::setAttribute($key, $value);
         }
     }
 
-    public function saveWithTranslation( array $options = array() )
+    public function saveWithTranslation(array $options = array())
     {
-        if ($this->exists)
-        {
-            if (count($this->getDirty()) > 0)
-            {
+        if ($this->exists) {
+            if (count($this->getDirty()) > 0) {
                 // If $this->exists and dirty, parent::save() has to return true. If not,
                 // an error has occurred. Therefore we shouldn't save the translations.
-                if (parent::save($options))
-                {
+                if (parent::save($options)) {
                     return $this->saveTranslations();
                 }
+
                 return false;
-            }
-            else
-            {
+            } else {
                 // If $this->exists and not dirty, parent::save() skips saving and returns
                 // false. So we have to save the translations
                 return $this->saveTranslations();
             }
-        }
-        elseif (parent::save($options))
-        {
+        } elseif (parent::save($options)) {
             // We save the translations only if the instance is saved in the database.
             return $this->saveTranslations();
         }
+
         return false;
     }
 
@@ -171,20 +155,14 @@ trait Translatable {
     {
         $totallyGuarded = $this->totallyGuarded();
 
-        foreach ($attributes as $key => $values)
-        {
-            if ($this->isKeyALocale($key))
-            {
+        foreach ($attributes as $key => $values) {
+            if ($this->isKeyALocale($key)) {
                 $translation = $this->getTranslation($key);
 
-                foreach ($values as $translationAttribute => $translationValue)
-                {
-                    if ($this->isFillable($translationAttribute))
-                    {
+                foreach ($values as $translationAttribute => $translationValue) {
+                    if ($this->isFillable($translationAttribute)) {
                         $translation->$translationAttribute = $translationValue;
-                    }
-                    elseif ($totallyGuarded)
-                    {
+                    } elseif ($totallyGuarded) {
                         throw new MassAssignmentException($key);
                     }
                 }
@@ -197,14 +175,13 @@ trait Translatable {
 
     private function getTranslationByLocaleKey($key)
     {
-        foreach ($this->translations as $translation)
-        {
-            if ($translation->getAttribute($this->getLocaleKey()) == $key)
-            {
+        foreach ($this->translations as $translation) {
+            if ($translation->getAttribute($this->getLocaleKey()) == $key) {
                 return $translation;
             }
         }
-        return null;
+
+        return;
     }
 
     protected function isKeyReturningTranslationText($key)
@@ -215,26 +192,27 @@ trait Translatable {
     protected function isKeyALocale($key)
     {
         $locales = $this->getLocales();
+
         return in_array($key, $locales);
     }
 
     protected function getLocales()
     {
         $config = App::make('config');
+
         return $config->get('subbly.frontendLocales', array());
     }
 
     protected function saveTranslations()
     {
         $saved = true;
-        foreach ($this->translations as $translation)
-        {
-            if ($saved && $this->isTranslationDirty($translation))
-            {
+        foreach ($this->translations as $translation) {
+            if ($saved && $this->isTranslationDirty($translation)) {
                 $translation->setAttribute($this->getRelationKey(), $this->getKey());
                 $saved = $translation->save();
             }
         }
+
         return $saved;
     }
 
@@ -242,14 +220,16 @@ trait Translatable {
     {
         $dirtyAttributes = $translation->getDirty();
         unset($dirtyAttributes[$this->getLocaleKey()]);
+
         return count($dirtyAttributes) > 0;
     }
 
     protected function getNewTranslationInstance($locale)
     {
         $modelName = $this->getTranslationModelName();
-        $translation = new $modelName;
+        $translation = new $modelName();
         $translation->setAttribute($this->getLocaleKey(), $locale);
+
         return $translation;
     }
 
@@ -261,14 +241,12 @@ trait Translatable {
     public function toArray()
     {
         $attributes = parent::toArray();
-        foreach($this->translatedAttributes AS $field)
-        {
-            if ($translations = $this->getTranslation())
-            {
+        foreach ($this->translatedAttributes as $field) {
+            if ($translations = $this->getTranslation()) {
                 $attributes[$field] = $translations->$field;
             }
         }
+
         return $attributes;
     }
-
 }

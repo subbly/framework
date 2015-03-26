@@ -3,7 +3,6 @@
 namespace Subbly\CMS\Controllers\Api;
 
 use Illuminate\Support\Facades\Input;
-
 use Subbly\Subbly;
 
 class ProductCategoriesController extends BaseController
@@ -18,9 +17,8 @@ class ProductCategoriesController extends BaseController
         $this->beforeFilter('@processAuthentication');
     }
 
-
     /**
-     * Get list of ProductCategory for a Product
+     * Get list of ProductCategory for a Product.
      *
      * @route GET /api/v1/products/:product_sku/categories
      * @authentication required
@@ -37,12 +35,12 @@ class ProductCategoriesController extends BaseController
     }
 
     /**
-     * Create/Update Product's 'categories
+     * Create/Update Product's 'categories.
      *
      * @route POST/PUT /api/v1/products/:product_sku/categories
      * @authentication required
      */
-    private function manage( $product_sku )
+    private function manage($product_sku)
     {
         $product = Subbly::api('subbly.product')->find($product_sku);
 
@@ -50,7 +48,7 @@ class ProductCategoriesController extends BaseController
             return $this->jsonErrorResponse('"product_category" is required.');
         }
 
-        if (!is_array( Input::get('product_category'))) {
+        if (!is_array(Input::get('product_category'))) {
             return $this->jsonErrorResponse('"product_category" must be an array.');
         }
 
@@ -62,36 +60,36 @@ class ProductCategoriesController extends BaseController
                 'code'    => 201,
                 'message' => 'ProductCategory created',
             ),
-        ));        
+        ));
     }
 
     /**
-     * Create a new ProductCategory
+     * Create a new ProductCategory.
      *
      * @route POST /api/v1/products/:product_sku/categories
      * @authentication required
      */
-    public function store( $product_sku )
+    public function store($product_sku)
     {
-        $this->manage( $product_sku );
+        $this->manage($product_sku);
     }
 
     /**
-     * Update a ProductCategory
+     * Update a ProductCategory.
      *
      * @route PUT|PATCH /api/v1/products/:product_sku/categories/:uid
      * @authentication required
      */
-    public function update( $product_sku, $uid )
+    public function update($product_sku, $uid)
     {
-        $this->manage( $product_sku );
+        $this->manage($product_sku);
     }
 
     /**
-      * Delete a ProductCategory
-      *
-      * @route DELETE /api/v1/products/:product_sku/categories/:uid
-      * @authentication required
+     * Delete a ProductCategory.
+     *
+     * @route DELETE /api/v1/products/:product_sku/categories/:uid
+     * @authentication required
      */
     public function delete($product_sku, $uid)
     {

@@ -3,7 +3,6 @@
 namespace Subbly\CMS\Controllers\Api;
 
 use Illuminate\Support\Facades\Input;
-
 use Subbly\Subbly;
 
 class SettingsController extends BaseController
@@ -18,9 +17,8 @@ class SettingsController extends BaseController
         $this->beforeFilter('@processAuthentication');
     }
 
-
     /**
-     * Get Setting list
+     * Get Setting list.
      *
      * @route GET /api/settings
      * @authentication required
@@ -35,7 +33,7 @@ class SettingsController extends BaseController
     }
 
     /**
-     * Update a Setting
+     * Update a Setting.
      *
      * @route PUT|PATCH /api/settings
      * @authentication required
@@ -50,9 +48,9 @@ class SettingsController extends BaseController
 
         $user = $settings->updateMany(Input::get('settings'));
 
-        return $this->jsonResponse( array(
+        return $this->jsonResponse(array(
                 'settings' => $settings->all(),
-            ), 
+            ),
             array(
                 'status' => array(
                     'code'    => 200,

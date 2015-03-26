@@ -3,7 +3,6 @@
 namespace Subbly\Model;
 
 use Cartalyst\Sentry\Users\Eloquent\User as Model;
-
 use Illuminate\Auth\UserInterface;
 use Illuminate\Auth\Reminders\RemindableInterface;
 use Illuminate\Database\Eloquent\SoftDeletingTrait;
@@ -32,7 +31,7 @@ class User extends Model implements ModelInterface//, UserInterface, RemindableI
     protected $dates = array('deleted_at');
 
     /**
-     * Validations
+     * Validations.
      */
     protected $rules = array(
         'first_name' => 'required',
@@ -43,17 +42,17 @@ class User extends Model implements ModelInterface//, UserInterface, RemindableI
     protected $defaultValues = array();
 
     /**
-     * Boot
+     * Boot.
      */
     public static function boot()
     {
         parent::boot();
 
-        self::$hasher = new \Cartalyst\Sentry\Hashing\BcryptHasher;
+        self::$hasher = new \Cartalyst\Sentry\Hashing\BcryptHasher();
     }
 
     /**
-     * Relashionship
+     * Relashionship.
      */
     public function orders()
     {
@@ -81,38 +80,43 @@ class User extends Model implements ModelInterface//, UserInterface, RemindableI
     }
 
     /**
-     * Aliases
+     * Aliases.
      */
-    public function setFirstnameAttribute($value) {
+    public function setFirstnameAttribute($value)
+    {
         $this->attributes['first_name'] = (string) $value;
     }
-    public function getFirstnameAttribute() {
+    public function getFirstnameAttribute()
+    {
         return $this->attributes['first_name'];
     }
 
-    public function setLastnameAttribute($value) {
+    public function setLastnameAttribute($value)
+    {
         $this->attributes['last_name'] = (string) $value;
     }
-    public function getLastnameAttribute() {
+    public function getLastnameAttribute()
+    {
         return $this->attributes['last_name'];
     }
 
-
     /**
-     * Statistics
+     * Statistics.
      */
-    public function statisticsGetTotalBetweenTwoDates( $from, $to ) 
+    public function statisticsGetTotalBetweenTwoDates($from, $to)
     {
         dd('ok');
-        return \DB::table( 'users' )->whereBetween( 'created_at', array( $from, $to ) )->count();
+
+        return \DB::table('users')->whereBetween('created_at', array( $from, $to ))->count();
     }
 
-    public function statisticsGetAvgBetweenTwoDates( $from, $to ) 
+    public function statisticsGetAvgBetweenTwoDates($from, $to)
     {
         dd('ok');
-        $totalDays = $from->diffInDays( $to ); 
-        $totalUsers = $this->statisticstGetTotalBetweenTwoDates( $from, $to );
-        return ( $totalUsers / $totalDays );
+        $totalDays = $from->diffInDays($to);
+        $totalUsers = $this->statisticstGetTotalBetweenTwoDates($from, $to);
+
+        return ($totalUsers / $totalDays);
     }
 
     /**
@@ -128,7 +132,6 @@ class User extends Model implements ModelInterface//, UserInterface, RemindableI
 
         return $this->getArrayableItems($attributes);
     }
-
 
     /**
      * Gets a code for when the user is

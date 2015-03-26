@@ -3,23 +3,22 @@
 namespace Subbly\Framework;
 
 use Pimple;
-
 use Subbly\Api\Api;
 use Subbly\Resolver\MediaResolver;
 
 class Container extends Pimple\Container
 {
     /**
-     * Load services
+     * Load services.
      */
     public function load()
     {
         $c = $this;
 
-        /**
+        /*
          * Api
          */
-        $this['api'] = function($c) {
+        $this['api'] = function ($c) {
             $api = new Api($c);
 
             $api->registerServices(array(
@@ -40,31 +39,32 @@ class Container extends Pimple\Container
             ));
 
             $api->service('subbly.setting')->registerDefaultSettings(
-                __DIR__ . '/../Resources/configs/default_settings.yml'
+                __DIR__.'/../Resources/configs/default_settings.yml'
             );
 
             $api->service('subbly.stats')->registerDefaultStats(
-                __DIR__ . '/../Resources/configs/default_stats.yml'
+                __DIR__.'/../Resources/configs/default_stats.yml'
             );
+
             return $api;
         };
 
-        /**
+        /*
          * Event dispatcher
          */
-        $this['event_dispatcher'] = function($c) {
+        $this['event_dispatcher'] = function ($c) {
             return new EventDispatcher();
         };
 
-        $this['media_resolver'] = function($c) {
+        $this['media_resolver'] = function ($c) {
             return new MediaResolver($c);
         };
 
-        /**
+        /*
          * Swiftmailer
          */
-        $this['mailer'] = function($c) {
-            return ;
+        $this['mailer'] = function ($c) {
+            return;
         };
 
         // Fire 'subbly.container:loaded' event
@@ -72,9 +72,9 @@ class Container extends Pimple\Container
     }
 
     /**
-     * Ask if named service exists
+     * Ask if named service exists.
      *
-     * @param string  $name  Name of the service to check
+     * @param string $name Name of the service to check
      *
      * @return boolean
      */
@@ -84,9 +84,9 @@ class Container extends Pimple\Container
     }
 
     /**
-     * Get a service from is name
+     * Get a service from is name.
      *
-     * @param string  $name  Name of the service to called
+     * @param string $name Name of the service to called
      *
      * @return mixed
      */

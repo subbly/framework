@@ -3,7 +3,6 @@
 namespace Subbly\Tests\Resources\database\seeds;
 
 use Illuminate\Database\Seeder;
-
 use Subbly\Model\User;
 use Subbly\Tests\Support\TestCase;
 
@@ -23,8 +22,7 @@ class UserTableSeeder extends Seeder
         TestCase::addFixture('users.jon_snow', $user);
 
         // generate some others users
-        for ($i=1; $i <= 10; $i++)
-        {
+        for ($i = 1; $i <= 10; $i++) {
             $user = User::create(array(
                 'email'     => $faker->email,
                 'password'  => $faker->password(),
@@ -32,7 +30,7 @@ class UserTableSeeder extends Seeder
                 'lastname'  => $faker->lastName,
                 'activated' => $i === 0 ? true : rand(0, 1),
             ));
-            TestCase::addFixture('users.user_' . $i, $user);
+            TestCase::addFixture('users.user_'.$i, $user);
         }
     }
 }

@@ -3,7 +3,6 @@
 namespace Subbly\CMS\Controllers\Api;
 
 use Illuminate\Support\Facades\Input;
-
 use Subbly\Subbly;
 
 class UsersController extends BaseController
@@ -20,9 +19,8 @@ class UsersController extends BaseController
         $this->loadPresenter('Subbly\\Presenter\\V1\\UserPresenter');
     }
 
-
     /**
-     * Get User list
+     * Get User list.
      *
      * @route GET /api/v1/users
      * @authentication required
@@ -37,7 +35,7 @@ class UsersController extends BaseController
     }
 
     /**
-     * Search one or many User
+     * Search one or many User.
      *
      * @route GET /api/v1/users/search/?q=
      * @authentication required
@@ -58,7 +56,7 @@ class UsersController extends BaseController
     }
 
     /**
-     * Get User datas
+     * Get User datas.
      *
      * @route GET /api/v1/users/:uid
      * @authentication required
@@ -75,7 +73,7 @@ class UsersController extends BaseController
     }
 
     /**
-     * Create a new User
+     * Create a new User.
      *
      * @route POST /api/v1/users/
      * @authentication required
@@ -100,7 +98,7 @@ class UsersController extends BaseController
     }
 
     /**
-     * Update a User
+     * Update a User.
      *
      * @route PUT|PATCH /api/v1/users/:uid
      * @authentication required

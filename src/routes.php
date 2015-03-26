@@ -4,7 +4,7 @@ Route::group(array(
     'prefix' => '/api',
 ), function () {
 
-    /**
+    /*
      * API v1
      */
     Route::group(array(

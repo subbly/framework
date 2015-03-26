@@ -10,7 +10,7 @@ trait Validable
     private $errorMessages = array();
 
     /**
-     * Is model valid
+     * Is model valid.
      *
      * @return boolean
      */
@@ -23,19 +23,19 @@ trait Validable
         $rules        = array();
         $replacements = array();
 
-        foreach ($this->attributes as $k=>$v) {
+        foreach ($this->attributes as $k => $v) {
             $replacements['{{self_'.$k.'}}'] = $v;
         }
 
-        foreach ($this->rules as $k=>$v) {
+        foreach ($this->rules as $k => $v) {
             $rules[$k] = str_replace(array_keys($replacements), array_values($replacements), $v);
         }
 
         $v = Validator::make($this->attributes, $rules);
 
-        if ($v->fails())
-        {
+        if ($v->fails()) {
             $this->errorMessages = $v->messages();
+
             return false;
         }
 
@@ -43,7 +43,7 @@ trait Validable
     }
 
     /**
-     * Get the error messages
+     * Get the error messages.
      *
      * @return \Illuminate\Support\MessageBag
      */

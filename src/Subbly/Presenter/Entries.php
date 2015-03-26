@@ -14,13 +14,13 @@ class Entries implements \IteratorAggregate
      */
     public function __construct()
     {
-        $this->entries = new ArrayCollection;
+        $this->entries = new ArrayCollection();
     }
 
     /**
-     * Add a new Entry to the collection
+     * Add a new Entry to the collection.
      *
-     * @param Entry  $entry
+     * @param Entry $entry
      *
      * @return \Subbly\Presenter\Entries
      */
@@ -42,7 +42,7 @@ class Entries implements \IteratorAggregate
     }
 
     /**
-     * Get the collection as array
+     * Get the collection as array.
      *
      * @return array
      */
