@@ -123,8 +123,10 @@ return array(
         'Illuminate\Workbench\WorkbenchServiceProvider',
 
         'Cartalyst\Sentry\SentryServiceProvider',
-        'Barryvdh\Debugbar\ServiceProvider',
-        'Spatie\EloquentSortable\SortableServiceProvider',
+        'Subbly\Framework\SubblyFrameworkServiceProvider',
+        'Subbly\Backend\SubblyBackendServiceProvider',
+        'Subbly\Frontage\SubblyFrontageServiceProvider',
+        'Subbly\Shoppingcart\ShoppingcartServiceProvider',
     ),
 
     /*
@@ -192,7 +194,7 @@ return array(
         'Validator'         => 'Illuminate\Support\Facades\Validator',
         'View'              => 'Illuminate\Support\Facades\View',
         'Sentry'            => 'Cartalyst\Sentry\Facades\Laravel\Sentry',
-        'Debugbar'          => 'Barryvdh\Debugbar\Facade',
+        'Cart'              => 'Subbly\Shoppingcart\Facades\Cart',
     ),
 
 );
