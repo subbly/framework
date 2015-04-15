@@ -48,7 +48,8 @@
     },
 
     "suggest": {
-        "subbly/backend": "The Subbly backend"
+        "subbly/backend": "The Subbly backend",
+        "subbly/frontage": "The Subbly front package"
     },
 
     "autoload": {
