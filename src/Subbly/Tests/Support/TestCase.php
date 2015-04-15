@@ -18,10 +18,15 @@ class TestCase extends \Illuminate\Foundation\Testing\TestCase
      */
     public function createApplication()
     {
-        $unitTesting     = true;
-        $testEnvironment = 'testing';
 
-        return require __DIR__.'/../../../../bootstrap/start.php';
+        $sandboxDir = __DIR__.'/../../../../tests/sandbox';
+
+        $app = new \Subbly\Framework\Application();
+        $app->setRootDirectory($sandboxDir);
+        $app->setConfigDirectory($sandboxDir . '/config/');
+        $app->start();
+
+        return $app;
     }
 
     /**

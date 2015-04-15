@@ -7,7 +7,7 @@ class SubblyTest extends TestCase
 {
     public function testVersion()
     {
-        $this->assertEquals(Subbly::VERSION, '0.1.0-dev');
+        $this->assertEquals(Subbly::VERSION, '0.2.0-dev');
     }
 
     public function testApi()

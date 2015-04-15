@@ -56,8 +56,12 @@ class Application extends BaseApplication
      */
     protected function registerPaths()
     {
-        define('TPL_PUBLIC_PATH', $this->rootDirectory.'/themes');
-        define('DS', DIRECTORY_SEPARATOR);
+        if (!defined('TPL_PUBLIC_PATH')) {
+            define('TPL_PUBLIC_PATH', $this->rootDirectory.'/themes');
+        }
+        if (!defined('DS')) {
+            define('DS', DIRECTORY_SEPARATOR);
+        }
 
         $this->bindInstallPaths(array(
             'app'     => realpath(__DIR__.'/../../../app'),
