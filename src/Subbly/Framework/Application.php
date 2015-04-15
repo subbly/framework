@@ -37,8 +37,8 @@ class Application extends BaseApplication
         $this->registerPaths();
 
         $app       = $this;
-        $framework = $app['path.base'] . '/vendor/laravel/framework/src';
-        require $framework . '/Illuminate/Foundation/start.php';
+        $framework = $app['path.base'].'/vendor/laravel/framework/src';
+        require $framework.'/Illuminate/Foundation/start.php';
 
         $this->loadPatches();
     }
@@ -60,10 +60,10 @@ class Application extends BaseApplication
         define('DS', DIRECTORY_SEPARATOR);
 
         $this->bindInstallPaths(array(
-            'app'     => realpath(__DIR__ . '/../../../app'),
-            'public'  => $this->rootDirectory . '/themes',
+            'app'     => realpath(__DIR__.'/../../../app'),
+            'public'  => $this->rootDirectory.'/themes',
             'base'    => $this->rootDirectory,
-            'storage' => $this->rootDirectory . '/storage',
+            'storage' => $this->rootDirectory.'/storage',
         ));
     }
 }
