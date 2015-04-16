@@ -18,7 +18,6 @@ class TestCase extends \Illuminate\Foundation\Testing\TestCase
      */
     public function createApplication()
     {
-
         $app = new \Subbly\Tests\Support\Application();
         $app->start();
 

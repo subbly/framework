@@ -197,7 +197,7 @@ $config = array(
 
 );
 
-if (!defined('SUBBLY_TEST_ENV') && SUBBLY_TEST_ENV !== TRUE) {
+if (!(defined('SUBBLY_TEST_ENV') && SUBBLY_TEST_ENV === TRUE)) {
     $config['providers'][] = 'Subbly\Backend\SubblyBackendServiceProvider';
     $config['providers'][] = 'Subbly\Frontage\SubblyFrontageServiceProvider';
 }

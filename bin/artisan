@@ -1,19 +1,19 @@
 #!/usr/bin/env php
 <?php
 
-/*
-|--------------------------------------------------------------------------
-| Register The Auto Loader
-|--------------------------------------------------------------------------
-|
-| Composer provides a convenient, automatically generated class loader
-| for our application. We just need to utilize it! We'll require it
-| into the script here so that we do not have to worry about the
-| loading of any our classes "manually". Feels great to relax.
-|
-*/
+define('LARAVEL_START', microtime(true));
 
-require __DIR__.'/bootstrap/autoload.php';
+
+if (file_exists($a = __DIR__.'/../../../autoload.php')) {
+    $baseDir = __DIR__.'/../../../../';
+    require_once $a;
+} else {
+    $baseDir = __DIR__.'/../tests/dummy';
+    require_once __DIR__.'/../vendor/autoload.php';
+}
+
+Patchwork\Utf8\Bootup::initMbstring();
+Illuminate\Support\ClassLoader::register();
 
 /*
 |--------------------------------------------------------------------------
@@ -27,7 +27,10 @@ require __DIR__.'/bootstrap/autoload.php';
 |
 */
 
-$app = require_once __DIR__.'/bootstrap/start.php';
+$app = new \Subbly\Framework\Application();
+$app->setRootDirectory($baseDir);
+$app->setConfigDirectory($baseDir.'/config/');
+$app->start();
 
 /*
 |--------------------------------------------------------------------------
