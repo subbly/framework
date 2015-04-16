@@ -19,11 +19,7 @@ class TestCase extends \Illuminate\Foundation\Testing\TestCase
     public function createApplication()
     {
 
-        $sandboxDir = __DIR__.'/../../../../tests/sandbox';
-
-        $app = new \Subbly\Framework\Application();
-        $app->setRootDirectory($sandboxDir);
-        $app->setConfigDirectory($sandboxDir . '/config/');
+        $app = new \Subbly\Tests\Support\Application();
         $app->start();
 
         return $app;
