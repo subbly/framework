@@ -12,7 +12,7 @@ class Application extends BaseApplication
     protected function loadLaravel($env)
     {
         $app = $this;
-        $framework = realpath($this->rootDirectory.'/../..').'/vendor/laravel/framework/src';
+        $framework = $this->rootDirectory.'/../../vendor/laravel/framework/src';
         require $framework.'/Illuminate/Foundation/start.php';
     }
 
@@ -21,12 +21,12 @@ class Application extends BaseApplication
      */
     protected function registerPaths()
     {
-        $this->rootDirectory = realpath(__DIR__.'/../../../../tests/sandbox');
+        $this->rootDirectory = __DIR__.'/../../../../tests/sandbox/';
 
         parent::registerPaths();
 
         $this->bindInstallPaths(array(
-            'app'     => realpath(__DIR__.'/../../../../app'),
+            'app'     => __DIR__.'/../../../../app/',
             'public'  => $this->rootDirectory.'/themes',
             'base'    => $this->rootDirectory,
             'storage' => $this->rootDirectory.'/storage',
