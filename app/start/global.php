@@ -30,7 +30,7 @@ ClassLoader::addDirectories(array(
 |
 */
 
-Log::useFiles(storage_path().'/logs/laravel.log');
+Log::useFiles(storage_path().'/logs/subbly.log');
 
 /*
 |--------------------------------------------------------------------------
