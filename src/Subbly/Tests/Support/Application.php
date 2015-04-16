@@ -21,7 +21,7 @@ class Application extends BaseApplication
      */
     protected function registerPaths()
     {
-        $this->rootDirectory = __DIR__.'/../../../../tests/sandbox/';
+        $this->rootDirectory = __DIR__.'/../../../../tests/dummy/';
 
         parent::registerPaths();
 
