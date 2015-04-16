@@ -9,6 +9,7 @@ php:
 before_script:
   - travis_retry composer self-update
   - travis_retry composer install --prefer-source --no-interaction --dev
+  - mysql -e 'create database subbly_shop_test;'
 
 script: phpunit --colors --coverage-text
 

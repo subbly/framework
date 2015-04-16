@@ -11,6 +11,8 @@ class Application extends BaseApplication
      */
     protected function loadLaravel($env)
     {
+        $env = 'testing';
+
         $app = $this;
         $framework = $this->rootDirectory.'/../../vendor/laravel/framework/src';
         require $framework.'/Illuminate/Foundation/start.php';
