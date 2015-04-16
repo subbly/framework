@@ -6,8 +6,8 @@ use Illuminate\Foundation\Application as BaseApplication;
 
 class Application extends BaseApplication
 {
-    private $rootDirectory;
-    private $configDirectory;
+    protected $rootDirectory;
+    protected $configDirectory;
 
     /**
      *
@@ -36,11 +36,19 @@ class Application extends BaseApplication
 
         $this->registerPaths();
 
+        $this->loadLaravel($env);
+
+        $this->loadPatches();
+    }
+
+    /**
+     *
+     */
+    protected function loadLaravel($env)
+    {
         $app       = $this;
         $framework = $app['path.base'].'/vendor/laravel/framework/src';
         require $framework.'/Illuminate/Foundation/start.php';
-
-        $this->loadPatches();
     }
 
     /**
