@@ -1,6 +1,6 @@
 <?php
 
-return array(
+$config = array(
 
     /*
     |--------------------------------------------------------------------------
@@ -124,8 +124,6 @@ return array(
 
         'Cartalyst\Sentry\SentryServiceProvider',
         'Subbly\Framework\SubblyFrameworkServiceProvider',
-        'Subbly\Backend\SubblyBackendServiceProvider',
-        'Subbly\Frontage\SubblyFrontageServiceProvider',
         'Subbly\Shoppingcart\ShoppingcartServiceProvider',
     ),
 
@@ -198,3 +196,10 @@ return array(
     ),
 
 );
+
+if (!defined('SUBBLY_TEST_ENV') && SUBBLY_TEST_ENV !== TRUE) {
+    $config['providers'][] = 'Subbly\Backend\SubblyBackendServiceProvider';
+    $config['providers'][] = 'Subbly\Frontage\SubblyFrontageServiceProvider';
+}
+
+return $config;

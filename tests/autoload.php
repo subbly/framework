@@ -1,5 +1,7 @@
 <?php
 
+define('SUBBLY_TEST_ENV', TRUE);
+
 $testEnvironment = 'testing';
 
 require_once __DIR__ . '/../vendor/autoload.php';

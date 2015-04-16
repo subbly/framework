@@ -2,6 +2,7 @@
 
 namespace Subbly\Framework;
 
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\ServiceProvider;
 use Subbly\Command\CreateAdminUserCommand;
@@ -33,9 +34,7 @@ class SubblyFrameworkServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->registerMyCommand();
-
-        $this->commands('create-admin-user');
+        Artisan::add(new CreateAdminUserCommand());
     }
 
     private function registerMyCommand()
